@@ -1,7 +1,7 @@
 <?php
 /**
  * Kbs project - 2019 © ICTM1o1 - Boaz, Jesse, Jordy, Kahn, Ton
- * This file parses the correct page and displayes this for the user. If not it redirects to a 404 page
+ * This file parses all database functions
  */
 
 
@@ -45,7 +45,7 @@ class database
     }
 
     /**
-     * Dynamic database function
+     * Dynamic database functiothe correct page and displayes this for the user. If not it redirects to a 404 pagen
      * @param string $query - Database Query
      * @param array $param - All parameters for bind params
      * @example $database->DBQuery('SELECT * FROM stockitems WHERE RecommendedRetailPrice BETWEEN ? AND ?', [135, 340]);
