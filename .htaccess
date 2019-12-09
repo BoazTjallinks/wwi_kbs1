@@ -1,0 +1,10 @@
+RewriteEngine On
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+RewriteRule ^(public)($|/) - [L]
+
+RewriteRule ^(.*) www/index.php?q=$1 [QSA]
