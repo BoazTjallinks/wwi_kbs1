@@ -202,5 +202,17 @@ elseif($maxPages > 5){
 }
 
 
-print_r(count($stockCategories));
+print('<div class="row container">');
+for ($i=0; $i < count($stockCategories); $i++) {
+    $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$stockCategories[$i]['StockItemID']]);
+    if ($getimg == '0 results found!') {
+        $img = '/public/img/product/no-image.png';
+    }
+    else {
+        $img = $getimg[0]['ImagePath'];
+    }
+
+    showItem($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice']);
+}
+print('</div>');
 $database->closeConnection();

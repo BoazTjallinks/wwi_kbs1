@@ -1,0 +1,150 @@
+/*-------------------------------BEGIN CSS VOOR DE PRODUCTPAGINA----------------------------------*/
+/*TESTEN VAN ZOVEELSTE PUSH*/
+.carousel-indicators {
+    background-color: rgba(60,150,255,0.4);
+  }
+  
+  #add-button-desktop {
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  
+  #column-badge-stock-desktop { /*-----BAGDE*/
+    width: 100%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+  }
+  
+  #price-desktop {
+    padding-top: 2%;
+    padding-bottom: 1%;
+  }
+  
+  /*#breadcrumb-desktop{
+    background-color: #007bff;
+  }*/
+  
+  #cooling-desktop {
+    padding-top: 1%;
+    margin: 3%;
+  }
+  
+  #title-product-desktop {
+    position: inherit;
+    margin: 2%;
+  }
+  
+  #beschrijving-desktop {
+    margin-top: 2%;
+    margin-left: 5%;
+  }
+  
+   #badge-desktop {       /*-----BADGE*/
+    padding: 1%;
+    font-size: medium;
+    margin: 0.5%;
+    width: 70%;
+    position: inherit;
+    left: 15%;
+    right: 15%;
+  }
+
+  #sold-out-button-desktop{
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: white;
+    font-size: large;
+    color: #ff3c00; /* ff3c00 */
+    border-style: solid;
+    display: block;
+    border-color: #e45124;
+  }
+
+  #sold-out-button-mobile{
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: white;
+    font-size: large;
+    color: #ff3c00; /* ff3c00 */
+    border-style: solid;
+    display: block;
+    border-color: #e45124;
+
+  }
+
+  #add-button-mobile {
+    width: 100%;
+    position: inherit;
+    /* left: 2.5%; */
+    margin: 1%;
+  }
+  
+  #price-mobile {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+
+  #number-input-mobile {
+    width: 15%;
+    margin-top: 3%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  
+  #beschrijving-mobile {
+    margin-top: 3%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 3%;
+    padding-right: 2%;
+  }
+  
+  #color-button-mobile {
+    width: 100%;
+    margin-top: 3%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    margin-left: 1%;
+  }
+  
+  #id-column-cooling-mobile {
+    margin-top: 5%;
+    margin-left: 2%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+  }
+  
+  #stock-mobile {
+    width: 100%;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+  }
+  
+  #column-badge-stock-mobile { /*-----BAGDE*/
+    width: 100%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+  }
+
+  #badge-mobile {   /*-----BAGDE*/
+    padding: 1%;
+    margin: 1%;
+    font-size: small;
+    width: 80%;
+    position: inherit;
+    left: 10%;
+    /* background-color: orange; */
+  }
+  
+  
+  /*-------------------------------EINDE CSS VOOR DE PRODUCTPAGINA----------------------------------*/
+
+  
