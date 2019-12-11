@@ -84,8 +84,13 @@ $size = $_SESSION['size'];
 
 
 $sessionOptions = $function->getOptions();
+$stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$cat]);
 $stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ?', [$cat, $limit]);
 
+
+/*Pagination*/
+$maxPages = ceil(count($stockAllCategories) / $limit);
+$maxPages = 100;
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
     $getcolor = [];
@@ -121,6 +126,63 @@ if ($size !== $function->getDefaultnr('size')) {
     $stockCategories = $getSize;
     print_r(count($stockCategories));
 }
+
+for ($i=0; $i < count($stockCategories); $i++) { 
+    print_r($stockCategories[$i]['StockItemName']);
+    echo '</br>';
+}
+
+$pagemin = $page - 1;
+$mpagemin = $maxPages - 1;
+$mpageminmin = $maxPages - 2;
+$mpageminminmin = $maxPages - 3;
+$pageplus = $page + 1;
+$pageplusplus = $page + 2;
+$pageplusplusplus = $page + 3;
+
+if($maxPages <= 1){
+    echo 'Disabled';
+}
+elseif($maxPages >= 2){
+    if($page <= 3){
+    echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$pageplus' class='button'>$pageplus</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$pageplusplus' class='button'>$pageplusplus</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$pageplusplusplus' class='button'>$pageplusplusplus</a>";
+    echo "</br>";
+    echo "...";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+    if ($page >= 4 AND $page <= $maxPages-2){
+        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+        echo "...";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemin' class='button'>$pagemin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$page' class='button'>$page</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pageplus' class='button'>$pageplus</a>";
+        echo "</br>";
+        echo "...";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+    if($page >= $maxPages - 3){
+        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+        echo "...";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpageminminmin' class='button'>$mpageminminmin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpageminmin' class='button'>$mpageminmin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemin' class='button'>$mpagemin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+}
+
 
 print_r(count($stockCategories));
 $database->closeConnection();
