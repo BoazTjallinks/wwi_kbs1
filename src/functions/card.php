@@ -7,7 +7,7 @@
 function showItem($productId, $productImage, $productName, $productSpecial, $productDescription, $productPrice) {
 
     // Product Image
-    echo '<div class="col-xl-4"><div class="card wwi_prdcts_card wwi_mat_3"><div class="card-body"><figure class="figure wwi_prdcts_imgcenter"><img class="img-fluid figure-img wwi_prdcts_imgsize" src="'.$productImage.'"></figure>';
+    echo '<div class="col-xl-4"><div class="card wwi_prdcts_card wwi_mat_3"><div class="card-body d-flex flex-column"><figure class="figure wwi_prdcts_imgcenter"><img class="img-fluid figure-img d-xl-flex wwi-itemimg wwi-center" src="'.$productImage.'"></figure>';
     // Product Name
     echo '<h4 class="card-title">'.$productName.'</h4>';
     // Product Special
