@@ -11,19 +11,20 @@ if (!is_numeric($id)) {
 }
 
 $database = new database();
-//$result = $database->getStockItemspurchaseOrderlines($id);
+$result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;",[$id]);
 
-while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+
+
     $soldOut = false;
 
-    $stockItemID = $row["StockItemID"];
-    $stockItemName = $row["StockItemName"];
-    $recomretprice  = $row["RecommendedRetailPrice"];
-    $description = $row["Description"];
+    $stockItemID = $result[0]["StockItemID"];
+    $stockItemName = $result[0]["StockItemName"];
+    $recomretprice  = $result[0]["RecommendedRetailPrice"];
+    $description = $result[0]["Description"];
     $video = "<iframe width=\"560\" height=\"315\" src=\"https:'//'www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=42\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
-    #$video = $row["[HIER DE ROUTE NAAR DE VIDEO]"];
+    #$video = $result[0]["[HIER DE ROUTE NAAR DE VIDEO]"];
     
-    $GetStockItemHolding = $row["QuantityOnHand"];
+    $GetStockItemHolding = $result[0]["QuantityOnHand"];
     //zorgt ervoor dat er verschillende kleuren worden gebruikt bij een X hoeveelheid stockitems
     if($GetStockItemHolding > 15){
         $stockItemHolding = "Enough in stock for you to order!";
@@ -44,12 +45,12 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
     #$database = new database();
     
 
-    $photoPath = "../public/img/id".$id.".png";
+    $photoPath = "../../public/img/products/id".$id.".png";
 
     if(file_exists($photoPath)){                                    
         $photo = $photoPath;
     }else{
-        $photo = "../public/img/no-image.png";
+        $photo = "../../public/img/products/no-image.png";
     }
     //checkt of er een bestand bestaat op de plek van $photoPath
     //if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
@@ -62,11 +63,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         <div class="container d-lg-none">
             <div class="row">
                 <div class="col">
-                    <ol class="breadcrumb">
+                    <!-- <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
                         <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
                         <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
-                    </ol>
+                    </ol> -->
                     <h1><?php print($stockItemName); ?></h1>
                 </div>
             </div>
@@ -101,8 +102,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                         <div class="col" id="id-column-cooling-mobile"><small>Cooled or not</small></div>
                     </div>
                     <div class="row">
-                        <div class="col" id="column-badge-stock-mobile"><span class="badge badge-primary" id="badge-mobile" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span><small id="stock-mobile">ffff</small></div>
-                        
+                        <div class="col" id="column-badge-stock-mobile"><span class="badge badge-primary" id="badge-mobile" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span><small id="stock-mobile"></small></div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -146,32 +146,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                             
                             $resultgetPicture = $database->getPictures($stockItemID);
                             $nieuwvar = mysqli_fetch_array($resultgetPicture, MYSQLI_ASSOC);
-                            while ($row = mysqli_fetch_array($resultgetPicture, MYSQLI_ASSOC)) {
+                            while ($result[0] = mysqli_fetch_array($resultgetPicture, MYSQLI_ASSOC)) {
                                 
-                                $pictureID = $row['PictureID'];
-                                $imgPath = $row["ImagePath"];
+                                $pictureID = $result[0]['PictureID'];
+                                $imgPath = $result[0]["ImagePath"];
                                 
                                 $amountOfPictures = count($nieuwvar);
-                                // //print $amountOfPictures;
-                                // if($amountOfPictures > 1){
-                                //     for($i=0; $i<$amountOfPictures; $i++){
-                                        
-                                //         if(file_exists($imgPath)){                                    
-                                //             if($i==0){
-                                //                 print ("<div class=\"carousel-item active\"><img class=\"w-100 d-block\" src=\"".$imgPath."\" alt=\"Slide Image\"></div>");
-                                //             }else{
-                                //                 print ("<div class=\"carousel-item\"><img class=\"w-100 d-block\" src=\"".$imgPath."\" alt=\"Slide Image\"></div>");
-                                //             }
-                                //         }else{
-                                //             print ("<div class=\"carousel-item active\"><img class=\"w-100 d-block\" src=\"../public/img/no-image.png\" alt=\"Slide Image\"></div>");
-                                //         }
-                                //     }
-                                // }
                                 
-                                //print_r($row["PictureId"]);
-                                //foreach($rowone as $pictureId){$image = $row['ImagePath'];if(file_exists($image)){$photo = $image;}else{$photo = "../public/img/no-image.png";}}
-                                // $pictureId = $row["PictureId"];$stockItemID_Picture = $row["StockItemID"];$image = $row['ImagePath'];print($pictureId);print($image);
-                                // if(file_exists($image)){$photo = $image;}else{$photo = "../public/img/no-image.png";}
                             }
                             
                             ?>
@@ -228,7 +209,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 <?php
 //print("f");
     
-}
+
+//while ($result[0] = $result) {}
 //ends the while-loop, niet aankomen
 
 //moet nog implementeren: <h5><a href='https://www.youtube.com/?gl=NL' target='_blank'  title='Go to youtube'>link to the videos</a></h5>
