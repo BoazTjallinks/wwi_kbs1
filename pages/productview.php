@@ -5,7 +5,7 @@
  */
 
 
-$id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
+$id = $_GET['id'];
 if (!is_numeric($id)) {
     header('location: /home');
 }
@@ -139,38 +139,40 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="carousel slide" data-ride="carousel" id="carousel-1-desktop">
-                        <div class="carousel-inner" role="listbox">
-                            
-                            <?php
-                            
-                            $resultgetPicture = $database->getPictures($stockItemID);
-                            $nieuwvar = mysqli_fetch_array($resultgetPicture, MYSQLI_ASSOC);
-                            while ($result[0] = mysqli_fetch_array($resultgetPicture, MYSQLI_ASSOC)) {
-                                
-                                $pictureID = $result[0]['PictureID'];
-                                $imgPath = $result[0]["ImagePath"];
-                                
-                                $amountOfPictures = count($nieuwvar);
-                                
-                            }
-                            
-                            ?>
-                            <div class="carousel-item active"><img class="w-100 d-block" src="<?php print($photo); ?>" alt="Slide Image"></div>
-                            <div class="carousel-item" active><img class="w-100 d-block" src="<?php print($photo); ?>" alt="Slide Image"></div>
-                            <div class="carousel-item" active><img class="w-100 d-block" src="<?php print($photo); ?>" alt="Slide Image"></div>
+                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                    <!--Slides-->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <iframe class="d-block w-100 wwi_35height" src="https://www.youtube.com/embed/thGH8jYlQCc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <div><a class="carousel-control-prev" href="#carousel-1-desktop" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1-desktop"
-                                role="button" data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
-                        <ol class="carousel-indicators">
-                            
-                            <?php
-                            for ($i=0; $i < count($nieuwvar); $i++) {
-                                print("<li data-target=\"#carousel-1-desktop\" data-slide-to=\"".$i."\"></li>");
-                            }
-                            ?>
-                        </ol>
+                        <?php
+                        $allPictures = $database->DBQuery('SELECT PictureID, StockItemID, ImagePath FROM picture where StockItemId = ?', [$id]);
+                        for ($i=0; $i < count($allPictures); $i++) { 
+                            echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
+                        }
+                        ?>
                     </div>
+                    <!--/.Slides-->
+                    <!--Controls-->
+                    <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    <!--/.Controls-->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-thumb" class="active" data-slide-to="0"><img src="" width="100"></li>
+                        <?php 
+                         for ($i=0; $i < count($allPictures); $i++) { 
+                            echo '<li data-target="#carousel-thumb" data-slide-to="'.$i.'"><img src="'.$allPictures[$i]['ImagePath'].'" width="100"></li>';
+                        }
+                        ?>
+                    </ol>
+                    </div>
+                    <!--/.Carousel Wrapper-->
                 </div>
                 <div class="col-md-6">
                     <div class="row">
