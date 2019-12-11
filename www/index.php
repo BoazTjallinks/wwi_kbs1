@@ -24,6 +24,9 @@ $query = $_GET['q'];
 if ($query == '') {
     header('location: /home');
 }
+
+require_once('../src/includes/header.php');
+
 // This checks if file that get's requested exists. If not it redirects the user to a 404 page
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php')) {
     require($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php');
