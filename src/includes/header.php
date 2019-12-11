@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Wideworldimporters || <?php echo $query; ?></title>
     <meta name="theme-color" content="#4DBFF2">
-    <meta property="og:image" content="">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="public/img/wwi/favicon/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="public/img/wwi/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="193x193" href="public/img/wwi/favicon/mstile-150x150.png">
@@ -437,19 +434,19 @@
                             class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navcol-1">
                         <div class="ml-auto">
-                            <div class="input-group wwi_25width wwi_mat_3"><input class="form-control wwi_mainborder"
-                                    type="text" placeholder="e.g Blue Chair, Sofa or Post Modern">
+                            <form action="/search" method="post">
+                            <div class="input-group wwi_25width wwi_mat_3">
+                                <input class="form-control wwi_mainborder" name="Searchquery" type="text" placeholder="e.g Blue Chair, Sofa or Post Modern">
                                 <div class="input-group-append"><button
                                         class="btn wwi_mainbgcolor wwi_text_lighthover wwi_text_light wwi_text_lighthover"
                                         type="button"><i class="fas fa-search"></i></button></div>
                             </div>
+                            </form>
                         </div>
                         <ul class="nav navbar-nav ml-auto wwi_right">
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
-                                    data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
                             </li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="#"><i
-                                        class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a></li>
                         </ul>
                     </div>
                 </div>

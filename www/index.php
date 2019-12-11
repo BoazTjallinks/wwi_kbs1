@@ -35,3 +35,6 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php')) {
 else {
     require($_SERVER['DOCUMENT_ROOT'] . '/src/error/404.php');
 }
+
+require_once('../src/includes/footer.php');
+

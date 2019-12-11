@@ -5,11 +5,11 @@
  */
 
 // Checks query $_GET variable and redirects if not
-if (!isset($_GET['query'])) {
-    header('location: /search?query=');
+if (!isset($_GET['Searchquery']) && !is_numeric($_GET['Searchquery'])) {
+    header('location: /search?Searchquery=');
 }
 
-$productName = $_GET['query'];
+$productName = $_GET['Searchquery'];
 
 $database = new database();
 $result = $database->DBQuery("SELECT * FROM stockitems WHERE StockItemName LIKE CONCAT('%',?,'%') OR StockItemID LIKE CONCAT('%',?,'%') OR SearchDetails LIKE CONCAT('%',?,'%')", [$productName]);
