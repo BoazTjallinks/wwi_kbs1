@@ -84,7 +84,10 @@ $size = $_SESSION['size'];
 
 
 $sessionOptions = $function->getOptions();
+$stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$cat]);
 $stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ?', [$cat, $limit]);
+
+
 
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
@@ -121,6 +124,83 @@ if ($size !== $function->getDefaultnr('size')) {
     $stockCategories = $getSize;
     print_r(count($stockCategories));
 }
+
+for ($i=0; $i < count($stockCategories); $i++) { 
+    print_r($stockCategories[$i]['StockItemName']);
+    echo '</br>';
+}
+/*Pagination*/
+$maxPages = ceil(count($stockAllCategories) / $limit);
+$maxPages = 100;
+$minPages = 1;
+$pagemin = $page - 1;
+$pagemintwee = $page - 2;
+$pageplustwee = $page + 2;
+$mpagemin = $maxPages - 1;
+$mpagemintwee = $maxPages - 2;
+$mpagemindrie = $maxPages - 3;
+$pageplus = $page + 1;
+$mpageplus = $minPages + 1;
+$mpageplustwee = $minPages + 2;
+$mpageplusdrie = $minPages + 3;
+
+if($maxPages <= $minPages){
+    $page = 1;
+    echo 'Disabled';
+}
+elseif($page < 1){
+    $page = $minPages;
+}
+elseif($page > $maxPages){
+    $page = $maxPages;
+}
+elseif($maxPages >= 2 AND $maxPages <= 5){
+    for($i = 1; $i <= $maxPages; $i++){
+        echo "<a href='http://kbs.local/categories?catid=3&page=$i' class='button'>$i</a>";
+        echo "</br>";
+    }
+    
+}
+elseif($maxPages > 5){
+    if($page <= 3){
+    echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplus' class='button'>$mpageplus</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplustwee' class='button'>$mpageplustwee</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplusdrie' class='button'>$mpageplusdrie</a>";
+    echo "</br>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$pageplustwee' class='button'>...</a>";
+    echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+    if ($page >= 5 AND $page <= $maxPages - 3){
+        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemintwee' class='button'>...</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemin' class='button'>$pagemin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$page' class='button'>$page</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pageplus' class='button'>$pageplus</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pageplustwee' class='button'>...</a>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+    if($page >= $maxPages - 2){
+        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemintwee' class='button'>...</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemindrie' class='button'>$mpagemindrie</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemintwee' class='button'>$mpagemintwee</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemin' class='button'>$mpagemin</a>";
+        echo "</br>";
+        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    }
+}
+
 
 print('<div class="row container">');
 for ($i=0; $i < count($stockCategories); $i++) {
