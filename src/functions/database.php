@@ -35,7 +35,15 @@ class database
     {
         try {
             if (!$result || mysqli_num_rows($result) > 0) {
-                return $result;
+                
+                $returnValue = array();
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    array_push($returnValue, $row);
+                }
+
+                return $returnValue;
+
             } else {
                 return '0 results found!';
             }
