@@ -7,6 +7,11 @@
 ob_start();
 session_start();
 
+// Error logging
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 // Load Dynamic functions
 $functions = scandir('../src/functions/');
 
@@ -24,6 +29,9 @@ $query = $_GET['q'];
 if ($query == '') {
     header('location: /home');
 }
+
+require_once('../src/includes/header.php');
+
 // This checks if file that get's requested exists. If not it redirects the user to a 404 page
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php')) {
     require($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php');
@@ -32,3 +40,6 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/pages/' . $query . '.php')) {
 else {
     require($_SERVER['DOCUMENT_ROOT'] . '/src/error/404.php');
 }
+
+require_once('../src/includes/footer.php');
+
