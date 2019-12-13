@@ -1,0 +1,69 @@
+.wwi_auth_sidebar {
+  background: url(../../public/img/wwi/banner.png);
+  min-height: 50vh;
+}
+
+.wwi_auth_sidebar_bgcolr {
+  background: rgba(77,191,242,0.86);
+  height: 100%;
+  width: 100%;
+}
+
+.wwi_banner_blur_bgcolr:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  filter: blur(2rem);
+  background: rgba(0,0,0,0.31);
+}
+
+.wwi_banner_blue_bgcolr:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(77,191,242,0.82);
+}
+
+.wwi_auth_modal {
+  padding: 0;
+}
+
+.wwi_banner_img {
+  position: absolute;
+  bottom: 0rem;
+  height: 100%;
+  width: 100%;
+}
+
+.wwi_banner_img_overlay {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  text-align: center;
+}
+
+.wwi_banner_btn_overlay {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  text-align: center;
+}
+
+.wwi_banner_text_overlay {
+  position: absolute;
+  top: 4rem;
+  left: 4rem;
+}
+
+.wwi_bgsidebar {
+  background: var(--main-color);
+  min-height: 100%;
+  color: white;
+}
+
