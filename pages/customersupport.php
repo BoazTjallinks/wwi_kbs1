@@ -23,7 +23,7 @@ if(isset($_POST['submitform'])){
 ?>
 
 <html>
-<form method="POST" action="customersupport">
+<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 * = required
 </br>
 *E-mail address: <input type="email" name="emailaddress" placeholder="example@example.com" maxlength="320" required>
