@@ -12,7 +12,8 @@ if (!is_numeric($id)) {
 
 $database = new database();
 $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;",[$id]);
-
+$showTemprature = $database->DBQuery('SELECT si.stockitemid, si.stockitemname, ischillerstock,  crt.ColdRoomTemperatureID, crt.temperature FROM stockitems AS si LEFT JOIN coldroomstockitems AS crsi ON si.stockitemid = crsi.stockitemid LEFT JOIN coldroomtemperatures AS crt ON crsi.ColdRoomTemperatureID = crt.ColdRoomTemperatureID WHERE IsChillerStock = ?',[1]);
+  
 
 
     $soldOut = false;
@@ -58,7 +59,7 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
 
 ?>
 
-
+<!-- mobile responsive  --> 
 <div>
         <div class="container d-lg-none">
             <div class="row">
@@ -90,16 +91,13 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
                 </div>
             </div>
             <?php 
-$ShowTemprature = $database->DBQuery('SELECT si.stockitemid, si.stockitemname, ischillerstock,  crt.ColdRoomTemperatureID, crt.temperature FROM stockitems AS si LEFT JOIN coldroomstockitems AS crsi ON si.stockitemid = crsi.stockitemid LEFT JOIN coldroomtemperatures AS crt ON crsi.ColdRoomTemperatureID = crt.ColdRoomTemperatureID WHERE IsChillerStock = ?',[1]);
-
- 
-for ($i=0; $i < count($ShowTemprature); $i++) { 
-  if ($stockItemId == $ShowTemprature[$i]['StockItemId']) {
-    if ($ShowTemprature[1]['ischillerstock'] == 1){
-      print($ShowTemprature[$i]['temperature']. '°C' . " " . $ShowTemprature[$i]['stockitemname']); 
-     }  
-  }    
-} 
+            for ($i=0; $i < count($showTemprature); $i++) { 
+                if ($stockItemID == $showTemprature[$i]['stockitemid']) {
+                  if ($showTemprature[1]['ischillerstock'] == 1){
+                    print("<p>" . "Dit product is nu: " . $showTemprature[$i]['temperature']. '°C' . "</p>" ); 
+                    } 
+                  } 
+                }   
             ?>
             <div class="row">
                 <div class="col-md-6">
@@ -137,7 +135,7 @@ for ($i=0; $i < count($ShowTemprature); $i++) {
                 </div>
             </div>
         </div>
-        <?php ?>
+        <!-- pc Browser --> 
         <div class="container d-none d-lg-block">
             <div class="row">
                 <div class="col">
@@ -191,7 +189,19 @@ for ($i=0; $i < count($ShowTemprature); $i++) {
                         <div class="col">
                             <h1 id="price-desktop"><?php print("€".$recomretprice); ?></h1>
                         </div>
-                        <div class="col" id="cooling-desktop"><small>Cooled or not</small></div>
+                        <div class="col" id="cooling-desktop"><small>
+                            <?php
+                            for ($i=0; $i < count($showTemprature); $i++) { 
+                                if ($stockItemID == $showTemprature[$i]['stockitemid']) {
+                                  if ($showTemprature[1]['ischillerstock'] == 1){
+                                    print("<h6 >" . "Dit product is nu: " .  $showTemprature[$i]['temperature']. '°C' . "</h6>"); 
+                                    } 
+                                  } 
+                                }  
+
+                            ?>
+                            
+                        </small></div>
                     </div>
                     <div class="row">
                         <div class="col" id="column-badge-stock-desktop"><span class="badge badge-primary" id="badge-desktop" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span></div>
