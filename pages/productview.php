@@ -13,48 +13,54 @@ if (!is_numeric($id)) {
 $database = new database();
 $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;",[$id]);
 
+/* -------------------------Begin limitatie url-hacken -------------------------------------------------- */
+$aantalstockitemsquery = $database->DBQuery("SELECT COUNT(?) AS counted FROM stockitems;",["StockItemID"]);
+$aantalstockitems = $aantalstockitemsquery[0]["counted"];
+if (($id > $aantalstockitems) || ($id == 0)){
+    header('location: /home');
+}
+/* -------------------------Eind limitatie url-hacken --------------------------------------------------- */
+
+$soldOut = false;
+
+$stockItemID = $result[0]["StockItemID"];
+$stockItemName = $result[0]["StockItemName"];
+$recomretprice  = $result[0]["RecommendedRetailPrice"];
+$description = $result[0]["Description"];
+$video = "<iframe width=\"560\" height=\"315\" src=\"https:'//'www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=42\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+#$video = $result[0]["[HIER DE ROUTE NAAR DE VIDEO]"];
+
+$GetStockItemHolding = $result[0]["QuantityOnHand"];
+//zorgt ervoor dat er verschillende kleuren worden gebruikt bij een X hoeveelheid stockitems
+if($GetStockItemHolding > 15){
+    $stockItemHolding = "Enough in stock for you to order!";
+    $styleColor = "style=\"\"";
+}elseif(($GetStockItemHolding <= 15) AND ($GetStockItemHolding > 5)){
+    $stockItemHolding = "Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
+    $styleColor = "style=\"background-color: orange;\"";
+}elseif(($GetStockItemHolding <= 5) AND ($GetStockItemHolding >0)){
+    $stockItemHolding = "Nearly sold out! Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
+    $styleColor = "style=\"background-color: red;\"";
+}else{
+    $stockItemHolding = "Out of stock!";
+    $styleColor = "style=\"background-color: grey;\"";
+    $soldOut = true;
+}
 
 
-    $soldOut = false;
-
-    $stockItemID = $result[0]["StockItemID"];
-    $stockItemName = $result[0]["StockItemName"];
-    $recomretprice  = $result[0]["RecommendedRetailPrice"];
-    $description = $result[0]["Description"];
-    $video = "<iframe width=\"560\" height=\"315\" src=\"https:'//'www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=42\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
-    #$video = $result[0]["[HIER DE ROUTE NAAR DE VIDEO]"];
-    
-    $GetStockItemHolding = $result[0]["QuantityOnHand"];
-    //zorgt ervoor dat er verschillende kleuren worden gebruikt bij een X hoeveelheid stockitems
-    if($GetStockItemHolding > 15){
-        $stockItemHolding = "Enough in stock for you to order!";
-        $styleColor = "style=\"\"";
-    }elseif(($GetStockItemHolding <= 15) AND ($GetStockItemHolding > 5)){
-        $stockItemHolding = "Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
-        $styleColor = "style=\"background-color: orange;\"";
-    }elseif(($GetStockItemHolding <= 5) AND ($GetStockItemHolding >0)){
-        $stockItemHolding = "Nearly sold out! Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
-        $styleColor = "style=\"background-color: red;\"";
-    }else{
-        $stockItemHolding = "Out of stock!";
-        $styleColor = "style=\"background-color: grey;\"";
-        $soldOut = true;
-    }
+#$database = new database();
 
 
-    #$database = new database();
-    
+$photoPath = "../../public/img/products/id".$id.".png";
 
-    $photoPath = "../../public/img/products/id".$id.".png";
+if(file_exists($photoPath)){                                    
+    $photo = $photoPath;
+}else{
+    $photo = "../../public/img/products/no-image.png";
+}
+//checkt of er een bestand bestaat op de plek van $photoPath
+//if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
 
-    if(file_exists($photoPath)){                                    
-        $photo = $photoPath;
-    }else{
-        $photo = "../../public/img/products/no-image.png";
-    }
-    //checkt of er een bestand bestaat op de plek van $photoPath
-    //if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
-    
 
 ?>
 
