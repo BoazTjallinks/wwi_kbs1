@@ -13,14 +13,18 @@ if (!is_numeric($id)) {
 $database = new database();
 $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;",[$id]);
 $showTemprature = $database->DBQuery('SELECT si.stockitemid, si.stockitemname, ischillerstock,  crt.ColdRoomTemperatureID, crt.temperature FROM stockitems AS si LEFT JOIN coldroomstockitems AS crsi ON si.stockitemid = crsi.stockitemid LEFT JOIN coldroomtemperatures AS crt ON crsi.ColdRoomTemperatureID = crt.ColdRoomTemperatureID WHERE IsChillerStock = ?',[1]);
-  
+
 
 /* -------------------------Begin limitatie url-hacken -------------------------------------------------- */
+
+
 $aantalstockitemsquery = $database->DBQuery("SELECT COUNT(?) AS counted FROM stockitems;",["StockItemID"]);
 $aantalstockitems = $aantalstockitemsquery[0]["counted"];
-if (($id > $aantalstockitems) || ($id == 0)){
+if (($id > $aantalstockitems) || ($id <= 0)){
     header('location: /home');
 }
+
+
 /* -------------------------Eind limitatie url-hacken --------------------------------------------------- */
 
 $soldOut = false;
