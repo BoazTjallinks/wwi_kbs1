@@ -12,53 +12,63 @@ if (!is_numeric($id)) {
 
 $database = new database();
 $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;",[$id]);
+$showTemprature = $database->DBQuery('SELECT si.stockitemid, si.stockitemname, ischillerstock,  crt.ColdRoomTemperatureID, crt.temperature FROM stockitems AS si LEFT JOIN coldroomstockitems AS crsi ON si.stockitemid = crsi.stockitemid LEFT JOIN coldroomtemperatures AS crt ON crsi.ColdRoomTemperatureID = crt.ColdRoomTemperatureID WHERE IsChillerStock = ?',[1]);
 
 
-
-    $soldOut = false;
-
-    $stockItemID = $result[0]["StockItemID"];
-    $stockItemName = $result[0]["StockItemName"];
-    $recomretprice  = $result[0]["RecommendedRetailPrice"];
-    $description = $result[0]["Description"];
-    $video = "<iframe width=\"560\" height=\"315\" src=\"https:'//'www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=42\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
-    #$video = $result[0]["[HIER DE ROUTE NAAR DE VIDEO]"];
-    
-    $GetStockItemHolding = $result[0]["QuantityOnHand"];
-    //zorgt ervoor dat er verschillende kleuren worden gebruikt bij een X hoeveelheid stockitems
-    if($GetStockItemHolding > 15){
-        $stockItemHolding = "Enough in stock for you to order!";
-        $styleColor = "style=\"\"";
-    }elseif(($GetStockItemHolding <= 15) AND ($GetStockItemHolding > 5)){
-        $stockItemHolding = "Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
-        $styleColor = "style=\"background-color: orange;\"";
-    }elseif(($GetStockItemHolding <= 5) AND ($GetStockItemHolding >0)){
-        $stockItemHolding = "Nearly sold out! Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
-        $styleColor = "style=\"background-color: red;\"";
-    }else{
-        $stockItemHolding = "Out of stock!";
-        $styleColor = "style=\"background-color: grey;\"";
-        $soldOut = true;
-    }
+/* -------------------------Begin limitatie url-hacken -------------------------------------------------- */
 
 
-    #$database = new database();
-    
+$aantalstockitemsquery = $database->DBQuery("SELECT COUNT(?) AS counted FROM stockitems;",["StockItemID"]);
+$aantalstockitems = $aantalstockitemsquery[0]["counted"];
+if (($id > $aantalstockitems) || ($id <= 0)){
+    header('location: /home');
+}
 
-    $photoPath = "../../public/img/products/id".$id.".png";
 
-    if(file_exists($photoPath)){                                    
-        $photo = $photoPath;
-    }else{
-        $photo = "../../public/img/products/no-image.png";
-    }
-    //checkt of er een bestand bestaat op de plek van $photoPath
-    //if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
-    
+/* -------------------------Eind limitatie url-hacken --------------------------------------------------- */
+
+$soldOut = false;
+$stockItemID = $result[0]["StockItemID"];
+$stockItemName = $result[0]["StockItemName"];
+$recomretprice  = $result[0]["RecommendedRetailPrice"];
+$description = $result[0]["Description"];
+$video = "<iframe width=\"560\" height=\"315\" src=\"https:'//'www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=42\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+
+$GetStockItemHolding = $result[0]["QuantityOnHand"];
+//zorgt ervoor dat er verschillende kleuren worden gebruikt bij een X hoeveelheid stockitems
+if($GetStockItemHolding > 15){
+    $stockItemHolding = "Enough in stock for you to order!";
+    $styleColor = "style=\"\"";
+}elseif(($GetStockItemHolding <= 15) AND ($GetStockItemHolding > 5)){
+    $stockItemHolding = "Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
+    $styleColor = "style=\"background-color: orange;\"";
+}elseif(($GetStockItemHolding <= 5) AND ($GetStockItemHolding >0)){
+    $stockItemHolding = "Nearly sold out! Only <strong>".$GetStockItemHolding."</strong> left! Order Now!";
+    $styleColor = "style=\"background-color: red;\"";
+}else{
+    $stockItemHolding = "Out of stock!";
+    $styleColor = "style=\"background-color: grey;\"";
+    $soldOut = true;
+}
+
+
+#$database = new database();
+
+
+$photoPath = "../../public/img/products/id".$id.".png";
+
+if(file_exists($photoPath)){                                    
+    $photo = $photoPath;
+}else{
+    $photo = "../../public/img/products/no-image.png";
+}
+//checkt of er een bestand bestaat op de plek van $photoPath
+//if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
+
 
 ?>
 
-
+<!-- mobile responsive  --> 
 <div>
         <div class="container d-lg-none">
             <div class="row">
@@ -89,6 +99,15 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
                     </div>
                 </div>
             </div>
+            <?php 
+            for ($i=0; $i < count($showTemprature); $i++) { 
+                if ($stockItemID == $showTemprature[$i]['stockitemid']) {
+                  if ($showTemprature[1]['ischillerstock'] == 1){
+                    print("<p>" . "Dit product is nu: " . $showTemprature[$i]['temperature']. '°C' . "</p>" ); 
+                    } 
+                  } 
+                }   
+            ?>
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">
@@ -125,7 +144,7 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
                 </div>
             </div>
         </div>
-        <?php ?>
+        <!-- pc Browser --> 
         <div class="container d-none d-lg-block">
             <div class="row">
                 <div class="col">
@@ -147,8 +166,14 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
                         </div>
                         <?php
                         $allPictures = $database->DBQuery('SELECT PictureID, StockItemID, ImagePath FROM picture where StockItemId = ?', [$id]);
+                        $stockItemIDpicture = $allPictures["StockItemID"];
                         for ($i=0; $i < count($allPictures); $i++) { 
-                            echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
+                            if($stockItemID == $stockItemIDpicture){
+                                echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
+                            }else{
+                                echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="../public/img/products/no-image.png"></div>';
+
+                            }
                         }
                         ?>
                     </div>
@@ -179,7 +204,19 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
                         <div class="col">
                             <h1 id="price-desktop"><?php print("€".$recomretprice); ?></h1>
                         </div>
-                        <div class="col" id="cooling-desktop"><small>Cooled or not</small></div>
+                        <div class="col" id="cooling-desktop"><small>
+                            <?php
+                            for ($i=0; $i < count($showTemprature); $i++) { 
+                                if ($stockItemID == $showTemprature[$i]['stockitemid']) {
+                                  if ($showTemprature[1]['ischillerstock'] == 1){
+                                    print("<h6 >" . "Dit product is nu: " .  $showTemprature[$i]['temperature']. '°C' . "</h6>"); 
+                                    } 
+                                  } 
+                                }  
+
+                            ?>
+                            
+                        </small></div>
                     </div>
                     <div class="row">
                         <div class="col" id="column-badge-stock-desktop"><span class="badge badge-primary" id="badge-desktop" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span></div>
@@ -209,6 +246,8 @@ $result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.
 
 
 <?php
+
+
 //print("f");
     
 
