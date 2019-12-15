@@ -19,3 +19,22 @@ function showItem($productId, $productImage, $productName, $productSpecial, $pro
     // Product Price
     echo '<div class="col"><h3 class="wwi_text_right">€'.$productPrice.'<br></h3></div></div></div></div></div>';
 }
+
+function showInput(int $amount, array $inputName, array $inputId, array $inputTitle, array $inputType, array $formClass, array $inputPlaceholder, array $inputClass) {
+    for ($i=0; $i < $amount; $i++) { 
+        echo '<div class="form-group '.$formClass[$i].'">';
+            echo '<label for="'.$inputId[$i].'">'.$inputTitle[$i].'</label>';
+            echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'">';
+        echo '</div>';
+    }
+}
+
+function showSwall($title, $text, $icon, $redirect) {
+    // return '<script> showSwall('.$title.', '.$text.', '.$icon.', '.$redirect.'); </script>';
+
+    return '<script> swal({ title: '.$title.', text: '.$text.', icon: '.$icon.', }).then(function(){ 
+        location.replace('.$redirect.');
+        }
+     ); </script>';
+
+} 
