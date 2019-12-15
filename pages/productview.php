@@ -162,8 +162,14 @@ if(file_exists($photoPath)){
                         </div>
                         <?php
                         $allPictures = $database->DBQuery('SELECT PictureID, StockItemID, ImagePath FROM picture where StockItemId = ?', [$id]);
+                        $stockItemIDpicture = $allPictures["StockItemID"];
                         for ($i=0; $i < count($allPictures); $i++) { 
-                            echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
+                            if($stockItemID == $stockItemIDpicture){
+                                echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
+                            }else{
+                                echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="../public/img/products/no-image.png"></div>';
+
+                            }
                         }
                         ?>
                     </div>
