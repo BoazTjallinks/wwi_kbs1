@@ -151,3 +151,8 @@ a, a:hover, a:focus {
   filter: blur(0.125rem);
 }
 
+.wwi-itemimg {
+  height: 15vh!important;
+  width: 90%;
+}
+
