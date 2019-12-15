@@ -19,10 +19,10 @@ class cat {
     public function setFilter($size) {
         $this->defaultvalue = [
             25,
-            0,
+            "nAn",
             $size[0]['MIN(RecommendedRetailPrice)'],
             $size[0]['MAX(RecommendedRetailPrice)'],
-            "na"
+            "nAn"
         ];
     }
     
