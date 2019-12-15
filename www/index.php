@@ -15,7 +15,7 @@ session_start();
 // Load Dynamic functions
 $functions = scandir('../src/functions/');
 
--
+
 // Sanitizes everything
 
 
