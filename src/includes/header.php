@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="public/css/wwi_global_items.css">
     <link rel="stylesheet" href="public/css/wwi_global.css">
     <link rel="stylesheet" href="public/css/wwi_home.css">
-    <link rel="stylesheet" href="public/css/wwi_product.css">
+	<link rel="stylesheet" href="public/css/wwi_product.css">
+	<link rel="stylesheet" href="public/css/styles.css">
 </head>
 
 <body>
