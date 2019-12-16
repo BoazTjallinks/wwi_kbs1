@@ -8,12 +8,15 @@
     width: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
+    background-color: #4DBFF2;
+    border-color: #4DBFF2;
   }
   
   #column-badge-stock-desktop { /*-----BAGDE*/
     width: 100%;
     padding-bottom: 1%;
     padding-top: 1%;
+    
   }
   
   #price-desktop {
@@ -48,6 +51,7 @@
     position: inherit;
     left: 15%;
     right: 15%;
+    background-color: #4DBFF2
   }
 
   #sold-out-button-desktop{
@@ -60,6 +64,26 @@
     border-style: solid;
     display: block;
     border-color: #e45124;
+  }
+
+  #go-back-desktop {
+    width: 12%;
+    position: inherit;
+    padding: 0.05%;
+    margin: 1%;
+    background-color: #4DBFF2;
+    border-color: #4DBFF2;
+  }
+
+  #go-back-mobile {
+    width: 40%;
+    position: inherit;
+    /* left: 2.5%; */
+    padding: 0.05%;
+    margin: 1%;
+    margin-top: 2.5%;
+    background-color: #4DBFF2;
+    border-color: #4DBFF2;
   }
 
   #sold-out-button-mobile{
@@ -80,6 +104,8 @@
     position: inherit;
     /* left: 2.5%; */
     margin: 1%;
+    background-color: #4DBFF2;
+    border-color: #4DBFF2;
   }
   
   #price-mobile {
@@ -142,6 +168,7 @@
     position: inherit;
     left: 10%;
     /* background-color: orange; */
+    background-color: #4DBFF2
   }
   
   

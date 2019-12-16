@@ -27,7 +27,7 @@ if (($id > $aantalstockitems) || ($id <= 0)){
 
 /* -------------------------Eind limitatie url-hacken --------------------------------------------------- */
 
-$soldOut = false;
+$soldOut = False;
 $stockItemID = $result[0]["StockItemID"];
 $stockItemName = $result[0]["StockItemName"];
 $recomretprice  = $result[0]["RecommendedRetailPrice"];
@@ -51,6 +51,8 @@ if($GetStockItemHolding > 15){
     $soldOut = true;
 }
 
+$expectedProductDelivery = 
+
 
 #$database = new database();
 
@@ -73,17 +75,13 @@ if(file_exists($photoPath)){
         <div class="container d-lg-none">
             <div class="row">
                 <div class="col">
-                    <!-- <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
-                        <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
-                        <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
-                    </ol> -->
+                <script>document.write('<a href="' + document.referrer + '"><button type="button" id="go-back-mobile" class="btn btn-primary">< Go back</button></a>');</script>
                     <h1><?php print($stockItemName); ?></h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                    <div class="carousel slide" data-interval="false" id="carousel-1">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active"><img class="w-100 d-block" src="<?php print($photo); ?>" alt="<?php print($stockItemName); ?>"></div>
                             <!-- <div class="carousel-item"><img class="w-100 d-block" <?php #print($photo); ?> alt="Slide Image"></div>
@@ -118,7 +116,19 @@ if(file_exists($photoPath)){
                                 </div>
                             </div>
                         </div>
-                        <div class="col" id="id-column-cooling-mobile"><small>Cooled or not</small></div>
+                        <div class="col" id="id-column-cooling-mobile"><small>
+                        <?php
+                            for ($i=0; $i < count($showTemprature); $i++) { 
+                                if ($stockItemID == $showTemprature[$i]['stockitemid']) {
+                                  if ($showTemprature[1]['ischillerstock'] == 1){
+                                    print("<h6 >" . "Dit product is nu: " .  $showTemprature[$i]['temperature']. '°C' . "</h6>"); 
+                                    } 
+                                  } 
+                                }  
+
+                            ?>
+                        </small>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col" id="column-badge-stock-mobile"><span class="badge badge-primary" id="badge-mobile" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span><small id="stock-mobile"></small></div>
@@ -134,6 +144,16 @@ if(file_exists($photoPath)){
                     }
                     ?>
                     </div>
+                    <div class = "row">
+                    <?php
+                    If($soldOut == TRUE){
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
+                    }else{
+                        print("<h6><div class=\"col\">Expected delivery time: 3 Days </div></h6>");
+                    }
+                    ?>
+                    </div>
+                </div>
                 </div>
                 <div class="col">
                     <div class="row">
@@ -148,17 +168,13 @@ if(file_exists($photoPath)){
         <div class="container d-none d-lg-block">
             <div class="row">
                 <div class="col">
-                <!-- <ol class="breadcrumb" id="breadcrumb-desktop">
-                        <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
-                        <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
-                        <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
-                    </ol> -->
+                <script>document.write('<a href="' + document.referrer + '"><button type="button" id="go-back-desktop" class="btn btn-primary">< Go back</button></a>');</script>
                     <h1 id="title-product-desktop"><?php print($stockItemName); ?></h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-interval="false">
                     <!--Slides-->
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
@@ -227,6 +243,15 @@ if(file_exists($photoPath)){
                         print("<div class=\"col\"><button class=\"btn btn-primary\" id=\"add-button-desktop\" type=\"button\">Add to shopping cart</button></div>");
                     }else{
                         print("<div class=\"col\"><span class=\"badge badge-primary\" id=\"sold-out-button-desktop\">This product is sold out</span></div>");
+                    }
+                    ?>
+                    </div>
+                    <div class = "row">
+                    <?php
+                    If($soldOut == TRUE){
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
+                    }else{
+                        print("<h6><div class=\"col\">Expected delivery time: 3 Days</div></h6>");
                     }
                     ?>
                     </div>
