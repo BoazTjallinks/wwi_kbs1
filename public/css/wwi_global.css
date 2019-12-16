@@ -151,3 +151,17 @@ a, a:hover, a:focus {
   filter: blur(0.125rem);
 }
 
+.wwi-itemimg {
+  height: 15vh!important;
+  width: 90%;
+}
+
+.wwi_login_h0n3y {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
