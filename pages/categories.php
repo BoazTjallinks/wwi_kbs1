@@ -131,7 +131,6 @@ for ($i=0; $i < count($stockCategories); $i++) {
 }
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
-$maxPages = 100;
 $minPages = 1;
 $pagemin = $page - 1;
 $pagemintwee = $page - 2;
