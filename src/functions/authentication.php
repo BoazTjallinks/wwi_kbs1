@@ -39,9 +39,10 @@ class auth
         $this->password = hashString($password);
         
         $checklogin = $this->db->DBQuery('SELECT * FROM webCustomer WHERE wCustomerEmail = ? AND wCustomerPassword = ?', [$this->username, $this->password]);
+        print_r($checklogin);
 
         if ($checklogin == '0 results found!') {
-            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password]);        
+            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password, '1']);        
 
             if ($regist == '0 results found!') {      
                 return showSwall('Something went wrong!', "Can not register.", "error", "");

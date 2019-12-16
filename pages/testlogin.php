@@ -26,3 +26,6 @@
             <button class="btn btn-primary btn-block btn-lg btn-signin wwi_maincolour" style="font-family:Roboto, sans-serif;font-size:16px;font-weight:normal;font-style:normal;" type="submit">Register</button>
         </div>
 </form>
+
+<?php
+echo showSwall('Something went wrong!', "Can not register.", "error", "");
