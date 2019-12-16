@@ -149,10 +149,10 @@ if($maxPages <= $minPages){
     echo 'Disabled';
 }
 elseif($page < 1){
-    $page = $minPages;
+    header('Location: /home');
 }
 elseif($page > $maxPages){
-    $page = $maxPages;
+    header('Location: /home');
 }
 elseif($maxPages >= 2 AND $maxPages <= 5){
     for($i = 1; $i <= $maxPages; $i++){
