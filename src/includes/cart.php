@@ -32,7 +32,11 @@ if(isset($_POST['stockItemID'])){
 
             <!-- Modal body -->
             <div class="modal-body">
-                Modal body..
+                <?php
+                $database = new database();
+                $selectStockItem= $database->DBquery("SELECT * FROM StockItems WHERE StockItemID = ?",[$id]);
+                $database->closeConnection();?>
+               
             </div>
         </div>
     </div>
