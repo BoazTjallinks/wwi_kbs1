@@ -163,41 +163,41 @@ elseif($maxPages >= 2 AND $maxPages <= 5){
 }
 elseif($maxPages > 5){
     if($page <= 3){
-    echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
     echo "</br>";
-    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplus' class='button'>$mpageplus</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplus' class='button'>$mpageplus</a>";
     echo "</br>";
-    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplustwee' class='button'>$mpageplustwee</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplustwee' class='button'>$mpageplustwee</a>";
     echo "</br>";
-    echo "<a href='http://kbs.local/categories?catid=3&page=$mpageplusdrie' class='button'>$mpageplusdrie</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplusdrie' class='button'>$mpageplusdrie</a>";
     echo "</br>";
-    echo "<a href='http://kbs.local/categories?catid=3&page=$pageplustwee' class='button'>...</a>";
-    echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplustwee' class='button'>...</a>";
+    echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
     if ($page >= 5 AND $page <= $maxPages - 3){
-        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemintwee' class='button'>...</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pagemintwee' class='button'>...</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemin' class='button'>$pagemin</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pagemin' class='button'>$pagemin</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$page' class='button'>$page</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$page' class='button'>$page</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$pageplus' class='button'>$pageplus</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplus' class='button'>$pageplus</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$pageplustwee' class='button'>...</a>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplustwee' class='button'>...</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
     if($page >= $maxPages - 2){
-        echo "<a href='http://kbs.local/categories?catid=3&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$pagemintwee' class='button'>...</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pagemintwee' class='button'>...</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemindrie' class='button'>$mpagemindrie</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpagemindrie' class='button'>$mpagemindrie</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemintwee' class='button'>$mpagemintwee</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpagemintwee' class='button'>$mpagemintwee</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$mpagemin' class='button'>$mpagemin</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpagemin' class='button'>$mpagemin</a>";
         echo "</br>";
-        echo "<a href='http://kbs.local/categories?catid=3&page=$maxPages' class='button'>$maxPages</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
 }
 
