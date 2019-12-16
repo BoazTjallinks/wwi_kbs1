@@ -25,6 +25,7 @@ if(isset($_POST['submitform'])){
     }else
     echo "You can't submit the same form twice";
 }
+$database->closeConnection();
 ?>
 
 <html>
