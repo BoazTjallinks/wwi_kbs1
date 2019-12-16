@@ -148,11 +148,11 @@ if(file_exists($photoPath)){
         <div class="container d-none d-lg-block">
             <div class="row">
                 <div class="col">
-                <ol class="breadcrumb" id="breadcrumb-desktop">
+                <!-- <ol class="breadcrumb" id="breadcrumb-desktop">
                         <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
                         <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
                         <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
-                    </ol>
+                    </ol> -->
                     <h1 id="title-product-desktop"><?php print($stockItemName); ?></h1>
                 </div>
             </div>
@@ -166,7 +166,7 @@ if(file_exists($photoPath)){
                         </div>
                         <?php
                         $allPictures = $database->DBQuery('SELECT PictureID, StockItemID, ImagePath FROM picture where StockItemId = ?', [$id]);
-                        $stockItemIDpicture = $allPictures["StockItemID"];
+                        $stockItemIDpicture = $allPictures[0]["StockItemID"];
                         for ($i=0; $i < count($allPictures); $i++) { 
                             if($stockItemID == $stockItemIDpicture){
                                 echo '<div class="carousel-item"><img class="d-block w-100 wwi_35height" src="'.$allPictures[$i]['ImagePath'].'"></div>';
