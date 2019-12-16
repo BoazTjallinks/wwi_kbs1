@@ -8,48 +8,77 @@
 
 $database = new database();
 
-//ff
+// Laad Discounted product zien op home pagina (unfinished) 
 
-// Laad Discounted product zien op home pagina (untested) 
+
 
 $DiscountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SI.StockItemID, SI.UnitPrice FROM specialdeals AS SD JOIN stockitems AS SI ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StockItemName != ?",[0]);
 
+/*
+
+//berekent de prijs met korting
+$discountPrice= $row['SI.UnitPrice'] - $row['DiscountAmount'];
+
+// Calculates the remaining time of the deal duration //
+
+$dealDayRemaining=round((($dealTime/24)/60)/60);
+$dealTime =($row['EndDate'] - date('Y-m-d'));
+print($dealTime);
+
+*/
+
+// (unfinished laad korting producten nog niet in) 
 if($DiscountedItems == 0){
     print("<ul>");
     print('<li> new items soon </li>');
     print('<li> new items soon </li>');    
     print('<li> new items soon </li>');
-    print('<li> new items soon </li>');    
+    print('<li> new items soon </li>');
+    print('<li> new items soon </li>');
+    print('<li> new items soon </li>');        
     print("</ul>");
 }else{ 
-    for ($z=0; $z < count($DiscountedItems); $z++){
-    print($DiscountedItems[$z]['StockItemName']);
-    }
+    for ($z=0; $z < 6; $z++){
+
+        $getimg = $database->DBQuery('SELECT * FROM picture WHERE stockitemid = ? AND isPrimary IS NOT NULL', [$DiscountedItems[$z]['stockitemid']]);
+        if ($getimg == '0 results found!') {
+            $img = '/public/img/products/no-image.png';
+        }
+        else {
+            $img = $getimg[0]['ImagePath'];
+        }
+        
+        showItem($DiscountedItems[$z]['stockitemid'], $img, $DiscountedItems[$z]['stockitemname'], '', $DiscountedItems[$z]['searchdetails'], $DiscountedItems[$z]['recommendedretailprice']);    
+
+}
 }
 
 
-// EyeCatchers (Loop is hard coded want PARAM probleem  )
-
-$EyeCatchersRand = $database->DBQuery("SELECT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, S.Photo, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID ORDER BY RAND() LIMIT ?" ,[5]);
-
-for ($x=0; $x < count($EyeCatchersRand); $x++){
-    print($EyeCatchersRand[$x]['StockItemName']);
-    }
 
 
-$PopulairProducts = $database->DBQuery("SELECT stockitemid, count(stockitemid) AS aantal FROM orderlines GROUP BY stockitemid ORDER BY aantal DESC LIMIT ?" ,[5]);
+// populaire producten (geen description)
+$PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailprice, searchdetails,  ol.stockitemid, count(ol.stockitemid) AS aantal FROM orderlines AS ol JOIN stockitems AS si ON ol.stockitemid = si.stockitemid GROUP BY ol.stockitemid ORDER BY aantal DESC LIMIT ?" ,[6]);
 
-for($a=0; $a < $PopulairProducts; $a++){
-   // print($PopulairProducts[$a]['StockItemName']);
+//$PopulairProducts = 0;
+
+if($PopularProducts == !0){
+for($a=0; $a < 6; $a++){
+
+$getimg = $database->DBQuery('SELECT * FROM picture WHERE stockitemid = ? AND isPrimary IS NOT NULL', [$PopularProducts[$a]['stockitemid']]);
+if ($getimg == '0 results found!') {
+    $img = '/public/img/products/no-image.png';
+}
+else {
+    $img = $getimg[0]['ImagePath'];
 }
 
-//var_dump($EyeCatchers);
-//  print($$EyeCatchers['StockItemName']);
-
-/*
-for ($a= 0; $a < 100; $a++) {
-    for ($x=0; $x < $EyeCatchers[$a]['StockItemName']; $x++){
-    print($EyeCatchers[$x]['StockItemName']);
-    }
+showItem($PopularProducts[$a]['stockitemid'], $img, $PopularProducts[$a]['stockitemname'], '', $PopularProducts[$a]['searchdetails'], $PopularProducts[$a]['recommendedretailprice']);    
 }
-*/
+}else{
+    print("Popular products are temporarily unavailable ");
+}
+
+
+
+
+
