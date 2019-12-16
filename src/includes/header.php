@@ -17,12 +17,13 @@
 	<link rel="stylesheet" href="public/css/wwi_global.css">
 	<link rel="stylesheet" href="public/css/wwi_home.css">
 	<link rel="stylesheet" href="public/css/wwi_product.css">
+	<link rel="stylesheet" href="public/css/styles.css">
 	<script src="public/js/jquery.min.js"></script>
-	<script src="public/bootstrap/js/bootstrap.min.js"></script>
 	<script src="public/js/bootstrap-better-nav.min.js"></script>
 	<!-- <script src="public/js/promise-po8lyfill.js"></script> -->
 	<script src="public/js/sweetalert.min.js"></script>
 	<script src="public/js/functions.js"></script>
+	<script src="public/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
