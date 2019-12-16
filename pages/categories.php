@@ -156,7 +156,7 @@ elseif($page > $maxPages){
 }
 elseif($maxPages >= 2 AND $maxPages <= 5){
     for($i = 1; $i <= $maxPages; $i++){
-        echo "<a href='http://kbs.local/categories?catid=3&page=$i' class='button'>$i</a>";
+        echo "<a href='http://kbs.local/categories?catid=$cat&page=$i' class='button'>$i</a>";
         echo "</br>";
     }
     
