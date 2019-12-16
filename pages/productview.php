@@ -136,7 +136,7 @@ if(file_exists($photoPath)){
                 </div>
                 <div class="col-md-6">
                     <div class="row">
-                    <form method="POST" action="/productview">
+                    <form method="POST" action="/productview?id=<?php echo $id ?>">
                     <?php
                     if(!$soldOut){
                         print(" <div class=\"col\"><input type=\"hidden\" name=\"stockItemID\" value=\"".$id."\"><button class=\"btn btn-primary\" id=\"add-button-mobile\" type=\"submit\">Add to shopping cart</button></div>");
@@ -240,10 +240,10 @@ if(file_exists($photoPath)){
                         <div class="col" id="column-badge-stock-desktop"><span class="badge badge-primary" id="badge-desktop" <?php print($styleColor); ?>><?php print($stockItemHolding); ?></span></div> 
                     </div>
                     <div class="row">
-                    <form method="POST" action="/productview">
+                    <form method="POST" action="/productview?id=<?php echo $id ?>">
                     <?php
                     if(!$soldOut){
-                        print("<div class=\"col\"><input type=\"hidden\" name=\"stockItemID\" value=\"".$id."\" style=\"width: 100%\"><button class=\"btn btn-primary\" id=\"add-button-desktop\" type=\"button\">Add to shopping cart</button></div>");
+                        print("<div class=\"col\"><input type=\"hidden\" name=\"stockItemID\" value=\"".$id."\"><button class=\"btn btn-primary\" id=\"add-button-desktop\" type=\"submit\">Add to shopping cart</button></div>");
                     }else{
                         print("<div class=\"col\"><span class=\"badge badge-primary\" id=\"sold-out-button-desktop\">This product is sold out</span></div>");
                     }
