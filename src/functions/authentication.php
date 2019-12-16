@@ -25,9 +25,9 @@ class auth
         $_SESSION['isloggedIn'] = $usertoken;
     }
 
-    public function register($username, $password, $repeat)
+    public function register($username, $password, $repeat, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName)
     {
-        if (empty($username) || empty($password) || empty($repeat)) {                          
+        if (empty($username) || empty($password) || empty($repeat) || empty($customerCountry) || empty($customerStreetNumber) || empty($customerStreetPostal) || empty($customerName)) {                          
              return showSwall('Something went wrong!', "Please fill all fields!", "error", "");
         }
 
@@ -39,16 +39,17 @@ class auth
         $this->password = hashString($password);
         
         $checklogin = $this->db->DBQuery('SELECT * FROM webCustomer WHERE wCustomerEmail = ? AND wCustomerPassword = ?', [$this->username, $this->password]);
-        print_r($checklogin);
+        // print_r($checklogin);
 
         if ($checklogin == '0 results found!') {
-            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password, '1']);        
-
+            // $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password, '1']);        
+            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName)  value (?, ?, ?, ?, ?, ?, ?)', [$this->username, $this->password, '1', $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName]);        
+            // INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName) 
+            print_r($regist);
             if ($regist == '0 results found!') {      
                 return showSwall('Something went wrong!', "Can not register.", "error", "");
             }
             else {
-                print_r($regist);
                 // echo $this->login($username, hashString($password));
             }   
         }

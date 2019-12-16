@@ -28,4 +28,4 @@
 </form>
 
 <?php
-echo showSwall('Something went wrong!', "Can not register.", "error", "");
+// echo showSwall('Something went wrong!', "Can not register.", "error", "");

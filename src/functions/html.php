@@ -31,7 +31,6 @@ function showInput(int $amount, array $inputName, array $inputId, array $inputTi
 
 function showSwall($title, $text, $icon, $redirect) {
     // return '<script> showSwall('.$title.', '.$text.', '.$icon.', '.$redirect.'); </script>';
-
     return '<script> swal({ title: "'.$title.'", text: "'.$text.'", icon: "'.$icon.'", }).then(function(){ 
         location.replace("'.$redirect.'");
         }
