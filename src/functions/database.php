@@ -57,7 +57,7 @@ class database
      * @param string $query - Database Query
      * @param array $param - All parameters for bind params
      * @example $database->DBQuery('SELECT * FROM stockitems WHERE RecommendedRetailPrice BETWEEN ? AND ?', [135, 340]);
-     * @usage $datbaase->DBquery(QUERY, VALUE ARRAY);
+     * @usage $database->DBquery(QUERY, VALUE ARRAY);
      * @return mixed
      */
     public function DBQuery(string $query, array $param) 
