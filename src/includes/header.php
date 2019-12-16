@@ -427,6 +427,7 @@
 				</div>
 			</div>
 		</section>
+</section>
 		<section id="header" class="d-none d-lg-block">
 			<nav class="navbar navbar-light navbar-expand-md sticky-top bg-light">
 				<div class="container-fluid"><img class="navbar-brand wwi_nav_img" src="public/img/wwi/logo.png"><button
