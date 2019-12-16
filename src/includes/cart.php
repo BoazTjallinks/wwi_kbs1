@@ -34,8 +34,18 @@ if(isset($_POST['stockItemID'])){
             <div class="modal-body">
                 <?php
                 $database = new database();
-                $selectStockItem= $database->DBquery("SELECT * FROM StockItems WHERE StockItemID = ?",[$id]);
-                $database->closeConnection();?>
+                if(isset($_SESSION['shoppingCart'])){
+                    if(!empty($_SESSION['shoppingCart'])){
+                        for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
+                            $stockID = $_SESSION['shoppingCart'][$i]['ItemID'];
+                            $selectStockItem= $database->DBquery("SELECT * FROM StockItems WHERE StockItemID = ?",[$stockID]);
+                            print_r($selectStockItem); 
+                        }
+                    }
+                }
+                $database->closeConnection();
+                ?>
+
                
             </div>
         </div>
