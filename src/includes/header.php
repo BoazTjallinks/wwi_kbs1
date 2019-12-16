@@ -31,7 +31,7 @@
 		<section id="hidden" class="d-none d-lg-block">
 			<?php
 				require('../src/includes/login.php');
-				require('../src/includes/card.php');
+				require('../src/includes/cart.php');
 			?>
 		</section>
 </section>
@@ -56,7 +56,7 @@
 							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#login">
 								<i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
 							</li>
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#card">
+							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#cart">
 								<i class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a>
 							</li>
 						</ul>
