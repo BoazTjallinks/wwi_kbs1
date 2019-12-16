@@ -139,7 +139,7 @@ if(file_exists($photoPath)){
                     <form method="POST" action="/productview?id=<?php echo $id ?>">
                     <?php
                     if(!$soldOut){
-                        print(" <div class=\"col\"><input type=\"hidden\" name=\"stockItemID\" value=\"".$id."\"><button class=\"btn btn-primary\" id=\"add-button-mobile\" type=\"submit\">Add to shopping cart</button></div>");
+                        print("<div class=\"col\"><input type=\"hidden\" name=\"stockItemID\" value=\"".$id."\"><button class=\"btn btn-primary\" id=\"add-button-mobile\" type=\"submit\">Add to shopping cart</button></div>");
                     }else{
                         print("<div class=\"col\"><span class=\"badge badge-primary\" id=\"sold-out-button-mobile\">This product is sold out</span></div>");
                     }
