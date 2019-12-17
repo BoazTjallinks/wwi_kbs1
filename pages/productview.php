@@ -27,7 +27,7 @@ if (($id > $aantalstockitems) || ($id <= 0)){
 
 /* -------------------------Eind limitatie url-hacken --------------------------------------------------- */
 
-$soldOut = False;
+$soldOut = false;
 $stockItemID = $result[0]["StockItemID"];
 $stockItemName = $result[0]["StockItemName"];
 $recomretprice  = $result[0]["RecommendedRetailPrice"];
@@ -50,8 +50,6 @@ if($GetStockItemHolding > 15){
     $styleColor = "style=\"background-color: grey;\"";
     $soldOut = true;
 }
-
-$expectedProductDelivery = 
 
 
 #$database = new database();
@@ -136,16 +134,6 @@ if(file_exists($photoPath)){
                     }
                     ?>
                     </div>
-                    <div class = "row">
-                    <?php
-                    If($soldOut == TRUE){
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
-                    }else{
-                        print("<h6><div class=\"col\">Expected delivery time: 3 Days </div></h6>");
-                    }
-                    ?>
-                    </div>
-                </div>
                 </div>
                 <div class="col">
                     <div class="row">
@@ -239,15 +227,6 @@ if(file_exists($photoPath)){
                         print("<div class=\"col\"><button class=\"btn btn-primary\" id=\"add-button-desktop\" type=\"button\">Add to shopping cart</button></div>");
                     }else{
                         print("<div class=\"col\"><span class=\"badge badge-primary\" id=\"sold-out-button-desktop\">This product is sold out</span></div>");
-                    }
-                    ?>
-                    </div>
-                    <div class = "row">
-                    <?php
-                    If($soldOut == TRUE){
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
-                    }else{
-                        print("<h6><div class=\"col\">Expected delivery time: 3 Days</div></h6>");
                     }
                     ?>
                     </div>
