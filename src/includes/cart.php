@@ -23,6 +23,8 @@ if (isset($_POST['stockItemID'])) {
 }
 
 $database = new database();
+$StockItems = $database->DBquery('SELECT * FROM StockItems', []);
+
 if (isset($_SESSION['shoppingCart'])) {
     if (!empty($_SESSION['shoppingCart'])) {
     } else {
@@ -38,15 +40,21 @@ if (isset($_SESSION['shoppingCart'])) {
 
             <!-- Modal body -->
             <div class="modal-body wwi_auth_modal">
+                <?php
+                    if (!isset($_SESSION['shoppingCart'])) {
+                        echo '<center><h3 class="wwi_maincolor wwi_padding_normal"><strong>You got nothing in your cart :(</strong></h3></center>';
+                    } else {
+                        ?>
+
                 <section id="shopping-cart">
-                    <h1 class="wwi_maincolor wwi_padding_normal"><strong><?php echo count($_SESSION['shoppingCart']); ?> Item(s) in shopping cart</strong></h1>
+                    <h3 class="wwi_maincolor wwi_padding_normal"><strong><?php echo count($_SESSION['shoppingCart']); ?> Item(s) in shopping cart</strong></h3>
                     <div class="table-responsive table-borderless">
                         <table class="table table-bordered">
                             <thead class="wwi_mainbgcolor wwi_text_light wwi_textalign_center">
                                 <tr class="wwi_frontsize_small">
                                     <th>Picture</th>
                                     <th>Name</th>
-                                    <th>Amount</th>
+                                    <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Delete</th>
                                 </tr>
@@ -58,21 +66,16 @@ if (isset($_SESSION['shoppingCart'])) {
                                         if (!empty($_SESSION['shoppingCart'])) {
                                             for ($i = 0; $i < count($_SESSION['shoppingCart']); $i++) {
                                                 $stockID = $_SESSION['shoppingCart'][$i]['ItemID'];
-                                                $selectStockItem= $database->DBquery("SELECT * FROM StockItems WHERE StockItemID = ?", [$stockID]);
-                                                print_r($selectStockItem);
                                                 echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
-                                                echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="assets/img/products/testproduct.png"></figure></td>';
+                                                echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="public/img/products/testproduct.png"></figure></td>';
                                                 echo '<td class="align-middle">StockItemName</td>';
                                                 echo '<td class="align-middle"><input class="form-control-sm" type="number" min="0" max="12"></td>';
                                                 echo '<td class="align-middle">€12</td>';
-                                                echo '
-                                                    <td class="align-middle"><a class="text-danger" href="#"><i class="fa fa-trash wwi_frontsize_normal"></i></a></td>';
+                                                echo '<td class="align-middle"><a class="text-danger" href="#"><i class="fa fa-trash wwi_frontsize_normal"></i></a></td>';
                                                 echo '</tr>';
                                             }
                                         }
-                                    }
-                                    $database->closeConnection();
-                                ?>
+                                    } ?>
                             </tbody>
                         </table>
                     </div>
@@ -99,6 +102,11 @@ if (isset($_SESSION['shoppingCart'])) {
                         </div>
                     </div>
                 </section>
+                <?php
+                    }
+
+                    $database->closeConnection();
+                ?>
             </div>
         </div>
     </div>
