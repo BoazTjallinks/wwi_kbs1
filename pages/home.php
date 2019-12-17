@@ -11,9 +11,36 @@ $database = new database();
 // Laad Discounted product zien op home pagina (unfinished) 
 
 
+/*
+$discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SI.StockItemID, SI.RecommendedRetailPrice	
+FROM specialdeals AS SD 
+JOIN stockitems AS SI 
+ON SD.StockItemID = SI.StockItemID 
+WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?",[1]);
+*/
 
-$DiscountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SI.StockItemID, SI.UnitPrice FROM specialdeals AS SD JOIN stockitems AS SI ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StockItemName != ?",[0]);
+/*
+$discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, DealDiscription,  SI.StockItemName, SI.StockItemID, SI.RecommendedRetailPrice
+FROM specialdeals AS SD 
+LEFT JOIN stockitems AS SI 
+ON SD.StockItemID = SI.StockItemID
+WHERE  StartDate != ?",[8]);
+*/
+/*
+$InTheNameOfPHPTestQuery= $database-->DBQuery("SELECT RecommendedRetailPrice, UnitPrice FROM StockItems" ,[]);
+//var_dump($discountedItems);
 
+if(isset($InTheNameOfPHPTestQuery[8]['RecommendedRetailPrice'])){
+$InTheNameOfPHPTestQuery = ($InTheNameOfPHPTestQuery[8]['RecommendedRetailPrice'] - $InTheNameOfPHPTestQuery[8]['UnitPrice']);
+print($InTheNameOfPHPTestQuery);
+}
+//$discountPrice = ($discountedItems[]['RecommendedRetailPrice'] - $discountedItems[]['DiscountAmount']);
+
+*/
+
+
+//print($discountedItems[1]['StockItemName']);
+//print($discountedItems[1]['StartDate']);    
 /*
 
 //berekent de prijs met korting
@@ -28,7 +55,8 @@ print($dealTime);
 */
 
 // (unfinished laad korting producten nog niet in) 
-if($DiscountedItems == 0){
+/*
+if($discountedItems == 0){
     print("<ul>");
     print('<li> new items soon </li>');
     print('<li> new items soon </li>');    
@@ -40,7 +68,7 @@ if($DiscountedItems == 0){
 }else{ 
     for ($z=0; $z < 6; $z++){
 
-        $getimg = $database->DBQuery('SELECT * FROM picture WHERE stockitemid = ? AND isPrimary IS NOT NULL', [$DiscountedItems[$z]['stockitemid']]);
+        $getimg = $database->DBQuery('SELECT * FROM picture WHERE stockitemid = ? AND isPrimary IS NOT NULL', [$discountedItems[$z]['stockitemid']]);
         if ($getimg == '0 results found!') {
             $img = '/public/img/products/no-image.png';
         }
@@ -48,12 +76,12 @@ if($DiscountedItems == 0){
             $img = $getimg[0]['ImagePath'];
         }
         
-        showItem($DiscountedItems[$z]['stockitemid'], $img, $DiscountedItems[$z]['stockitemname'], '', $DiscountedItems[$z]['searchdetails'], $DiscountedItems[$z]['recommendedretailprice']);    
+        showItem($discountedItems[$z]['stockitemid'], $img, $discountedItems[$z]['stockitemname'], '', $discountedItems[$z]['searchdetails'], $discountedItems[$z]['recommendedretailprice']);    
 
 }
 }
 
-
+*/
 
 
 // populaire producten (geen description)
