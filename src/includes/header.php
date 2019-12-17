@@ -30,8 +30,9 @@
 	<section id="html-body" class="container-fluid d-none d-lg-block">
 		<section id="hidden" class="d-none d-lg-block">
 			<?php
-				require('../src/includes/login.php');
-			?>
+                require('../src/includes/login.php');
+                require('../src/includes/cart.php');
+            ?>
 		</section>
 		<section id="header" class="d-none d-lg-block">
 			<nav class="navbar navbar-light navbar-expand-md sticky-top bg-light">

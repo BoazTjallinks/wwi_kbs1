@@ -23,7 +23,7 @@ if (isset($_POST['stockItemID'])) {
 }
 
 $database = new database();
-$StockItems = $database->DBquery('SELECT * FROM StockItems', []);
+$StockItems = $database->DBquery('SELECT * FROM stockitems', []);
 
 if (isset($_SESSION['shoppingCart'])) {
     if (!empty($_SESSION['shoppingCart'])) {
@@ -104,7 +104,6 @@ if (isset($_SESSION['shoppingCart'])) {
                 </section>
                 <?php
                     }
-
                     $database->closeConnection();
                 ?>
             </div>
