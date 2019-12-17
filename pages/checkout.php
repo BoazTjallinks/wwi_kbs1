@@ -6,7 +6,7 @@
 /* ------------------- OUDE CHECKOUT, NIET GEBRUIKEN, NIET VERWIJDEREN ---------------------*/ 
 // session_start();
 
-
+// include('/payment.php');
 
 ?>
 
@@ -45,7 +45,8 @@
                             <input name="submit_ideal" class="btn btn-primary" id="paymentbutton-ideal" type="submit" value="Proceed with iDeal payment"></input>
                         </form>
                     </div>
-                </div>
+                    <!-- <br><br><br><br><br><br> -->
+               </div>
 
 
                 <div class="tab-pane" role="tabpanel" id="tab-2">
@@ -55,21 +56,26 @@
                                 <div class="col">
                                     <span>
                                         <br>Card number*<br>
-                                        <input name="cardnumber" type="tel" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="40">
+                                        <input name="cardnumber" type="tel" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="19" value="<?php $_SESSION['cardnumber'] ?>" required>
                                     </span>
                                 </div>
                                 <div class="col">
                                     <span>
                                         <br>Name on the card*<br>
-                                        <input name="cardname" type="text" maxlength="60"><br>
+                                        <input name="cardname" type="text" maxlength="60" required><br>
                                     </span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    <span>CVC/CID*<br>
+                                        <input name="cvccid" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="4" type="tel" required>
+                                    </span>
+                                </div>
+                                <div class="col">
                                     <span>Expiration date*<br>
-                                        <select name="month">
-                                            <optgroup label="Month">
+                                        <select name="month" required>
+                                            <optgroup label="Month" required>
                                                 <option value="01">01</option>
                                                 <option value="02">02</option>
                                                 <option value="03">03</option>
@@ -84,8 +90,8 @@
                                                 <option value="12">12</option>
                                             </optgroup>
                                         </select>
-                                        <select name="year">
-                                            <optgroup label="This is a group">
+                                        <select name="year" required>
+                                            <optgroup label="Year" required>
                                                 <option value="2019">2019</option>
                                                 <option value="2019">2020</option>
                                                 <option value="2019">2021</option>
@@ -102,18 +108,17 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col">
-                                    <span>CVC/CID*<br>
-                                        <input name="cvccid" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="4" type="tel">
-                                    </span>
-                                </div>
+                                
                             </div>
                         <input name="submit_credit" class="btn btn-primary" id="paymentbutton-credit" type="submit" value="Proceed with credit payment"></input>
                     </form> 
                 </div>
+                <!-- <br><br><br> -->
             </div>
         </div>
+        
     </div>
-    </div>
+    <br><br><br><br><br><br>
 
+</div>
     
