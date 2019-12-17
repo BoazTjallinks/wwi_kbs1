@@ -59,9 +59,9 @@ class database
      */
     public function DBQuery(string $query, array $param)
     {
-        if (empty($param)) {
+        if (count($param) == 0) {
             $result = mysqli_query($this->connection, $query);
-    
+        
             return $this->returnQuery($result);
         } else {
             $stmt = $this->connection->prepare($query);
