@@ -79,6 +79,10 @@ a, a:hover, a:focus {
   min-height: 50vh!important;
 }
 
+.wwi_25minheight {
+  min-height: 25vh!important;
+}
+
 .wwi_50height {
   height: 50vh!important;
 }
@@ -154,6 +158,26 @@ a, a:hover, a:focus {
 .wwi-itemimg {
   height: 15vh!important;
   width: 90%;
+}
+
+.wwi-itemimg_nowith {
+  height: 8vh!important;
+}
+
+.wwi_stuck {
+  position: fixed;
+}
+
+.wwi_fontsize_xtrasmall {
+  font-size: 1rem;
+}
+
+.wwi_frontsize_small {
+  font-size: 1.25rem;
+}
+
+.wwi_frontsize_normal {
+  font-size: 2rem;
 }
 
 .wwi_login_h0n3y {

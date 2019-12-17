@@ -23,7 +23,7 @@ if (isset($_POST['stockItemID'])) {
 }
 
 $database = new database();
-$StockItems = $database->DBquery('SELECT * FROM stockitems', []);
+$StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholdings ON stockitems.StockItemID = stockitemholdings.StockItemID', []);
 
 if (isset($_SESSION['shoppingCart'])) {
     if (!empty($_SESSION['shoppingCart'])) {
@@ -66,13 +66,19 @@ if (isset($_SESSION['shoppingCart'])) {
                                         if (!empty($_SESSION['shoppingCart'])) {
                                             for ($i = 0; $i < count($_SESSION['shoppingCart']); $i++) {
                                                 $stockID = $_SESSION['shoppingCart'][$i]['ItemID'];
-                                                echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
-                                                echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="public/img/products/testproduct.png"></figure></td>';
-                                                echo '<td class="align-middle">StockItemName</td>';
-                                                echo '<td class="align-middle"><input class="form-control-sm" type="number" min="0" max="12"></td>';
-                                                echo '<td class="align-middle">€12</td>';
-                                                echo '<td class="align-middle"><a class="text-danger" href="#"><i class="fa fa-trash wwi_frontsize_normal"></i></a></td>';
-                                                echo '</tr>';
+                                                $ItemAmount = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+
+                                                for ($i=0; $i < count($StockItems); $i++) {
+                                                    if ($StockItems[$i]['StockItemID'] == $stockID) {
+                                                        echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
+                                                        echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="public/img/products/testproduct.png"></figure></td>';
+                                                        echo '<td class="align-middle">'.$StockItems[$i]['StockItemID'].'</td>';
+                                                        echo '<td class="align-middle"><input class="form-control-sm" type="number" value="'.$ItemAmount.'" min="1" max="'.$StockItems[$i]['QuantityOnHand'].'"></td>';
+                                                        echo '<td class="align-middle">€12</td>';
+                                                        echo '<td class="align-middle"><a class="text-danger" href="#"><i class="fa fa-trash wwi_frontsize_normal"></i></a></td>';
+                                                        echo '</tr>';
+                                                    }
+                                                }
                                             }
                                         }
                                     } ?>

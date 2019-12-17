@@ -55,8 +55,9 @@
 							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
 									data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
 							</li>
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#"><i
-										class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
+									data-target="#cart"><i class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a>
+							</li>
 						</ul>
 					</div>
 				</div>
