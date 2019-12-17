@@ -12,13 +12,14 @@ if(!isset($_GET['page'])){
 // }
 
 $page = $_GET['page'];
-$offset = $page * 10 - 10;
+$offset = $page * 7 - 7;
 $orderDetailsAll= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID", [832]);
+
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
@@ -26,6 +27,8 @@ JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID
 LIMIT ? OFFSET ? ", [832, 10, $offset]); 
+
+$itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);
 
 
 if($orderDetails == '0 results found!'){
@@ -41,13 +44,18 @@ if($orderDetails == '0 results found!'){
             }
         echo '<figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure>';
         echo $orderDetails[$i]['OrderID'];
-        echo $orderDetails[$i]['StockItemName'];
+        if(isset($orderDetails[$i]['StockItemID'])){
+            echo "<a href='/productview?id=".$orderDetails[$i]['StockItemID']."'>".$orderDetails[$i]['StockItemName']."</a>";
+        }else{
+            echo $itemsNotSold[$i]['StockItemName'];
+        }
+        echo $orderDetails[$i]['OrderDate'];
         echo '</br>';
         echo "<a href='/orderdetails?OrderID=".$orderDetails[$i]['OrderID']."'>More details</a>";
     }
 }
 print(count($orderDetailsAll));
-$maxPages = ceil(count($orderDetailsAll) / 10);
+$maxPages = ceil(count($orderDetailsAll) / 7);
 print($maxPages);
 $minPages = 1;
 $pagemin = $page - 1;
