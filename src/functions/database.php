@@ -35,7 +35,15 @@ class database
     {
         try {
             if (!$result || mysqli_num_rows($result) > 0) {
-                return $result;
+                
+                $returnValue = array();
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    array_push($returnValue, $row);
+                }
+
+                return $returnValue;
+
             } else {
                 return '0 results found!';
             }
@@ -49,6 +57,7 @@ class database
      * @param string $query - Database Query
      * @param array $param - All parameters for bind params
      * @example $database->DBQuery('SELECT * FROM stockitems WHERE RecommendedRetailPrice BETWEEN ? AND ?', [135, 340]);
+     * @usage $database->DBquery(QUERY, VALUE ARRAY);
      * @return mixed
      */
     public function DBQuery(string $query, array $param) 

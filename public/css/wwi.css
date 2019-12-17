@@ -1,0 +1,24 @@
+.wwi_center {
+  margin: 0 AUTO;
+  float: none;
+}
+
+.wwi_absolute {
+  position: absolute;
+}
+
+.wwi_imghead {
+  width: 120px;
+}
+
+.wwi_footercontainer {
+  height: 15vh;
+}
+
+.wwi_spacing {
+  margin-top: 2rem;
+}
+
+.wwi_maincolour {
+  background-color: #4DBFF2;
+}
