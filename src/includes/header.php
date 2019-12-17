@@ -31,13 +31,11 @@
 		<section id="hidden" class="d-none d-lg-block">
 			<?php
 				require('../src/includes/login.php');
-				require('../src/includes/card.php');
 			?>
 		</section>
-</section>
 		<section id="header" class="d-none d-lg-block">
 			<nav class="navbar navbar-light navbar-expand-md sticky-top bg-light">
-				<div class="container-fluid"><a href="../home"><img class="navbar-brand wwi_nav_img" src="public/img/wwi/logo.png"></a><button
+				<div class="container-fluid"><img class="navbar-brand wwi_nav_img" src="public/img/wwi/logo.png"><button
 						data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
 							class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
 					<div class="collapse navbar-collapse" id="navcol-1">
@@ -53,12 +51,11 @@
 							</form>
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#login">
-								<i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
+							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
+									data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
 							</li>
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal" data-target="#card">
-								<i class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a>
-							</li>
+							<li class="nav-item" role="presentation"><a class="nav-link" href="#"><i
+										class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a></li>
 						</ul>
 					</div>
 				</div>
