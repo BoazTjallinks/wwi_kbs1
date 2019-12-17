@@ -77,6 +77,7 @@ $function->checkFilterSession();
 $cat = $_GET['catid'];
 $page = $_GET['page'];
 $limit = $_SESSION['limit'];
+$offset = $page * $limit - $limit;
 $colorId = $_SESSION['colorid'];
 $minPrice = $_SESSION['minprice'];
 $maxPrice = $_SESSION['maxprice'];
@@ -85,7 +86,7 @@ $size = $_SESSION['size'];
 
 $sessionOptions = $function->getOptions();
 $stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$cat]);
-$stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ?', [$cat, $limit]);
+$stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ? OFFSET ?', [$cat, $limit, $offset]);
 
 
 
