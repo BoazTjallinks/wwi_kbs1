@@ -5,7 +5,7 @@
  */
 
 
-class database 
+class database
 {
     private $servername = 'school.blltjallinks.nl';
     private $username = 'kbs';
@@ -35,15 +35,12 @@ class database
     {
         try {
             if (!$result || mysqli_num_rows($result) > 0) {
-                
                 $returnValue = array();
-                while($row = mysqli_fetch_assoc($result))
-                {
+                while ($row = mysqli_fetch_assoc($result)) {
                     array_push($returnValue, $row);
                 }
 
                 return $returnValue;
-
             } else {
                 return '0 results found!';
             }
@@ -60,16 +57,21 @@ class database
      * @usage $database->DBquery(QUERY, VALUE ARRAY);
      * @return mixed
      */
-    public function DBQuery(string $query, array $param) 
-    {   
-        $stmt = $this->connection->prepare($query);
-        $types = str_repeat('s', count($param));
-        $stmt->bind_param($types, ...$param);
-        $stmt->execute();
+    public function DBQuery(string $query, array $param)
+    {
+        if (empty($param)) {
+            $result = mysqli_query($this->connection, $query);
+    
+            return $this->returnQuery($result);
+        } else {
+            $stmt = $this->connection->prepare($query);
+            $types = str_repeat('s', count($param));
+            $stmt->bind_param($types, ...$param);
+            $stmt->execute();
 
-        $result = mysqli_stmt_get_result($stmt);
-        return $this->returnQuery($result);
-        
+            $result = mysqli_stmt_get_result($stmt);
+            return $this->returnQuery($result);
+        }
     }
 
     /**
