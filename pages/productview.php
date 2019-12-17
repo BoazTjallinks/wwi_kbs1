@@ -51,10 +51,16 @@ if ($GetStockItemHolding > 15) {
     $soldOut = true;
 }
  
-$expectedProductDelivery =
+// Get deliverytime from database
+$GetDeliveryTime= $database->DBQuery("SELECT deliverytime, DT.stockitemID FROM deliverytime as DT JOIN stockitems as SI ON SI.stockitemID=DT.stockitemID WHERE SI.stockitemID = ?",[$id]);
+
+
+
+
+
  
  
-#$database = new database();
+#$database = new database(); 
  
  
 $photoPath = "../../public/img/products/id".$id.".png";
@@ -145,12 +151,12 @@ if (file_exists($photoPath)) {
                     ?> 
                     </div> 
                     <div class = "row"> 
-                    <?php
-                    if ($soldOut == true) {
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
-                    } else {
-                        print("<h6><div class=\"col\">Expected delivery time: 3 Days </div></h6>");
-                    }
+                    <?php 
+                    If($soldOut == TRUE){ 
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>"); 
+                    }else{ 
+                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>"); 
+                    } 
                     ?> 
                     </div> 
                 </div> 
@@ -246,12 +252,12 @@ if (file_exists($photoPath)) {
                     ?> 
                     </div> 
                     <div class = "row"> 
-                    <?php
-                    if ($soldOut == true) {
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
-                    } else {
-                        print("<h6><div class=\"col\">Expected delivery time: 3 Days</div></h6>");
-                    }
+                    <?php 
+                    If($soldOut == TRUE){ 
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>"); 
+                    }else{ 
+                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>"); 
+                    } 
                     ?> 
                     </div> 
                 </div> 
