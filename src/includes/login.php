@@ -1,14 +1,13 @@
-<?php 
+<?php
 ob_start();
 
-if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password']) ) {
-    
+if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password'])) {
     if ((strlen($_POST["email"]) > 0) || (strlen($_POST["password"]) > 0)) {
         header('location: https://youtu.be/dQw4w9WgXcQ?t=42');
         return false;
     }
 
-    $email = $_POST['SDKGJKEAHT']; 
+    $email = $_POST['SDKGJKEAHT'];
     $password = $_POST['ABSFUIGSAF'];
     $sessionid = $_POST['asfhhfaojaobgobnpg'];
 
@@ -16,13 +15,10 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
         // session_regenerate_id();
         $auth = new auth();
         echo $auth->login($email, $password);
-    }
-    else {
+    } else {
         echo "Something went wrong! Please try again!";
     }
-}
-elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password1']) && isset($_POST['password2']) && isset($_POST['iughafvgohwbwh']) && isset($_POST['asfjhgwfhkkw']) && isset($_POST['wqpbuhwrgwgui']) && isset($_POST['woyhajwgwasfjv']) && isset($_POST['alskhasg']) && isset($_POST['asklfjogasoi']) && isset($_POST['aspighogasp'])) {
-    echo 'hi';
+} elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password1']) && isset($_POST['password2']) && isset($_POST['iughafvgohwbwh']) && isset($_POST['asfjhgwfhkkw']) && isset($_POST['wqpbuhwrgwgui']) && isset($_POST['woyhajwgwasfjv']) && isset($_POST['alskhasg']) && isset($_POST['asklfjogasoi']) && isset($_POST['aspighogasp'])) {
     if ((strlen($_POST["email"]) > 0) || (strlen($_POST["password1"]) > 0) || (strlen($_POST["password2"]) > 0)) {
         header('location: https://youtu.be/dQw4w9WgXcQ?t=42');
         return false;
@@ -43,8 +39,7 @@ elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($
         // session_regenerate_id();
         $auth = new auth();
         echo $auth->register($email, $password1, $password2, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName);
-    }
-    else {
+    } else {
         echo "Something went wrong! Please try again!";
     }
 }
@@ -82,8 +77,8 @@ elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($
                                         <form action="#" method="POST">
                                             <div>
                                                 <!-- wwi_login_h0n3y -->
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
+                                                <!-- <div class="form-group"> -->
+                                                    <!-- <label for="exampleInputEmail1">Email address</label>
                                                     <input type="email" class="form-control wwi_mat_3"
                                                         id="exampleInputEmail1" placeholder="Enter email" />
                                                 </div>
@@ -91,7 +86,19 @@ elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($
                                                     <label for="exampleInputPassword1">Password</label>
                                                     <input type="password" class="form-control wwi_mat_3"
                                                         id="exampleInputPassword1" placeholder="Password" />
+                                                </div> -->
+                                                <div class="form-group wwi_login_h0n3y">
+                                                    <input class="form-control" type="password" id="asfhhfaojaobgobnpg" name="asfhhfaojaobgobnpg" value="<?php echo session_id(); ?>" >
                                                 </div>
+                                                <div class="form-group wwi_login_h0n3y">
+                                                    <input class="form-control" name="email" type="email" id="email" placeholder="Email address">
+                                                </div>
+                                                <div class="form-group wwi_login_h0n3y">
+                                                    <input class="form-control" name="password" type="password" id="Password" placeholder="Password">
+                                                </div>
+                                                <?php
+                                                    echo showInput(2, ['SDKGJKEAHT', 'ABSFUIGSAF'], ['loginEmail', 'loginPassword'], ['Email address', 'Password'], ['email', 'password'], ['', ''], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], []);
+                                                ?>
 
                                                 <!-- wwi_login_h0n3y -->
                                                 <button type="submit"
@@ -116,7 +123,7 @@ elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($
                                         <input class="form-control" type="password" name="password2" placeholder="Repeat password">
                                     </div>
                                     <?php
-                                        echo showInput(2, ['aspighogasp', 'iughafvgohwbwh'], ['registerName', 'registerEmail'], ['Your name', 'Your email'], ['text', 'email'], ['', ''], ['Name', 'Email'], ['wwi_mat_3', 'wwi_mat_3'],[]);
+                                        echo showInput(2, ['aspighogasp', 'iughafvgohwbwh'], ['registerName', 'registerEmail'], ['Your name', 'Your email'], ['text', 'email'], ['', ''], ['Name', 'Email'], ['wwi_mat_3', 'wwi_mat_3'], []);
                                         echo '<div class="form-row">';
                                         echo showInput(2, ['asfjhgwfhkkw', 'wqpbuhwrgwgui'], ['registerPassword', 'registerRepeat'], ['Password', 'Repeat'], ['password', 'password'], ['col-md-6', 'col-md-6'], ['Password', 'Repeat Password'], ['wwi_mat_3', 'wwi_mat_3']);
                                         echo '</div>';
