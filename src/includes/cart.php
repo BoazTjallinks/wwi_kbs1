@@ -24,7 +24,7 @@ if (isset($_POST['stockItemID'])) {
             $_SESSION['shoppingCart'] = [$item];
         }
     }
-    print_r($_SESSION['shoppingCart']);
+    // print_r($_SESSION['shoppingCart']);
 }
 
 $database = new database();
