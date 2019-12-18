@@ -56,14 +56,10 @@
 									<i class="fas fa-user"></i>
 									<strong>&nbsp;Account</strong><br>
 									<?php
-									// var_dump($_SESSION['isloggedIn']);
 									if(isset($_SESSION['isloggedIn']) && ($_SESSION['isloggedIn'] != '0 results found!')){
 										echo 'Logged in!';
-										// var_dump($_SESSION['isloggedIn']);
-
 									}else{
 										echo ('Not logged in');
-										// var_dump($_SESSION['isloggedIn']);
 									} ?>
 								</a>
 							</li>
