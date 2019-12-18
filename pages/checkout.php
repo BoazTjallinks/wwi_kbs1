@@ -7,20 +7,134 @@
 // session_start();
 
 // include('/payment.php');
+$notCompleted = false;
+
+
+if(empty($_POST['bank'])){
+    $_POST['bank'] = '';
+}else{
+    $_SESSION['bank'] = $_POST['bank'];
+}
+if(empty($_POST['cardnumber'])){
+    $_POST['cardnumber'] = '';
+}else{
+    $_SESSION['cardnumber'] = $_POST['cardnumber'];
+}
+if(empty($_POST['cardname'])){
+    $_POST['cardname'] = '';
+}else{
+    $_SESSION['cardname'] = $_POST['cardname'];
+}
+if(empty($_POST['month'])){
+    $_POST['month'] = '';
+}else{
+    $_SESSION['month'] = $_POST['month'];
+}
+if(empty($_POST['year'])){
+    $_POST['year'] = '';
+}else{
+    $_SESSION['year'] = $_POST['year'];
+}
+if(empty($_POST['cvccid'])){
+    $_POST['cvccid'] = '';
+}else{
+    $_SESSION['cvccid'] = $_POST['cvccid'];
+}
+
+
+
+
+if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset($_POST['submit_ideal']) && isset($_POST['submit_credit']))){
+
+    if(isset($_POST['submit_ideal'])){
+        $_SESSION['bank'] = $_POST['bank'];
+        // $_SESSION['cardnumber'] = '';// $_SESSION['cardname'] = ''; // $_SESSION['month'] = '';// $_SESSION['year'] = '';// $_SESSION['cvccid'] = '';
+        $notCompleted = false;
+        print('<!--<div class="container"><div class="row"><div class="col"><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
+                        <div class="modal fade show" role="dialog" tabindex="-1" style="display: block;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Payment completed</h4><a href="/home"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></a></div>
+                                    <div class="modal-body">
+                                        <h5>Your order will be processed</h5>
+                                        <p>Thank you for paying with '.$_SESSION['bank'].' using iDeal.<br>Until next time!</p>
+                                    </div>
+                                    <div class="modal-footer"><a href="/home"><button class="btn btn-primary" id="go-homepage-button" type="button">Go to homepage</button></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--</div></div></div>-->
+            ');
+
+        // var_dump($_SESSION['bank'].' '.$_SESSION['cardnumber'].' '.$_SESSION['cardname'].' '.$_SESSION['month'].' '.$_SESSION['year'].' '.$_SESSION['cvccid']);
+    }
+    
+    
+    if(isset($_POST['submit_credit'])){
+        $_SESSION['bank'] = 'credit';
+        $_SESSION['cardnumber'] = $_POST['cardnumber'];
+        $_SESSION['cardname'] = $_POST['cardname'];
+        $_SESSION['month'] = $_POST['month'];
+        $_SESSION['year'] = $_POST['year'];
+        $_SESSION['cvccid'] = $_POST['cvccid'];
+        
+        // var_dump($_SESSION['bank'].' '.$_SESSION['cardnumber'].' '.$_SESSION['cardname'].' '.$_SESSION['month'].' '.$_SESSION['year'].' '.$_SESSION['cvccid']);
+
+
+        if(!empty($_SESSION['cardnumber']) AND !empty($_SESSION['cardname']) AND !empty($_SESSION['month']) AND !empty($_SESSION['year']) AND !empty($_SESSION['cvccid'])){
+            
+            if(is_numeric($_SESSION['cardnumber']) && is_numeric($_SESSION['cvccid'])){
+                $notCompleted = false;
+                print('<!--<div class="container"><div class="row"><div class="col"><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
+                        <div class="modal fade show" role="dialog" tabindex="-1" style="display: block;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Payment completed</h4><a href="/home"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></a></div>
+                                    <div class="modal-body">
+                                        <h5>Your order will be processed</h5>
+                                        <p>Thank you for paying with '.$_SESSION['bank'].'.<br>Until next time!</p>
+                                    </div>
+                                    <div class="modal-footer"><a href="/home"><button class="btn btn-primary" id="go-homepage-button" type="button">Go to homepage</button></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--</div></div></div>-->');
+            }else{
+                $notCompleted = true;
+                $incorrectInput = 'You didn\'t correctly fill in the form. Please fill all fields!';
+            }
+        
+        
+        
+        
+        
+        }else{
+            echo('You didn\'t correctly fill in the form. Please fill all fields!');
+        }
+    }
+}else{
+    // echo("hahahahahahahah echo");
+    // header('Location: /checkout');
+}
+
+
+
 
 ?>
 
 <div class="container">
         <div>
             <ul class="nav nav-tabs">
-                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">iDeal</a></li>
-                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Creditcard</a></li>
+                <li class="nav-item"><a class="nav-link <?php if(isset($_POST['submit_ideal'])){print('active');}elseif(!isset($_POST['submit_ideal']) && !isset($_POST['submit_credit'])){print('active');} ?>" role="tab" data-toggle="tab" href="#tab-1">iDeal</a></li>
+                <li class="nav-item"><a class="nav-link <?php if(isset($_POST['submit_credit'])){echo'active';} ?>" role="tab" data-toggle="tab" href="#tab-2">Creditcard</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="tab-1">
+                <div class="tab-pane <?php if(isset($_POST['submit_ideal'])){print('active');}elseif(!isset($_POST['submit_ideal']) && !isset($_POST['submit_credit'])){print('active');} ?>" role="tabpanel" id="tab-1">
                     <div class="form-group">
 
-                        <form action="/payment" method="post" name="form_ideal">
+                        <form action="/checkout" method="post" name="form_ideal">
                             <div class="row">
                                 <div class="col">
                                     <p>Choose your bank</p>
@@ -45,31 +159,41 @@
                             <input name="submit_ideal" class="btn btn-primary" id="paymentbutton-ideal" type="submit" value="Proceed with iDeal payment"></input>
                         </form>
                     </div>
-                    <!-- <br><br><br><br><br><br> -->
                </div>
 
 
-                <div class="tab-pane" role="tabpanel" id="tab-2">
+                <div class="tab-pane <?php if(isset($_POST['submit_credit'])){echo'active';} ?>" role="tabpanel" id="tab-2">
                     <div class="form-group">
-                        <form action="/payment" method="post" name="form_credit">
+                        <form action="/checkout" method="post" name="form_credit">
                             <div class="row">
                                 <div class="col">
+                                    <?php
+                                    
+                                    if(isset($_POST['submit_credit'])){
+                                        
+                                        if($notCompleted == true){
+                                            // print($incorrectInput);
+                                            print('<strong style="color:red;">Please fill in the form correctly!</strong>');
+                                        }
+                                    }
+
+                                    ?>
                                     <span>
                                         <br>Card number*<br>
-                                        <input name="cardnumber" type="tel" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="19" value="<?php $_SESSION['cardnumber'] ?>" required>
+                                        <input name="cardnumber" type="tel" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="19" value="<?php if(isset($_POST['submit_credit']) && ($notCompleted = true)){print($_SESSION['cardnumber']);} ?>" required>
                                     </span>
                                 </div>
                                 <div class="col">
                                     <span>
                                         <br>Name on the card*<br>
-                                        <input name="cardname" type="text" maxlength="60" required><br>
+                                        <input name="cardname" type="text" maxlength="60" value="<?php if(isset($_POST['submit_credit']) && ($notCompleted = true)){print($_SESSION['cardname']);} ?>" required><br>
                                     </span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <span>CVC/CID*<br>
-                                        <input name="cvccid" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="4" type="tel" required>
+                                        <input name="cvccid" onkeyup="this.value=this.value.replace(/[^\d++]/,'')" maxlength="4" type="tel" value="<?php if(isset($_POST['submit_credit']) && ($notCompleted = true)){print($_SESSION['cvccid']);} ?>" required>
                                     </span>
                                 </div>
                                 <div class="col">
@@ -113,7 +237,6 @@
                         <input name="submit_credit" class="btn btn-primary" id="paymentbutton-credit" type="submit" value="Proceed with credit payment"></input>
                     </form> 
                 </div>
-                <!-- <br><br><br> -->
             </div>
         </div>
         
@@ -121,4 +244,9 @@
     <br><br><br><br><br><br>
 
 </div>
-    
+
+<?php
+
+
+
+?>
