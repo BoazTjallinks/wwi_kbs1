@@ -8,36 +8,38 @@
 
 $database = new database();
 
-//Laad StockCategories in 
+//Laad StockCategories in
 
-$getstockgroups = $database->DBQuery("SELECT stockgroupname, stockgroupID FROM stockgroups WHERE stockgroupID != ?",[2]);
+$getstockgroups = $database->DBQuery("SELECT stockgroupname, stockgroupID FROM stockgroups WHERE stockgroupID != ?", [2]);
 
-function getStockgroups($getstockgroups, $i){
-for($i=0; $i<count($getstockgroups); $i++){
-    print($getstockgroups[$i]['stockgroupname']."<br>");
+function getStockgroups($getstockgroups, $i)
+{
+    for ($i=0; $i<count($getstockgroups); $i++) {
+        print($getstockgroups[$i]['stockgroupname']."<br>");
     }
 }
 
-// Laad Discounted product zien op home pagina 
+// Laad Discounted product zien op home pagina
 // Dit is de werkende versie die filtered op de datum van nu DESCRIPTION toevoegen
 
-$discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SD.StockItemID, SI.RecommendedRetailPrice FROM specialdeals AS SD  LEFT JOIN stockitems AS SI  ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?",[1]);
+$discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SD.StockItemID, SI.RecommendedRetailPrice FROM specialdeals AS SD  LEFT JOIN stockitems AS SI  ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?", [1]);
 
-Function getDiscountedProducts ($discountedItems, $b){
-if($discountedItems !== 0  && $discountedItems[$b]['StockItemID'] !== 0){
-    for($b=0; $b < 6; $b++){
-	   return $discountPrice = ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
-	   return $oldPrice = ($discountedItems[$b]['RecommendedRetailPrice']); 
-	   return $discountPercentage =($discountedItems[$b]['DiscountPercentage']);
-	   return $discountProductName = ($discountedItems[$b]['StockItemID']); 
-		return $endDate = ($discountedItems[$b]['EndDate']);
-		return $b;
-	}
-}else{
-    print("<ul>");
-    print('<li> new items soon </li>');           
-	print("</ul>");
-		}
+function getDiscountedProducts($discountedItems, $b)
+{
+    if ($discountedItems !== 0  && $discountedItems[$b]['StockItemID'] !== 0) {
+        for ($b=0; $b < 6; $b++) {
+            return $discountPrice = ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
+            return $oldPrice = ($discountedItems[$b]['RecommendedRetailPrice']);
+            return $discountPercentage =($discountedItems[$b]['DiscountPercentage']);
+            return $discountProductName = ($discountedItems[$b]['StockItemID']);
+            return $endDate = ($discountedItems[$b]['EndDate']);
+            return $b;
+        }
+    } else {
+        print("<ul>");
+        print('<li> new items soon </li>');
+        print("</ul>");
+    }
 }
 
 // BEREKENT PRIJS CORRECT
@@ -51,10 +53,10 @@ for($b=0; $b < 6; $b++){
 
 //TEST QUERYS
 /*
-    //deze laad bestaande deals in  
+    //deze laad bestaande deals in
     $discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, SI.StockItemName, SI.StockItemID, SI.RecommendedRetailPrice
-    FROM specialdeals AS SD 
-LEFT JOIN stockitems AS SI 
+    FROM specialdeals AS SD
+LEFT JOIN stockitems AS SI
 ON SD.StockItemID = SI.StockItemID
 WHERE  StartDate != ?",[0]);
 
@@ -78,24 +80,24 @@ print($discountPrice);
 */
 
 
-// (unfinished laad korting producten nog niet in) 
+// (unfinished laad korting producten nog niet in)
 /*
 if($discountedItems !== 0  && $discountedItems[0]['StockItemID'] !== 0){
     for($b=0; $b < 6; $b++){
         $discountPrice = ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
         print($discountPrice);
     }
-}else{  
+}else{
     print("<ul>");
     print('<li> new items soon </li>');
-    print('<li> new items soon </li>');           
+    print('<li> new items soon </li>');
     print("</ul>");
 }
 */
 
 
 // populaire producten query
-$PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailprice, searchdetails,  ol.stockitemid, count(ol.stockitemid) AS aantal FROM orderlines AS ol JOIN stockitems AS si ON ol.stockitemid = si.stockitemid GROUP BY ol.stockitemid ORDER BY aantal DESC LIMIT ?" ,[6]);
+$PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailprice, searchdetails,  ol.stockitemid, count(ol.stockitemid) AS aantal FROM orderlines AS ol JOIN stockitems AS si ON ol.stockitemid = si.stockitemid GROUP BY ol.stockitemid ORDER BY aantal DESC LIMIT ?", [6]);
 
 ?>
 
@@ -184,7 +186,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 			<div class="col-xl-2 offset-xl-1 wwi_bgsidebar d-none d-lg-block wwi_mat_3">
 				<h1 class="wwi_light wwi_textalign_center"><strong>Categories</strong></h1>
 				<ul class="list-unstyled">
-					<li><a class="wwi_text_light wwi_text_lighthover" href="#"><?php getStockgroups($getstockgroups,$i); ?></a></li>
+					<li><a class="wwi_text_light wwi_text_lighthover" href="#"><?php getStockgroups($getstockgroups, $i); ?></a></li>
 				</ul>
 			</div>
 			<div class="col-xl-8 offset-xl-0">
