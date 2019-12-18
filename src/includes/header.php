@@ -51,10 +51,22 @@
 							</form>
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
-									data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
-							</li>
+						<?php if(isset($_SESSION['isloggedIn'])){
+											echo 'Logged in!';
+											var_dump($_SESSION['isloggedIn']);
+
+										}else{
+											var_dump($_SESSION['isloggedIn']);
+										} ?>
 							<li class="nav-item" role="presentation">
+								<a class="nav-link" href="#" data-toggle="modal" data-target="#login">
+									<i class="fas fa-user"></i>
+									<strong>&nbsp;Account</strong>
+								</a>
+							</li>
+							
+							<li class="nav-item" role="presentation">
+								
 								<a class="nav-link" href="#" data-toggle="modal" data-target="#cart">
 								<i class="fas fa-shopping-cart"></i>
 								<?php
