@@ -213,8 +213,8 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
                             print("Popular products are temporarily unavailable ");
                         }
                     ?>
-					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+					</div>
