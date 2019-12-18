@@ -1,5 +1,10 @@
 <?php
 
+
+if(!isset($_SESSION['isloggedIn'])){
+    header('Location: /home');
+}
+
 $notCompleted = false;
 
 if(empty($_POST['bank'])){
