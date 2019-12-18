@@ -1,14 +1,6 @@
 <?php
-/* ------------------- OUDE CHECKOUT, NIET GEBRUIKEN, NIET VERWIJDEREN ---------------------*/ 
-// print("<!-- <form action='/checkout.php' method='POST'><select name='Kies uw bank'><option>Kies uw bank..</option><option value='ABN AMRO'>ABN AMRO</option><option value='ASN Bank'>ASN Bank</option><option value='Handelsbanken'>Handelsbanken</option><option value='ING'>ING</option><option value='Knab'>Knab</option><option value='Moneyou'>Moneyou</option><option value='Rabobank'>Rabobank</option><option value='RegioBank'>RegioBank</option><option value='SNS'>SNS</option><option value='Triodos Bank'>Triodos Bank</option><option value='Van Lanschot'>Van Lanschot</option><option value='bunq'>bunq</option></select><br><input type='submit' value='Verder'></form> -->"); 
-// $abnamro = $_POST['ABN AMRO'];// $asnbank = $_POST['ASN Bank'];// $handelsbanken = $_POST['Handelsbanken'];// $ing = $_POST['ING'];// $knab = $_POST['Knab'];// $moneyou = $_POST['Moneyou'];// $rabobank = $_POST['Rabobank'];// $regiobank = $_POST['RegioBank'];// $sns = $_POST['SNS'];// $triodosbank = $_POST['Triodos Bank'];// $vanlanschot = $_POST['Van Lanschot'];// $bunq = $_POST['bunq'];// $verder = $_POST['Verder']; 
-// if(!isset($verder)){//     if(isset($abnamro)){//         echo('Gaat u verder');//         header('Location: /home');//     }else{//         echo('Kies een bank!');//     }// } 
-/* ------------------- OUDE CHECKOUT, NIET GEBRUIKEN, NIET VERWIJDEREN ---------------------*/ 
-// session_start();
 
-// include('/payment.php');
 $notCompleted = false;
-
 
 if(empty($_POST['bank'])){
     $_POST['bank'] = '';
@@ -46,10 +38,11 @@ if(empty($_POST['cvccid'])){
 
 if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset($_POST['submit_ideal']) && isset($_POST['submit_credit']))){
 
+/*----------------------------------------Submit iDeal begin----------------------------------------*/
     if(isset($_POST['submit_ideal'])){
         $_SESSION['bank'] = $_POST['bank'];
-        // $_SESSION['cardnumber'] = '';// $_SESSION['cardname'] = ''; // $_SESSION['month'] = '';// $_SESSION['year'] = '';// $_SESSION['cvccid'] = '';
         $notCompleted = false;
+
         print('<!--<div class="container"><div class="row"><div class="col"><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
                         <div class="modal fade show" role="dialog" tabindex="-1" style="display: block;">
                             <div class="modal-dialog" role="document">
@@ -66,11 +59,10 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         </div>
                     <!--</div></div></div>-->
             ');
-
-        // var_dump($_SESSION['bank'].' '.$_SESSION['cardnumber'].' '.$_SESSION['cardname'].' '.$_SESSION['month'].' '.$_SESSION['year'].' '.$_SESSION['cvccid']);
     }
-    
-    
+/*----------------------------------------Submit iDeal eind----------------------------------------*/
+
+/*----------------------------------------Submit credit begin----------------------------------------*/
     if(isset($_POST['submit_credit'])){
         $_SESSION['bank'] = 'credit';
         $_SESSION['cardnumber'] = $_POST['cardnumber'];
@@ -78,9 +70,6 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
         $_SESSION['month'] = $_POST['month'];
         $_SESSION['year'] = $_POST['year'];
         $_SESSION['cvccid'] = $_POST['cvccid'];
-        
-        // var_dump($_SESSION['bank'].' '.$_SESSION['cardnumber'].' '.$_SESSION['cardname'].' '.$_SESSION['month'].' '.$_SESSION['year'].' '.$_SESSION['cvccid']);
-
 
         if(!empty($_SESSION['cardnumber']) AND !empty($_SESSION['cardname']) AND !empty($_SESSION['month']) AND !empty($_SESSION['year']) AND !empty($_SESSION['cvccid'])){
             
@@ -103,23 +92,14 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         <!--</div></div></div>-->');
             }else{
                 $notCompleted = true;
-                $incorrectInput = 'You didn\'t correctly fill in the form. Please fill all fields!';
             }
-        
-        
-        
-        
-        
         }else{
             echo('You didn\'t correctly fill in the form. Please fill all fields!');
         }
     }
-}else{
-    // echo("hahahahahahahah echo");
-    // header('Location: /checkout');
+    /*----------------------------------------Submit credit eind----------------------------------------*/
+
 }
-
-
 
 
 ?>
@@ -159,7 +139,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                             <input name="submit_ideal" class="btn btn-primary" id="paymentbutton-ideal" type="submit" value="Proceed with iDeal payment"></input>
                         </form>
                     </div>
-               </div>
+                </div>
 
 
                 <div class="tab-pane <?php if(isset($_POST['submit_credit'])){echo'active';} ?>" role="tabpanel" id="tab-2">
@@ -168,15 +148,11 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                             <div class="row">
                                 <div class="col">
                                     <?php
-                                    
                                     if(isset($_POST['submit_credit'])){
-                                        
                                         if($notCompleted == true){
-                                            // print($incorrectInput);
                                             print('<strong style="color:red;">Please fill in the form correctly!</strong>');
                                         }
                                     }
-
                                     ?>
                                     <span>
                                         <br>Card number*<br>
@@ -239,14 +215,6 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                 </div>
             </div>
         </div>
-        
     </div>
     <br><br><br><br><br><br>
-
 </div>
-
-<?php
-
-
-
-?>
