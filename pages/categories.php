@@ -132,6 +132,7 @@ for ($i=0; $i < count($stockCategories); $i++) {
 }
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
+$maxPages = 100;
 $minPages = 1;
 $pagemin = $page - 1;
 $pageminTwo = $page - 2;
@@ -157,46 +158,33 @@ elseif($page > $maxPages){
 elseif($maxPages >= 2 AND $maxPages <= 4){
     for($i = 1; $i <= $maxPages; $i++){
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$i' class='button'>$i</a>";
-        echo "</br>";
     }
     
 }
 elseif($maxPages > 4){
     if($page <= 3){
     echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
-    echo "</br>";
     echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplus' class='button'>$mpageplus</a>";
-    echo "</br>";
     echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplusTwo' class='button'>$mpageplusTwo</a>";
-    echo "</br>";
     echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplusThree' class='button'>$mpageplusThree</a>";
-    echo "</br>";
     echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplusTwo' class='button'>...</a>";
     echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
     if ($page >= 4 AND $page <= $maxPages - 3){
         echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageminTwo' class='button'>...</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$pagemin' class='button'>$pagemin</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$page' class='button'>$page</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplus' class='button'>$pageplus</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplusTwo' class='button'>...</a>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
     if($page >= $maxPages - 2){
         echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageminTwo' class='button'>...</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageminThree' class='button'>$mpageminThree</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageminTwo' class='button'>$mpageminTwo</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpagemin' class='button'>$mpagemin</a>";
-        echo "</br>";
         echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
     }
 }
