@@ -1,5 +1,10 @@
 <?php
 
+
+if(!isset($_SESSION['isloggedIn'])){
+    header('Location: /home');
+}
+
 $notCompleted = false;
 
 if(empty($_POST['bank'])){
@@ -59,6 +64,8 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         </div>
                     <!--</div></div></div>-->
             ');
+            unset($_SESSION['shoppingCart']);
+            
     }
 /*----------------------------------------Submit iDeal eind----------------------------------------*/
 
@@ -90,6 +97,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                             </div>
                         </div>
                         <!--</div></div></div>-->');
+                        unset($_SESSION['shoppingCart']);
             }else{
                 $notCompleted = true;
             }
