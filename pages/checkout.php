@@ -1,4 +1,35 @@
 <?php
+// if (isset($_POST['stockItemID'])) {
+//     if (is_numeric($_POST['stockItemID'])) {
+//         $item = ['ItemID' => $_POST['stockItemID'], 'ItemAmount' => 1, 'newItem' => true];
+//         if (isset($_SESSION['shoppingCart'])) {
+//             if (empty($_SESSION['shoppingCart'])) {
+//                 $_SESSION['shoppingCart'] = [$item];
+
+//             } else {
+//                 for ($i=0; $i < count($_SESSION['shoppingCart']); $i++) {
+//                     if ($_SESSION['shoppingCart'][$i]['ItemID'] == $_POST['stockItemID']) {
+//                         if ($_SESSION['shoppingCart'][$i]['newItem'] == true) {
+//                             $_SESSION['shoppingCart'][$i]['ItemAmount'] = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+//                             $_SESSION['shoppingCart'][$i]['newItem'] = false;
+
+//                         } else {
+//                             $_SESSION['shoppingCart'][$i]['ItemAmount'] = ($_SESSION['shoppingCart'][$i]['ItemAmount'] + 1);
+//                         }
+//                     } else {
+//                         array_push($_SESSION['shoppingCart'], $item);
+//                     }
+//                 }
+//             }
+//         } else {
+//             $_SESSION['shoppingCart'] = [$item];
+//         }
+//     }
+//     // print_r($_SESSION['shoppingCart']);
+// }
+print_r($_SESSION['shoppingCart']);
+// var_dump($_SESSION['shoppingCart'][$ItemID]['ItemID']);
+// var_dump($_SESSION['shoppingCart'][$ItemAmount]['ItemAmount']);
 
 $notCompleted = false;
 
