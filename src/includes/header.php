@@ -71,4 +71,46 @@
 					</div>
 				</div>
 			</nav>
-		</section>
+		
+	<!-- <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Clothing</a>
+                        <div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" role="presentation" href="#">Clothing</a>
+							<a class="dropdown-item" role="presentation" href="#">T-shirts</a>
+							<a class="dropdown-item" role="presentation" href="#">Furry footwear</a>
+						</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Electronics</a>
+                        <div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" role="presentation" href="#">Computing Novelties</a>
+							<a class="dropdown-item" role="presentation" href="#">USB Novelties</a>
+						</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Miscellaneous&nbsp;</a>
+                        <div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" role="presentation" href="#">Novelty Items</a>
+							<a class="dropdown-item" role="presentation" href="#">Airline Novelties</a>
+							<a class="dropdown-item" role="presentation" href="#">Toys</a>
+						</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Household</a>
+                        <div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" role="presentation" href="#">Mugs</a>
+							<a class="dropdown-item" role="presentation" href="#">Packaging Materials</a>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav> -->
+	</section>
