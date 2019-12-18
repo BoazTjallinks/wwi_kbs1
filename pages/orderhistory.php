@@ -77,17 +77,16 @@ if($maxPages <= $minPages){
     echo 'Disabled';
 }
 elseif($page < 1){
-    header('Location: /home');
+    header('Location: /orderhistory?page=1');
 }
 elseif($page > $maxPages){
-    header('Location: /home');
+    header('Location: /orderhistory?page=1');
 }
 elseif($maxPages >= 2 AND $maxPages <= 4){
     for($i = 1; $i <= $maxPages; $i++){
         echo "<a href='http://kbs.local/orderhistory?&page=$i' class='button'>$i</a>";
         echo "</br>";
     }
-    
 }
 elseif($maxPages > 4){
     if($page <= 3){
