@@ -132,7 +132,7 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                                     echo '<h5 class="wwi_padding_left_normal"><strong>TAX&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h5 class="wwi_padding_left_normal"><strong>SHIPPING COSTS&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h1 class="wwi_padding_left_normal"><strong>TOTAL&nbsp;</strong>€'.$total.'</h1>';
-                                    echo '<div class="align-middle wwi_padding_left_normal"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></div>';
+                                    echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
                                 }
                             } ?>
                                 </div>

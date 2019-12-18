@@ -12,42 +12,42 @@
  * Make sure to disable the display of errors in production code!
  */
 
-use Mollie\Api\Resources\Payment;
+// use Mollie\Api\Resources\Payment;
 
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-require_once "../src/mollie_api/vendor/autoload.php";
-require_once "../src/mollie_api/examples/functions.php";
-/*
- * Initialize the Mollie API library with your API key.
- *
- * See: https://www.mollie.com/dashboard/developers/api-keys
- */
-$mollie = new \Mollie\Api\MollieApiClient();
-var_dump($mollie);
-$mollie->setApiKey("test_gxfNCzkjE8bGxabVP3TunyT6wqASHK");
-var_dump($mollie);
+// // ini_set('display_errors', 1);
+// // ini_set('display_startup_errors', 1);
+// // error_reporting(E_ALL);
+// require_once "../src/mollie_api/vendor/autoload.php";
+// require_once "../src/mollie_api/examples/functions.php";
+// /*
+//  * Initialize the Mollie API library with your API key.
+//  *
+//  * See: https://www.mollie.com/dashboard/developers/api-keys
+//  */
+// $mollie = new \Mollie\Api\MollieApiClient();
+// var_dump($mollie);
+// $mollie->setApiKey("test_gxfNCzkjE8bGxabVP3TunyT6wqASHK");
+// var_dump($mollie);
 
-$payment = $mollie->payments->create([ 
-    "amount" => [ 
-        "currency" => "EUR", 
-        "value" => "10.00" 
-    ], 
-    "description" => "My first API payment", 
-    "redirectUrl" => "https://webshop.example.org/order/12345/", 
-    "webhookUrl"  => "https://webshop.example.org/mollie-webhook/", 
-]); 
+// $payment = $mollie->payments->create([ 
+//     "amount" => [ 
+//         "currency" => "EUR", 
+//         "value" => "10.00" 
+//     ], 
+//     "description" => "My first API payment", 
+//     "redirectUrl" => "https://webshop.example.org/order/12345/", 
+//     "webhookUrl"  => "https://webshop.example.org/mollie-webhook/", 
+// ]); 
 
-var_dump($payment);
+// var_dump($payment);
 
-header("Location: ../../home.php" . $payment->getCheckoutUrl(), true, 303);
+// header("Location: ../../home.php" . $payment->getCheckoutUrl(), true, 303);
 
-$payment = $mollie->payments->get($payment->id);
+// $payment = $mollie->payments->get($payment->id);
 
-var_dump($payment);
+// var_dump($payment);
 
-if ($payment->isPaid())
-{
-    echo "Payment received.";
-}
+// if ($payment->isPaid())
+// {
+//     echo "Payment received.";
+// }
