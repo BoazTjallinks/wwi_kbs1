@@ -34,6 +34,7 @@ LIMIT ? OFFSET ? ", [832, 10, $offset]);
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);
 
 
+
 if($orderDetails == '0 results found!'){
     echo 'No orders found.';
 }else{
@@ -45,6 +46,7 @@ if($orderDetails == '0 results found!'){
             else {
                 $img = $getimg[0]['ImagePath'];
             }
+        $normalDate = date("d-m-Y", strtotime($orderDetails[$i]['OrderDate']));
         echo '<figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure>';
         echo $orderDetails[$i]['OrderID'];
         if(isset($orderDetails[$i]['StockItemID'])){
@@ -52,7 +54,7 @@ if($orderDetails == '0 results found!'){
         }else{
             echo $itemsNotSold[$i]['StockItemName'];
         }
-        echo $orderDetails[$i]['OrderDate'];
+        echo $normalDate;
         echo "<a href='/orderdetails?OrderID=".$orderDetails[$i]['OrderID']."'>More details</a>";
         echo '</br>';
     }

@@ -29,8 +29,8 @@ FROM orders O
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID
 WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]);
-
-echo $orderDetails[0]['OrderDate'];
+$normalDate = date("d-m-Y", strtotime($orderDetails[0]['OrderDate']));
+echo $normalDate;
 echo '</br>';
 echo $orderID;
 $maxtotal = 0;
