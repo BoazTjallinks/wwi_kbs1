@@ -27,9 +27,14 @@
 //     }
 //     // print_r($_SESSION['shoppingCart']);
 // }
-print_r($_SESSION['shoppingCart']);
+// print_r($_SESSION['shoppingCart']);
 // var_dump($_SESSION['shoppingCart'][$ItemID]['ItemID']);
 // var_dump($_SESSION['shoppingCart'][$ItemAmount]['ItemAmount']);
+
+if(!isset($_SESSION['isloggedIn'])){
+    header('Location: /home');
+}
+
 
 $notCompleted = false;
 
