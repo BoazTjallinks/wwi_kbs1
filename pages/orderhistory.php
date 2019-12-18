@@ -18,7 +18,9 @@ FROM orders O
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
-GROUP BY O.OrderID", [832]);
+GROUP BY O.OrderID
+ORDER BY O.OrderDate DESC", [832]);
+
 
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
 FROM orders O 
@@ -26,6 +28,7 @@ JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID
+ORDER BY O.OrderDate DESC
 LIMIT ? OFFSET ? ", [832, 10, $offset]); 
 
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);

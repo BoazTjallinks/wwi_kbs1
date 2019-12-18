@@ -17,13 +17,13 @@ $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
-WHERE O.OrderID = ? ", [$orderID]); 
+WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]); 
 
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID
-WHERE O.OrderID = ?", [$orderID]);
+WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]);
 
 echo $orderDetails[0]['OrderDate'];
 echo '</br>';
