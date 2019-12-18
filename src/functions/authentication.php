@@ -59,7 +59,8 @@ class auth
     public function login($username, $password)
     {
         if (empty($username) || empty($password)) {
-            return 'Please fill all fields!';
+            // return 'Please fill all fields!';
+            return showSwall('Something went wrong!', "Please fill all fields!", "error", "");
         }
 
         $this->username = $username;

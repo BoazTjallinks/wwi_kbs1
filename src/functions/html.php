@@ -4,10 +4,11 @@
  * Card functions
  */
 
-function showItem($productId, $productImage, $productName, $productSpecial, $productDescription, $productPrice) {
+function showItem($productId, $productImage, $productName, $productSpecial, $productDescription, $productPrice)
+{
 
     // Product Image
-    echo '<div class="col-xl-4"><div class="card wwi_prdcts_card wwi_mat_3"><div class="card-body d-flex flex-column"><figure class="figure wwi_prdcts_imgcenter"><img class="img-fluid figure-img d-xl-flex wwi-itemimg wwi-center" src="'.$productImage.'"></figure>';
+    echo '<div class="col-xl-4 col-md-4 col-sm-4 col-xs-12"><div class="card wwi_prdcts_card wwi_mat_3"><div class="card-body d-flex flex-column"><figure class="figure wwi_prdcts_imgcenter"><img class="img-fluid figure-img d-xl-flex wwi-itemimg wwi-center" src="'.$productImage.'"></figure>';
     // Product Name
     echo '<h4 class="card-title">'.$productName.'</h4>';
     // Product Special
@@ -20,20 +21,21 @@ function showItem($productId, $productImage, $productName, $productSpecial, $pro
     echo '<div class="col"><h3 class="wwi_text_right">€'.$productPrice.'<br></h3></div></div></div></div></div>';
 }
 
-function showInput(int $amount, array $inputName, array $inputId, array $inputTitle, array $inputType, array $formClass, array $inputPlaceholder, array $inputClass) {
-    for ($i=0; $i < $amount; $i++) { 
+function showInput(int $amount, array $inputName, array $inputId, array $inputTitle, array $inputType, array $formClass, array $inputPlaceholder, array $inputClass)
+{
+    for ($i=0; $i < $amount; $i++) {
         echo '<div class="form-group '.$formClass[$i].'">';
-            echo '<label for="'.$inputId[$i].'">'.$inputTitle[$i].'</label>';
-            echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'">';
+        echo '<label for="'.$inputId[$i].'">'.$inputTitle[$i].'</label>';
+        echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'">';
         echo '</div>';
     }
 }
 
-function showSwall($title, $text, $icon, $redirect) {
+function showSwall($title, $text, $icon, $redirect)
+{
     // return '<script> showSwall('.$title.', '.$text.', '.$icon.', '.$redirect.'); </script>';
     return '<script> swal({ title: "'.$title.'", text: "'.$text.'", icon: "'.$icon.'", }).then(function(){ 
         location.replace("'.$redirect.'");
         }
      ); </script>';
-
-} 
+}
