@@ -1,8 +1,9 @@
 <?php
+$database = new database();
 $email = $firstName = $lastName = $orderNmr = $reasonOfContact = $phoneNumber = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = test_input($_POST["email"]);
+    $email = test_input($_POST["emailaddress"]);
     $firstName = test_input($_POST["firstname"]);
     $lastName = test_input($_POST["lastname"]);
     $orderNmr = test_input($_POST["ordernumber"]);
@@ -17,18 +18,23 @@ function test_input($data) {
 }
 
 if(isset($_POST['submitform'])){
-    $contactForm= $database->DBQuery("INSERT INTO customerservice (first_name, last_name, order_nmr, email, reason_of_contact, phone_nmr) values (?, ?, ?, ?, ?, ?)", [$firstName, $lastName, $orderNmr, $email, $reasonOfContact, $phoneNumber]); 
-    echo "Thank you for your message, you will hear from us as soon as possible";
+    $checkContactForm= $database->DBQuery("SELECT first_name, last_name, email, reason_contact, order_nmr, phone_nmr FROM customerservice WHERE first_name = ? AND last_name = ? AND email = ? AND reason_contact = ? AND order_nmr = ? AND phone_nmr = ?",[$firstName, $lastName, $email, $reasonOfContact, $orderNmr, $phoneNumber]); 
+    if($checkContactForm == "0 results found!"){
+        $contactForm= $database->DBQuery("INSERT INTO customerservice (first_name, last_name, email, reason_contact, order_nmr, phone_nmr) values (?, ?, ?, ?, ?, ?)", [$firstName, $lastName, $email, $reasonOfContact, $orderNmr, $phoneNumber]); 
+        echo "Thank you for your message, you will hear from us as soon as possible";
+    }else
+    echo "You can't submit the same form twice";
 }
+$database->closeConnection();
 ?>
 
 <html>
-<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<form method="POST" action="/customersupport">
 * = required
 </br>
 *E-mail address: <input type="email" name="emailaddress" placeholder="example@example.com" maxlength="320" required>
 </br>
-*First name: <input type="text" name="fitstname" maxlength="45" required>
+*First name: <input type="text" name="firstname" maxlength="45" required>
 *Last name: <input type="text" name="lastname" maxlength="45" required>
 Mobile/Phonenumber: <input type='tel' name='phonenumber' placeholder='06-12345678'maxlength="11">
 </br>

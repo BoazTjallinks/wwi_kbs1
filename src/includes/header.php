@@ -51,10 +51,21 @@
 							</form>
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
-									data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
+						<li class="nav-item" role="presentation">
+								<a class="nav-link" href="#" data-toggle="modal" data-target="#login">
+									<i class="fas fa-user"></i>
+									<strong>&nbsp;Account</strong><br>
+									<?php
+									if(isset($_SESSION['isloggedIn']) && ($_SESSION['isloggedIn'] != '0 results found!')){
+										echo 'Logged in!';
+									}else{
+										echo ('Not logged in');
+									} ?>
+								</a>
 							</li>
+							
 							<li class="nav-item" role="presentation">
+								
 								<a class="nav-link" href="#" data-toggle="modal" data-target="#cart">
 								<i class="fas fa-shopping-cart"></i>
 								<?php

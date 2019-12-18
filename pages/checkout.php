@@ -1,5 +1,10 @@
 <?php
 
+
+if(!isset($_SESSION['isloggedIn'])){
+    header('Location: /home');
+}
+
 $notCompleted = false;
 
 if(empty($_POST['bank'])){
@@ -33,7 +38,37 @@ if(empty($_POST['cvccid'])){
     $_SESSION['cvccid'] = $_POST['cvccid'];
 }
 
+// $database = new database();
+// $itemsToSubtract = $database->DBQuery("SELECT si.stockitemid, si.stockitemname, sih.quantityonhand FROM stockitems AS si JOIN stockitemholdings ON si.stockitemid = sih.stockitemid WHERE si.stockitemid = ?",[$stockID]);
 
+// // var_dump($_SESSION['shoppingCart']);
+// if (isset($_SESSION['shoppingCart'])) {
+//     if (!empty($_SESSION['shoppingCart'])) {
+//         $amount = 0;
+//         for ($i=0; $i < count($_SESSION['shoppingCart']); $i++) {
+//             if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+//                 $stockID = $_SESSION['shoppingCart'][$i]['ItemID'];
+//                 $ItemAmount = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+
+
+//                 // for ($i2=0; $i2 < count($itemsToSubtract); $i2++) {
+//                 //     if ($itemsToSubtract[$i2]['StockItemID'] == $stockID) {
+//                 //         $amount = $amount + ($itemsToSubtract[$i2]['RecommendedRetailPrice'] * $ItemAmount);
+//                 //         var_dump($amount);
+//                 //     }
+//                 // }
+//                 // echo ('id: '.$stockID.' - amount: '.$ItemAmount);
+                
+//                 $stockitemid = $itemsToSubtract[$i]['stockitemid'];
+//                 $stockitemname = $itemsToSubtract[$i]['stockitemname'];
+//                 $quantityonhand = $itemsToSubtract[$i]['quantityonhand'];
+
+//                 echo ('id: '.$stockitemid.' - name: '.$stockitemname.' - amount: '.$quantityonhand);
+//             }
+//         }
+//     }
+// }
+// echo ($_SESSION['shoppingCart']['ItemID'].' - '.$_SESSION['shoppingCart']['ItemAmount']);
 
 
 if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset($_POST['submit_ideal']) && isset($_POST['submit_credit']))){
@@ -59,6 +94,8 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         </div>
                     <!--</div></div></div>-->
             ');
+            unset($_SESSION['shoppingCart']);
+            
     }
 /*----------------------------------------Submit iDeal eind----------------------------------------*/
 
@@ -90,6 +127,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                             </div>
                         </div>
                         <!--</div></div></div>-->');
+                        unset($_SESSION['shoppingCart']);
             }else{
                 $notCompleted = true;
             }

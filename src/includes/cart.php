@@ -41,10 +41,10 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
             <div class="modal-body wwi_auth_modal">
                 <?php
                     if (!isset($_SESSION['shoppingCart'])) {
-                        echo '<center><h3 class="wwi_maincolor wwi_padding_normal"><strong>You got nothing in your cart :(</strong></h3></center>';
+                        echo '<center><h3 class="wwi_maincolor wwi_padding_normal"><strong>You got nothing in your cart...</strong></h3></center>';
                     } else {
                         if (empty($_SESSION['shoppingCart'])) {
-                            echo '<center><h3 class="wwi_maincolor wwi_padding_normal"><strong>You got nothing in your cart :(</strong></h3></center>';
+                            echo '<center><h3 class="wwi_maincolor wwi_padding_normal"><strong>You got nothing in your cart...</strong></h3></center>';
                         } else {
                             ?>
 
@@ -132,7 +132,11 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                                     echo '<h5 class="wwi_padding_left_normal"><strong>TAX&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h5 class="wwi_padding_left_normal"><strong>SHIPPING COSTS&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h1 class="wwi_padding_left_normal"><strong>TOTAL&nbsp;</strong>€'.$total.'</h1>';
-                                    echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
+                                    if(isset($_SESSION['isloggedIn'])){
+                                        echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
+                                    }else{
+                                        echo '<div class="align-middle wwi_padding_left_normal"><!--<a href="/checkout">--><strong>You\'ll need to log in first!</strong><!--</a>--></div>';
+                                    }
                                 }
                             } ?>
                                 </div>
