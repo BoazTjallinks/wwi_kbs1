@@ -51,7 +51,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                                         <h4 class="modal-title">Payment completed</h4><a href="/home"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></a></div>
                                     <div class="modal-body">
                                         <h5>Your order will be processed</h5>
-                                        <p>Thank you for paying with '.$_SESSION['bank'].' using iDeal.<br>Until next time!</p>
+                                        <p>Thank you for paying through '.$_SESSION['bank'].' using iDeal.<br>Until next time!</p>
                                     </div>
                                     <div class="modal-footer"><a href="/home"><button class="btn btn-primary" id="go-homepage-button" type="button">Go to homepage</button></a></div>
                                 </div>
