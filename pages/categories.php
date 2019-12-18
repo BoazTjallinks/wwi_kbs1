@@ -5,7 +5,8 @@
  */
 
 
-class cat {
+class cat
+{
     protected $options = [
         "limit",
         "colorid",
@@ -16,7 +17,8 @@ class cat {
     
     private $defaultvalue;
     
-    public function setFilter($size) {
+    public function setFilter($size)
+    {
         $this->defaultvalue = [
             25,
             "nAn",
@@ -26,13 +28,15 @@ class cat {
         ];
     }
     
-    public function checkGetParams() {
-        if (!isset($_GET['catid']) || !isset($_GET['page'])){
+    public function checkGetParams()
+    {
+        if (!isset($_GET['catid']) || !isset($_GET['page'])) {
             header('location: /home');
         }
     }
     
-    public function checkFilterSession() {    
+    public function checkFilterSession()
+    {
         for ($i=0; $i < count($this->options); $i++) {
             if (!isset($_SESSION[$this->options[$i]])) {
                 $_SESSION[$this->options[$i]] = $this->defaultvalue[$i];
@@ -40,7 +44,8 @@ class cat {
         }
     }
     
-    public function clearSession() {
+    public function clearSession()
+    {
         for ($i=0; $i < count($this->options); $i++) {
             unset($_SESSION[$this->options[$i]]);
             if ($i == (count($this->options)-1)) {
@@ -49,11 +54,13 @@ class cat {
         }
     }
     
-    public function getOptions() {
+    public function getOptions()
+    {
         return $this->options;
     }
     
-    public function getDefaultnr($param) {
+    public function getDefaultnr($param)
+    {
         for ($i=0; $i < count($this->options); $i++) {
             if ($param == $this->options[$i]) {
                 return $this->defaultvalue[$i];
@@ -126,10 +133,7 @@ if ($size !== $function->getDefaultnr('size')) {
     print_r(count($stockCategories));
 }
 
-for ($i=0; $i < count($stockCategories); $i++) { 
-    print_r($stockCategories[$i]['StockItemName']);
-    echo '</br>';
-}
+
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
 $maxPages = 100;
@@ -145,14 +149,12 @@ $mpageplus = $minPages + 1;
 $mpageplusTwo = $minPages + 2;
 $mpageplusThree = $minPages + 3;
 
-if($maxPages <= $minPages){
+if ($maxPages <= $minPages) {
     $page = 1;
     echo 'Disabled';
-}
-elseif($page < 1){
+} elseif ($page < 1) {
     header('Location: /home');
-}
-elseif($page > $maxPages){
+} elseif ($page > $maxPages) {
     header('Location: /home');
 }
 elseif($maxPages >= 2 AND $maxPages <= 4){
@@ -194,9 +196,8 @@ print('<div class="row container">');
 for ($i=0; $i < count($stockCategories); $i++) {
     $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$stockCategories[$i]['StockItemID']]);
     if ($getimg == '0 results found!') {
-        $img = '/public/img/product/no-image.png';
-    }
-    else {
+        $img = '/public/img/products/no-image.png';
+    } else {
         $img = $getimg[0]['ImagePath'];
     }
 
