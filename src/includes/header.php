@@ -30,8 +30,9 @@
 	<section id="html-body" class="container-fluid d-none d-lg-block">
 		<section id="hidden" class="d-none d-lg-block">
 			<?php
-				require('../src/includes/login.php');
-			?>
+                require('../src/includes/login.php');
+                require('../src/includes/cart.php');
+            ?>
 		</section>
 		<section id="header" class="d-none d-lg-block">
 			<nav class="navbar navbar-light navbar-expand-md sticky-top bg-light">
@@ -54,8 +55,19 @@
 							<li class="nav-item" role="presentation"><a class="nav-link" href="#" data-toggle="modal"
 									data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong></a>
 							</li>
-							<li class="nav-item" role="presentation"><a class="nav-link" href="#"><i
-										class="fas fa-shopping-cart"></i><strong>&nbsp;Cart</strong></a></li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" href="#" data-toggle="modal" data-target="#cart">
+								<i class="fas fa-shopping-cart"></i>
+								<?php
+
+                                if (!isset($_SESSION['shoppingCart'])) {
+                                    echo '<strong>&nbsp;Cart</strong>';
+                                } else {
+                                    echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                }
+                                ?>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
