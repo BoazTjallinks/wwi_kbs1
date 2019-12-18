@@ -51,17 +51,20 @@
 							</form>
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
-						<?php if(isset($_SESSION['isloggedIn'])){
-											echo 'Logged in!';
-											var_dump($_SESSION['isloggedIn']);
-
-										}else{
-											var_dump($_SESSION['isloggedIn']);
-										} ?>
-							<li class="nav-item" role="presentation">
+						<li class="nav-item" role="presentation">
 								<a class="nav-link" href="#" data-toggle="modal" data-target="#login">
 									<i class="fas fa-user"></i>
-									<strong>&nbsp;Account</strong>
+									<strong>&nbsp;Account</strong><br>
+									<?php
+									// var_dump($_SESSION['isloggedIn']);
+									if(isset($_SESSION['isloggedIn']) && ($_SESSION['isloggedIn'] != '0 results found!')){
+										echo 'Logged in!';
+										// var_dump($_SESSION['isloggedIn']);
+
+									}else{
+										echo ('Not logged in');
+										// var_dump($_SESSION['isloggedIn']);
+									} ?>
 								</a>
 							</li>
 							
