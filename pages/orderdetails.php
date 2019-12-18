@@ -13,11 +13,16 @@ if(!isset($_GET['OrderID'])){
 
 $orderID = $_GET['OrderID'];
 
+
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]); 
+if($orderDetails == '0 results found!'){
+    header('location: /orderhistory?page=1');
+}
+
 
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate
 FROM orders O 
