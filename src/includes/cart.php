@@ -135,11 +135,8 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                                     if(isset($_SESSION['isloggedIn'])){
                                         echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
                                     }else{
-                                        // echo 'Please login first to check your order history';
-                                        echo '<div class="align-middle wwi_padding_left_normal"><!--<a href="/checkout">--><strong>Please login first to check your shopping cart!</strong><!--</a>--></div>';
-
+                                        echo '<div class="align-middle wwi_padding_left_normal"><!--<a href="/checkout">--><strong>You\'ll need to log in first!</strong><!--</a>--></div>';
                                     }
-                                    // echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
                                 }
                             } ?>
                                 </div>
