@@ -27,14 +27,14 @@
 </head>
 
 <body>
-	<section id="html-body" class="container-fluid d-none d-lg-block">
-		<section id="hidden" class="d-none d-lg-block">
+	<section id="html-body" class="container-fluid ">
+		<section id="hidden" class="">
 			<?php
                 require('../src/includes/login.php');
                 require('../src/includes/cart.php');
             ?>
 		</section>
-		<section id="header" class="d-none d-lg-block">
+		<section id="header" class="">
 			<nav class="navbar navbar-light navbar-expand-md sticky-top bg-light">
 				<div class="container-fluid"><a href="/home"><img class="navbar-brand wwi_nav_img" src="public/img/wwi/logo.png"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
 						<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
