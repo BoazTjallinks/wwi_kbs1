@@ -51,18 +51,27 @@
 							</form>
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
-						<?php if(isset($_SESSION['isloggedIn'])){
-											echo 'Logged in!';
-											var_dump($_SESSION['isloggedIn']);
+						<li class="nav-item" role="presentation">
+								
+								<?php
+                                // <a class="nav-link" href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong><br></a>
+                                    if (isset($_SESSION['isloggedIn'])) {
+                                        ?>
+								<div class="dropdown show">
+									<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-user"></i>&nbsp;Account
+									</a>
 
-										}else{
-											var_dump($_SESSION['isloggedIn']);
-										} ?>
-							<li class="nav-item" role="presentation">
-								<a class="nav-link" href="#" data-toggle="modal" data-target="#login">
-									<i class="fas fa-user"></i>
-									<strong>&nbsp;Account</strong>
-								</a>
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+										<a class="dropdown-item" href="/orderhistory">Order history</a>
+										<a class="dropdown-item" href="/logout">Logout</a>
+									</div>
+                                </div>
+									<?php
+                                    } else {
+                                        echo('<a class="nav-link" href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong><br></a>');
+                                        // logout
+                                    } ?>
 							</li>
 							
 							<li class="nav-item" role="presentation">
@@ -84,45 +93,26 @@
 				</div>
 			</nav>
 		
-	<!-- <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <div class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Clothing</a>
-                        <div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" role="presentation" href="#">Clothing</a>
-							<a class="dropdown-item" role="presentation" href="#">T-shirts</a>
-							<a class="dropdown-item" role="presentation" href="#">Furry footwear</a>
-						</div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Electronics</a>
-                        <div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" role="presentation" href="#">Computing Novelties</a>
-							<a class="dropdown-item" role="presentation" href="#">USB Novelties</a>
-						</div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Miscellaneous&nbsp;</a>
-                        <div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" role="presentation" href="#">Novelty Items</a>
-							<a class="dropdown-item" role="presentation" href="#">Airline Novelties</a>
-							<a class="dropdown-item" role="presentation" href="#">Toys</a>
-						</div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Household</a>
-                        <div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" role="presentation" href="#">Mugs</a>
-							<a class="dropdown-item" role="presentation" href="#">Packaging Materials</a>
-						</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav> -->
+			<nav class="navbar navbar-light navbar-expand-md">
+        		<div class="container-fluid">
+            		<div class="row">
+						<?php
+                            $database = new database();
+                            $getstockgroups = $database->DBQuery("SELECT * FROM stockgroups", []);
+                            $getStockgroupCategories = $database->DBQuery("SELECT * FROM stockgroupscategories", []);
+                            
+                            $database->closeConnection();
+                            for ($i=0; $i < count($getStockgroupCategories); $i++) {
+                                echo '<div class="col"><div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">'.$getStockgroupCategories[$i]['sgCategoriesName'].'&nbsp;</a><div class="dropdown-menu" role="menu">';
+                                for ($i2=0; $i2 < count($getstockgroups); $i2++) {
+                                    if ($getStockgroupCategories[$i]['sgCategoriesID'] == $getstockgroups[$i2]['StockGroupParent']) {
+                                        echo '<a class="dropdown-item" role="presentation" href="/categories?catid='.$getstockgroups[$i2]['StockGroupID'].'&page=1">'.$getstockgroups[$i2]['StockGroupName'].'</a>';
+                                    }
+                                }
+                                echo '</div></div></div>';
+                            }
+                        ?>
+					</div>
+        		</div>
+    		</nav>
 	</section>
