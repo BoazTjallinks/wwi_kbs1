@@ -125,4 +125,4 @@
             $_SESSION['limit'] = 25;
         }
     }
-    print_r($_SESSION);
+    // print_r($_SESSION);
