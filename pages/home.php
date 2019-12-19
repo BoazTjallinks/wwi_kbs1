@@ -151,10 +151,10 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 			</div>
 		</section>
 	</section>
-	
+	<section>
 			<!-- Populaire producten --> 
-			<div class="col-xl-15 offset-xl-0">
-				<div class="container">
+			<div class="col-xl-12 offset-xl-0">
+					<div class="container">
 					<div class="row">
 						<div class="col">
 							<div>
