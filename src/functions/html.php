@@ -34,12 +34,16 @@ function showItem($productId, $productImage, $productName, $productSpecial, $pro
     echo '<div class="col"><h3 class="wwi_text_right">€'.$productPrice.'<br></h3></div></div></div></div></div>';
 }
 
-function showInput(int $amount, array $inputName, array $inputId, array $inputTitle, array $inputType, array $formClass, array $inputPlaceholder, array $inputClass)
+function showInput(int $amount, array $inputName, array $inputId, array $inputTitle, array $inputType, array $formClass, array $inputPlaceholder, array $inputClass, array $isRequired)
 {
     for ($i=0; $i < $amount; $i++) {
         echo '<div class="form-group '.$formClass[$i].'">';
         echo '<label for="'.$inputId[$i].'">'.$inputTitle[$i].'</label>';
-        echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'">';
+        if ($isRequired[$i] == true) {
+            echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'" required>';
+        } else {
+            echo '<input name="'.$inputName[$i].'" type="'.$inputType[$i].'" class="form-control '.$inputClass[$i].'" id="'.$inputId[$i].'" placeholder="'.$inputPlaceholder[$i].'">';
+        }
         echo '</div>';
     }
 }
