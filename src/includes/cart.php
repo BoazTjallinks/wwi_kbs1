@@ -100,11 +100,18 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                         <div class="col wwi_padding_normal bg-light">
                             <h1 class="wwi_frontsize_normal wwi_padding_left_normal"><strong>Shipping information</strong></h1>
                             <div class="wwi_padding_left_normal wwi_fontsize_xtrasmall">
-                                <p><strong>Name</strong> Ton Scholma</p>
-                                <p><strong>Street</strong> Tontonstraat 25b</p>
-                                <p><strong>Postal</strong> 7426TT</p>
-                                <p><strong>City</strong> Zwolle</p>
-                                <p><strong>Country</strong>&nbsp;Netherlands</p>
+                            <?php
+                                if (isset($_SESSION['isloggedIn'])) {
+                                    $customerInfo = $database->DBQuery('SELECT * FROM webCustomer WHERE wCustomerID = ?', [$_SESSION['isloggedIn']]);
+                                    // print_r($_SESSION['isloggedIn']);
+                                    echo '<p><strong>Name</strong> '.$customerInfo[0]['wCustomerName'].'</p>';
+                                    echo '<p><strong>Address</strong> '.$customerInfo[0]['wCustomerStreetPostal'].'</p>';
+                                    echo '<p><strong>Street</strong> '.$customerInfo[0]['wCustomerStreetname'].' '.$customerInfo[0]['wCustomerStreetNumber'].'</p>';
+                                    echo '<p><strong>City</strong> '.$customerInfo[0]['wCustomerCity'].'</p>';
+                                    echo '<p><strong>Country</strong>&nbsp;'.$customerInfo[0]['wCustomerCountry'].'</p>';
+                                } else {
+                                    echo '<div class="align-middle wwi_padding_left_normal"><!--<a href="/checkout">--><strong>You\'ll need to log in first!</strong><!--</a>--></div>';
+                                } ?>
                             </div>
                         </div>
                         <div class="col wwi_mainbgcolor wwi_padding_normal wwi_text_light">
@@ -132,9 +139,9 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                                     echo '<h5 class="wwi_padding_left_normal"><strong>TAX&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h5 class="wwi_padding_left_normal"><strong>SHIPPING COSTS&nbsp;</strong>€'.$tax.'</h5>';
                                     echo '<h1 class="wwi_padding_left_normal"><strong>TOTAL&nbsp;</strong>€'.$total.'</h1>';
-                                    if(isset($_SESSION['isloggedIn'])){
+                                    if (isset($_SESSION['isloggedIn'])) {
                                         echo '<div class="align-middle wwi_padding_left_normal"><a href="/checkout"><button class="btn btn-light btn-lg wwi_maincolor" type="button"><strong>Proceed to checkout</strong></button></a></div>';
-                                    }else{
+                                    } else {
                                         echo '<div class="align-middle wwi_padding_left_normal"><!--<a href="/checkout">--><strong>You\'ll need to log in first!</strong><!--</a>--></div>';
                                     }
                                 }

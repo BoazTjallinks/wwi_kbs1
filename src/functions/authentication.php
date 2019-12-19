@@ -25,9 +25,9 @@ class auth
         $_SESSION['isloggedIn'] = $usertoken;
     }
 
-    public function register($username, $password, $repeat, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName)
+    public function register($username, $password, $repeat, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName, $customerStreetName, $customerStreetCity)
     {
-        if (empty($username) || empty($password) || empty($repeat) || empty($customerCountry) || empty($customerStreetNumber) || empty($customerStreetPostal) || empty($customerName)) {
+        if (empty($username) || empty($password) || empty($repeat) || empty($customerCountry) || empty($customerStreetNumber) || empty($customerStreetPostal) || empty($customerName)|| empty($customerStreetCity)|| empty($customerStreetName)) {
             return showSwall('Something went wrong!', "Please fill all fields!", "error", "");
         }
 
@@ -43,7 +43,7 @@ class auth
 
         if ($checklogin == '0 results found!') {
             // $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password, '1']);
-            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName)  value (?, ?, ?, ?, ?, ?, ?)', [$this->username, $this->password, '1', $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName]);
+            $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName, wCustomerCity, wCustomerStreetname)  value (?, ?, ?, ?, ?, ?, ?, ?, ?)', [$this->username, $this->password, '1', $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName, $customerStreetCity, $customerStreetName]);
             // INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName)
             print_r($regist);
             if ($regist == '0 results found!') {
@@ -71,7 +71,7 @@ class auth
         if ($result == '0 results found!') {
             return showSwall('Error!', "Username or password is wrong!", "error", "");
         } else {
-            $this->generateSession(mysqli_fetch_assoc($result)['wCustomerID']);
+            $this->generateSession($result[0]['wCustomerID']);
             return showSwall('Good job!', "Successfully logged in!", "success", "");
         }
     }
