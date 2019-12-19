@@ -66,7 +66,7 @@ function Dealbutton ($checkDeals){
 
 
 // populaire producten query
-$PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailprice, searchdetails,  ol.stockitemid, count(ol.stockitemid) AS aantal FROM orderlines AS ol JOIN stockitems AS si ON ol.stockitemid = si.stockitemid GROUP BY ol.stockitemid ORDER BY aantal DESC LIMIT ?", [6]);
+$PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailprice, searchdetails,  ol.stockitemid, count(ol.stockitemid) AS aantal FROM orderlines AS ol JOIN stockitems AS si ON ol.stockitemid = si.stockitemid GROUP BY ol.stockitemid ORDER BY aantal DESC LIMIT ?", [9]);
 
 ?>
 
@@ -151,16 +151,9 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 			</div>
 		</section>
 	</section>
-	<section id="homequathead" class="wwi_text_left wwi_float_left">
-		<div class="row container-fluid wwi_margin_top_normal">
-			<div class="col-xl-2 offset-xl-1 wwi_bgsidebar d-none d-lg-block wwi_mat_3">
-				<h1 class="wwi_light wwi_textalign_center"><strong>Categories</strong></h1>
-				<ul class="list-unstyled">
-				<li> No items </li>
-				</ul>
-			</div>
+	
 			<!-- Populaire producten --> 
-			<div class="col-xl-8 offset-xl-0">
+			<div class="col-xl-15 offset-xl-0">
 				<div class="container">
 					<div class="row">
 						<div class="col">
@@ -172,7 +165,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 					<div class="row row-flex">
                     <?php
                         if ($PopularProducts == !0) {
-                            for ($a=0; $a < 6; $a++) {
+                            for ($a=0; $a < 9; $a++) {
                                 $getimg = $database->DBQuery('SELECT * FROM picture WHERE stockitemid = ? AND isPrimary IS NOT NULL', [$PopularProducts[$a]['stockitemid']]);
                                 if ($getimg == '0 results found!') {
                                     $img = '/public/img/products/no-image.png';
