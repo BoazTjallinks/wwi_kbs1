@@ -246,8 +246,11 @@ $mpageplusThree = $minPages + 3;
                         } else {
                             $img = $getimg[0]['ImagePath'];
                         }
-                        
-                        showItem($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice']);
+                        if($checkDeals ='0 results found!'){
+                            showItem($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice']);
+                        }else{ 
+                            showItemAndDeals($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice'], $checkDeals[$i]['DiscountPercentage'] );
+                        }
                     }
                     ?>
                     </div>

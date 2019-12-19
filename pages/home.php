@@ -18,13 +18,7 @@ $database = new database();
 
 $discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SD.StockItemID, SI.RecommendedRetailPrice FROM specialdeals AS SD  LEFT JOIN stockitems AS SI  ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?", [1]);
 
-$checkDeals = $database->DBQuery('SELECT StartDate, EndDate, DiscountAmount, DealDescription, DiscountPercentage, SD.StockItemID, SD.StockGroupID, SI.StockItemName, SI.RecommendedRetailPrice, SG.stockgroupname
-FROM specialdeals AS SD
-LEFT JOIN stockitems AS SI 
-ON SD.StockItemID = SI.StockItemID 
-LEFT JOIN stockgroups AS SG
-ON SD.StockgroupID = SG.StockgroupID
-WHERE UTC_DATE BETWEEN StartDate AND EndDate', []);
+$checkDeals = $database->DBQuery('SELECT StartDate, EndDate, DiscountAmount, DealDescription, DiscountPercentage, SD.StockItemID, SD.StockGroupID, SI.StockItemName, SI.RecommendedRetailPrice, SG.stockgroupname FROM specialdeals AS SD LEFT JOIN stockitems AS SI ON SD.StockItemID = SI.StockItemID LEFT JOIN stockgroups AS SG ON SD.StockgroupID = SG.StockgroupID WHERE UTC_DATE BETWEEN StartDate AND EndDate', []);
 
 // Checkt voor active deals
 function checkDeals($checkDeals)
@@ -33,13 +27,11 @@ function checkDeals($checkDeals)
         for ($i=0; $i < count($checkDeals); $i++) {
             if ($checkDeals[$i]['StockItemID'] == 0) {	
 				print("<h1 class='wwi_text_light'><strong>".$checkDeals[$i]['stockgroupname']."</strong></h1>");
-				//print("<h3 class='wwi_text_light'><strong>".round($checkDeals[$i]['DiscountPercentage'],0)." % Discount!</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
 
 			} elseif ($checkDeals[$i]['StockGroupID'] == 0) {
 				print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockItemName']</strong></h1>");
-				//print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DiscountPercentage']." Discount!</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
             } else {
@@ -171,11 +163,15 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
                                     $img = '/public/img/products/no-image.png';
                                 } else {
                                     $img = $getimg[0]['ImagePath'];
-                                }
-                                
+								}
+								
+                                if($checkDeals ='0 results found!'){
                                 showItem($PopularProducts[$a]['stockitemid'], $img, $PopularProducts[$a]['stockitemname'], '', $PopularProducts[$a]['searchdetails'], $PopularProducts[$a]['recommendedretailprice']);
-                            }
-                        } else {
+                            }else{ 
+								showItemAndDeals($PopularProducts[$a]['stockitemid'], $img, $PopularProducts[$a]['stockitemname'], '', $PopularProducts[$a]['searchdetails'], $PopularProducts[$a]['recommendedretailprice'], $checkDeals[1]['DiscountPercentage'] );
+							}
+						}
+						} else {
                             print("Popular products are temporarily unavailable ");
                         }
                     ?>
