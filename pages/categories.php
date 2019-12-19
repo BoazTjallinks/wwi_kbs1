@@ -96,7 +96,10 @@ $stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stock
 $stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ? OFFSET ?', [$cat, $limit, $offset]);
 
 
-
+if ($stockAllCategories == '0 results found!') {
+    echo 'No items in this categorie!';
+    return false;
+}
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
     $getcolor = [];

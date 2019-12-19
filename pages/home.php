@@ -170,26 +170,6 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 										type="button"><strong>View product</strong></button>
 								</div>
 							</div>
-							<?php
-
-                            for ($i=0; $i < 5; $i++) {
-                                ?>
-							<div class="carousel-item active wwi_50minheight"><img
-									class="w-100 d-block wwi_25width wwi_25height .wwi_banner_img wwi_banner_img_overlay"
-									src="public/img/products/testproduct.png" alt="Slide Image">
-								<div class="wwi_banner_blue_bgcolr"></div>
-								<div>
-									<div class="wwi_banner_text_overlay">
-										<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
-										<h3 class="wwi_text_light"><strong>30% off</strong></h3>
-										<h3 class="wwi_text_light"><strong>..</strong></h3>
-									</div><button class="btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor"
-										type="button"><strong>View product</strong></button>
-								</div>
-							</div>
-							<?php
-                            }
-                            ?>
 						</div>
 						<div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span
 									class="sr-only">Previous</span></a><a class="carousel-control-next"
