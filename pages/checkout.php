@@ -68,11 +68,15 @@ if(empty($_POST['cvccid'])){
 //         }
 //     }
 // }
-for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
-    if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
-        echo ($_SESSION['shoppingCart'][$i]['ItemID'].' - '.$_SESSION['shoppingCart'][$i]['ItemAmount']);
-    }
-}
+
+$database = new database();
+
+
+
+// echo($itemsToSubtract[0]['quantityonhand'].'<br>');
+// print_r($_SESSION['shoppingCart'][$i]['ItemID'].' - '.$_SESSION['shoppingCart'][$i]['ItemAmount'].'<br>');
+// echo($itemsToSubtract[$i]['stockitemid'].' - '.$itemsToSubtract[$i]['stockitemname'].' - '.$itemsToSubtract['quantityonhand']);
+
 
 
 if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset($_POST['submit_ideal']) && isset($_POST['submit_credit']))){
@@ -98,8 +102,27 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         </div>
                     <!--</div></div></div>-->
             ');
-            unset($_SESSION['shoppingCart']);
+
+            for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
+                if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
             
+                    $shoppedID = $_SESSION['shoppingCart'][$i]['ItemID'];
+                    $shoppedAmount = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+            
+                    $itemsToSubtract = $database->DBQuery("SELECT StockItemID, QuantityOnHand FROM quantity_test WHERE stockitemid = ?",[$shoppedID]);
+                    $instock = $itemsToSubtract[0]['QuantityOnHand'];
+                    
+                    $newinstock = $instock - $shoppedAmount;
+                    // echo ('itemid: '.$shoppedID.' amount to buy: '.$shoppedAmount.' amount in stock: '.$instock.' nieuw in stock: '.$newinstock.'<br>');
+            
+                    $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
+                    
+                }
+            }
+
+            unset($_SESSION['shoppingCart']);
+            $database->closeConnection();
+
     }
 /*----------------------------------------Submit iDeal eind----------------------------------------*/
 
@@ -131,7 +154,27 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                             </div>
                         </div>
                         <!--</div></div></div>-->');
+
+                        for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
+                            if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+                        
+                                $shoppedID = $_SESSION['shoppingCart'][$i]['ItemID'];
+                                $shoppedAmount = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+                        
+                                $itemsToSubtract = $database->DBQuery("SELECT StockItemID, QuantityOnHand FROM quantity_test WHERE stockitemid = ?",[$shoppedID]);
+                                $instock = $itemsToSubtract[0]['QuantityOnHand'];
+                                
+                                $newinstock = $instock - $shoppedAmount;
+                                // echo ('itemid: '.$shoppedID.' amount to buy: '.$shoppedAmount.' amount in stock: '.$instock.' nieuw in stock: '.$newinstock.'<br>');
+                        
+                                $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
+                                
+                            }
+                        }
+
                         unset($_SESSION['shoppingCart']);
+                        $database->closeConnection();
+
             }else{
                 $notCompleted = true;
             }
