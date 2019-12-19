@@ -172,5 +172,27 @@
 }
 
 
-/*-------------------------------EINDE CSS VOOR DE PRODUCTPAGINA----------------------------------*/
+/*-------------------------------EINDE css voor de PRODUCTPAGINA----------------------------------*/
 
+/*-------------------------------BEGIN css voor de CHECKOUT----------------------------------*/
+
+#paymentbutton-credit{
+  width:94%;
+  margin:3%;
+  background-color:#4DBFF2;
+  border-color:#4DBFF2
+}
+#paymentbutton-ideal{
+  width:94%;
+  margin:3%;
+  background-color:#4DBFF2;
+  border-color:#4DBFF2
+}
+
+#go-homepage-button {
+  background-color: #4DBFF2;
+  border-color: #4DBFF2;
+}
+
+
+/*-------------------------------EINDE css voor de CHECKOUT----------------------------------*/

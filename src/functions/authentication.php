@@ -59,7 +59,8 @@ class auth
     public function login($username, $password)
     {
         if (empty($username) || empty($password)) {
-            return 'Please fill all fields!';
+            // return 'Please fill all fields!';
+            return showSwall('Something went wrong!', "Please fill all fields!", "error", "");
         }
 
         $this->username = $username;
@@ -67,16 +68,16 @@ class auth
 
         $result =  $this->db->DBQuery('SELECT * FROM webCustomer WHERE wCustomerEmail = ? AND wCustomerPassword = ?', [$this->username, $this->password]);
 
-        $this->generateSession(mysqli_fetch_assoc($result)['wCustomerID']);
-
-        return showSwall('Good job!', "Successfully logged in!", "success", "");
+        if ($result == '0 results found!') {
+            return showSwall('Error!', "Username or password is wrong!", "error", "");
+        } else {
+            $this->generateSession(mysqli_fetch_assoc($result)['wCustomerID']);
+            return showSwall('Good job!', "Successfully logged in!", "success", "");
+        }
     }
     
     public function logout()
     {
         unset($_SESSION['isloggedIn']);
-
-        session_destroy();
-        session_regenerate_id(true);
     }
 }
