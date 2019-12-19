@@ -45,11 +45,10 @@ class auth
             // $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms) value (?, ?, ?)', [$this->username, $this->password, '1']);
             $regist = $this->db->DBQuery('INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName, wCustomerCity, wCustomerStreetname)  value (?, ?, ?, ?, ?, ?, ?, ?, ?)', [$this->username, $this->password, '1', $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName, $customerStreetCity, $customerStreetName]);
             // INSERT INTO webCustomer (wCustomerEmail, wCustomerPassword, wCustomerPerms, wCustomerCountry, wCustomerStreetNumber, wCustomerStreetPostal, wCustomerName)
-            print_r($regist);
             if ($regist == '0 results found!') {
                 return showSwall('Something went wrong!', "Can not register.", "error", "");
             } else {
-                // echo $this->login($username, hashString($password));
+                echo $this->login($username, hashString($password));
             }
         } else {
             return showSwall('Something went wrong!', "Can not register.", "error", "");

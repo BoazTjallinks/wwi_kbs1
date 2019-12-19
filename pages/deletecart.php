@@ -11,7 +11,7 @@ if (isset($_GET['itemid']) && isset($_GET['redirect'])) {
             if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
                 if ($_SESSION['shoppingCart'][$i]['ItemID'] == $itemid) {
                     $_SESSION['shoppingCart'][$i] = 'nAn';
-                    array_splice($_SESSION['shoppingCart'], $i, $i);
+                    // array_splice($_SESSION['shoppingCart'], $i, $i);
                     header('location: '.$redirect.'#cart');
                 }
             } else {
