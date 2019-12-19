@@ -49,12 +49,12 @@ Mobile/Phonenumber: <input type='tel' name='phonenumber' placeholder='06-1234567
     <form method="POST" action="/customersupport" class="wwi_padding_normal">
     <h1>Contact form</h1>
         <?php
-            echo showInput(1, ['emailaddress'], ['csupportEmail'], ['Email address'], ['email'], [''], [''], ['wwi_mat_3'], []);
+            echo showInput(1, ['emailaddress'], ['csupportEmail'], ['Email address'], ['email'], [''], [''], ['wwi_mat_3'], [true]);
             echo '<div class="form-row">';
-            echo showInput(2, ['firstname', 'lastname'], ['csupportFirstname', 'csupportLastname'], ['Fist name', 'Last name'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3']);
+            echo showInput(2, ['firstname', 'lastname'], ['csupportFirstname', 'csupportLastname'], ['First name', 'Last name'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
             echo '</div>';
             echo '<div class="form-row">';
-            echo showInput(2, ['phonenumber', 'ordernumber'], ['csupportPhonenumber', 'csupportOrdernumber'], ['Phone number', 'Order Number'], ['tel', 'number'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3']);
+            echo showInput(2, ['phonenumber', 'ordernumber'], ['csupportPhonenumber', 'csupportOrdernumber'], ['Phone number', 'Order Number'], ['tel', 'number'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, '']);
             echo '</div>';
         ?>
         

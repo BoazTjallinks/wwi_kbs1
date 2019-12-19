@@ -97,7 +97,7 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
                                                     <input class="form-control" name="password" type="password" id="Password" placeholder="Password">
                                                 </div>
                                                 <?php
-                                                    echo showInput(2, ['SDKGJKEAHT', 'ABSFUIGSAF'], ['loginEmail', 'loginPassword'], ['Email address', 'Password'], ['email', 'password'], ['', ''], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], []);
+                                                    echo showInput(2, ['SDKGJKEAHT', 'ABSFUIGSAF'], ['loginEmail', 'loginPassword'], ['Email address', 'Password'], ['email', 'password'], ['', ''], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
                                                 ?>
 
                                                 <!-- wwi_login_h0n3y -->
@@ -123,9 +123,9 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
                                         <input class="form-control" type="password" name="password2" placeholder="Repeat password">
                                     </div>
                                     <?php
-                                        echo showInput(2, ['aspighogasp', 'iughafvgohwbwh'], ['registerName', 'registerEmail'], ['Your name', 'Your email'], ['text', 'email'], ['', ''], ['Name', 'Email'], ['wwi_mat_3', 'wwi_mat_3'], []);
+                                        echo showInput(2, ['aspighogasp', 'iughafvgohwbwh'], ['registerName', 'registerEmail'], ['Your name', 'Your email'], ['text', 'email'], ['', ''], ['Name', 'Email'], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
                                         echo '<div class="form-row">';
-                                        echo showInput(2, ['asfjhgwfhkkw', 'wqpbuhwrgwgui'], ['registerPassword', 'registerRepeat'], ['Password', 'Repeat'], ['password', 'password'], ['col-md-6', 'col-md-6'], ['Password', 'Repeat Password'], ['wwi_mat_3', 'wwi_mat_3']);
+                                        echo showInput(2, ['asfjhgwfhkkw', 'wqpbuhwrgwgui'], ['registerPassword', 'registerRepeat'], ['Password', 'Repeat'], ['password', 'password'], ['col-md-6', 'col-md-6'], ['Password', 'Repeat Password'], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
                                         echo '</div>';
                                         echo '<div class="form-row">';
                                     ?>
@@ -435,10 +435,11 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
                                         </div>
 
                                     <?php
-                                        echo showInput(2, ['asklfjogasoi', 'alskhasg'], ['registerZip', 'registerNumber'], ['Zip', 'Number'], ['text', 'text'], ['col-md-4', 'col-md-2'], ['', ''], ['wwi_mat_3', 'wwi_mat_3']);
+                                        echo showInput(2, ['asklfjogasoi', 'alskhasg'], ['registerZip', 'registerNumber'], ['Zip', 'Number'], ['text', 'text'], ['col-md-4', 'col-md-2'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
                                         echo '</div>';
                                         echo '<div class="form-row">';
-                                        echo showInput(2, ['ewfeokhgebdgs', 'pueqglbfwq'], ['registerStreetName', 'registerCity'], ['Street', 'City'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['Street name', 'City name'], ['wwi_mat_3', 'wwi_mat_3']);                                        echo '</div>';
+                                        echo showInput(2, ['ewfeokhgebdgs', 'pueqglbfwq'], ['registerStreetName', 'registerCity'], ['Street', 'City'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['Street name', 'City name'], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
+                                        echo '</div>';
                                     ?>
                                     <!-- <div class="form-group col-md-4">
                                         <label for="inputZip">Zip</label>
