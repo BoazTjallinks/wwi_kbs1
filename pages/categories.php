@@ -96,7 +96,10 @@ $stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stock
 $stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ? OFFSET ?', [$cat, $limit, $offset]);
 
 
-
+if ($stockAllCategories == '0 results found!') {
+    echo 'No items in this categorie!';
+    return false;
+}
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
     $getcolor = [];
@@ -133,7 +136,6 @@ if ($size !== $function->getDefaultnr('size')) {
 
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
-// $maxPages = 100;
 $minPages = 1;
 $pagemin = $page - 1;
 $pageminTwo = $page - 2;
@@ -192,27 +194,8 @@ $mpageplusThree = $minPages + 3;
                                 <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
 
                                         <?php
-                                        // $amountPages = ceil(count($stockAllCategories) / $limit);
-                                        // print_r('<li>'.$amountPages.'</li>');
-                                        
-                                        // if ($amountPages > 5) {
-                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
-                                        //     for ($i=0; $i < $amountPages; $i++) {
-                                        //         echo '<li class="page-item"><a class="page-link" href="#">'.$i.'</a></li>';
-                                        //     }
-                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
-                                        // } else {
-                                        //     for ($i=0; $i < $amountPages; $i++) {
-                                        //         if (($i + 1) == $page) {
-                                        //             echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
-                                        //         } else {
-                                        //             echo '<li class="page-item"><a class="page-link" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
-                                        //         }
-                                        //     }
-                                        // }
                                         if ($maxPages <= $minPages) {
                                             $page = 1;
-                                        // echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page=1">1</a></li>';
                                         } elseif ($page < 1) {
                                             header('Location: /home');
                                         } elseif ($page > $maxPages) {
@@ -243,7 +226,7 @@ $mpageplusThree = $minPages + 3;
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=1' class='button page-link'>1</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageminTwo' class='button page-link'>...</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminThree' class='button page-link'>$mpageminThree</a></li>";
-                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminTwo' class='button page-link'>$mpageminTwo</a</li>>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminTwo' class='button page-link'>$mpageminTwo</a</li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpagemin' class='button page-link'>$mpagemin</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$maxPages' class='button page-link'>$maxPages</a></li>";
                                             }
