@@ -5,11 +5,11 @@ if(!isset($_GET['page'])){
 }
 
 
-// if(isset($_SESSION['isloggedIn'])){
-//     $usertoken = $_SESSION['isloggedIn'];
-// }else{
-//     echo 'Please login first to check your order history';
-// }
+if(isset($_SESSION['isloggedIn'])){
+    $usertoken = $_SESSION['isloggedIn'];
+}else{
+    echo 'Please login first to check your order history';
+}
 
 $page = $_GET['page'];
 $offset = $page * 7 - 7;
@@ -19,7 +19,7 @@ JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID
-ORDER BY O.OrderDate DESC, O.OrderID DESC", [832]);
+ORDER BY O.OrderDate DESC, O.OrderID DESC", [$usertoken]);
 
 
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName,SUM(OL.Quantity * S.RecommendedRetailPrice / 100 * (100 + S.TaxRate)) AS TotalPriceItem, S.TaxRate
@@ -29,7 +29,7 @@ JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID
 ORDER BY O.OrderDate DESC, O.OrderID DESC
-LIMIT ? OFFSET ? ", [832, 10, $offset]); 
+LIMIT ? OFFSET ? ", [$usertoken, 10, $offset]); 
 
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);
 ?>
