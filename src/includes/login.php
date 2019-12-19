@@ -18,7 +18,7 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
     } else {
         echo "Something went wrong! Please try again!";
     }
-} elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password1']) && isset($_POST['password2']) && isset($_POST['iughafvgohwbwh']) && isset($_POST['asfjhgwfhkkw']) && isset($_POST['wqpbuhwrgwgui']) && isset($_POST['woyhajwgwasfjv']) && isset($_POST['alskhasg']) && isset($_POST['asklfjogasoi']) && isset($_POST['aspighogasp'])) {
+} elseif (isset($_POST['asfhhfaojaobgobnpg']) && isset($_POST['email']) && isset($_POST['password1']) && isset($_POST['password2']) && isset($_POST['iughafvgohwbwh']) && isset($_POST['asfjhgwfhkkw']) && isset($_POST['wqpbuhwrgwgui']) && isset($_POST['woyhajwgwasfjv']) && isset($_POST['alskhasg']) && isset($_POST['asklfjogasoi']) && isset($_POST['aspighogasp']) && isset($_POST['ewfeokhgebdgs']) && isset($_POST['pueqglbfwq'])) {
     if ((strlen($_POST["email"]) > 0) || (strlen($_POST["password1"]) > 0) || (strlen($_POST["password2"]) > 0)) {
         header('location: https://youtu.be/dQw4w9WgXcQ?t=42');
         return false;
@@ -31,14 +31,14 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
     $customerCountry = $_POST['woyhajwgwasfjv'];
     $customerStreetNumber = $_POST['alskhasg'];
     $customerStreetPostal = $_POST['asklfjogasoi'];
+    $customerStreetName = $_POST['ewfeokhgebdgs'];
+    $customerStreetCity = $_POST['pueqglbfwq'];
     $customerName = $_POST['aspighogasp'];
-
-    print('<script>console.log("'.$password1.' and '.$password2.'")</script>');
 
     if ($sessionid === session_id()) {
         // session_regenerate_id();
         $auth = new auth();
-        echo $auth->register($email, $password1, $password2, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName);
+        echo $auth->register($email, $password1, $password2, $customerCountry, $customerStreetNumber, $customerStreetPostal, $customerName, $customerStreetName, $customerStreetCity);
     } else {
         echo "Something went wrong! Please try again!";
     }
@@ -437,6 +437,8 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
                                     <?php
                                         echo showInput(2, ['asklfjogasoi', 'alskhasg'], ['registerZip', 'registerNumber'], ['Zip', 'Number'], ['text', 'text'], ['col-md-4', 'col-md-2'], ['', ''], ['wwi_mat_3', 'wwi_mat_3']);
                                         echo '</div>';
+                                        echo '<div class="form-row">';
+                                        echo showInput(2, ['ewfeokhgebdgs', 'pueqglbfwq'], ['registerStreetName', 'registerCity'], ['Street', 'City'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['Street name', 'City name'], ['wwi_mat_3', 'wwi_mat_3']);                                        echo '</div>';
                                     ?>
                                     <!-- <div class="form-group col-md-4">
                                         <label for="inputZip">Zip</label>
