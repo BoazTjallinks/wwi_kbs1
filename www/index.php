@@ -8,9 +8,9 @@ ob_start();
 session_start();
 
 // Error logging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // Load Dynamic functions
 $functions = scandir('../src/functions/');
@@ -19,9 +19,9 @@ $functions = scandir('../src/functions/');
 // Sanitizes everything
 
 
-$_GET = filter_var_array($_GET,FILTER_SANITIZE_STRING);
-$_POST = filter_var_array($_POST,FILTER_SANITIZE_STRING);
-$_SESSION = filter_var_array($_SESSION,FILTER_SANITIZE_STRING);
+$_GET = filter_var_array($_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
+$_SESSION = filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
 
 
 for ($i=2; $i < count($functions); $i++) {
@@ -46,4 +46,3 @@ else {
 }
 
 require_once('../src/includes/footer.php');
-
