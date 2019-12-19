@@ -102,7 +102,7 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
 
                                                 <!-- wwi_login_h0n3y -->
                                                 <button type="submit"
-                                                    class="btn wwi_text_light wwi_mainbgcolor wwi_mat_3 wwi_text_lighthover"><strong>Submit</strong></button>
+                                                    class="btn wwi_text_light wwi_mainbgcolor wwi_mat_3 wwi_text_lighthover"><strong>Login</strong></button>
                                             </div>
                                         </form>
                                     </div>
