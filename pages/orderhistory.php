@@ -86,35 +86,35 @@ elseif($page > $maxPages){
 }
 elseif($maxPages >= 2 AND $maxPages <= 4){
     for($i = 1; $i <= $maxPages; $i++){
-        echo "<a href='http://kbs.local/orderhistory?&page=$i' class='button'>$i</a>";
+        echo "<a href='/orderhistory?&page=$i' class='button'>$i</a>";
         echo "</br>";
     }
 }
 elseif($maxPages > 4){
     if($page <= 3){
-    echo "<a href='http://kbs.local/orderhistory?&page=1' class='button'>1</a>";
-    echo "<a href='http://kbs.local/orderhistory?&page=$mpageplus' class='button'>$mpageplus</a>";
-    echo "<a href='http://kbs.local/orderhistory?&page=$mpageplusTwo' class='button'>$mpageplusTwo</a>";
-    echo "<a href='http://kbs.local/orderhistory?&page=$mpageplusThree' class='button'>$mpageplusThree</a>";
-    echo "<a href='http://kbs.local/orderhistory?&page=$pageplusTwo' class='button'>...</a>";
-    echo "<a href='http://kbs.local/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
+    echo "<a href='/orderhistory?&page=1' class='button'>1</a>";
+    echo "<a href='/orderhistory?&page=$mpageplus' class='button'>$mpageplus</a>";
+    echo "<a href='/orderhistory?&page=$mpageplusTwo' class='button'>$mpageplusTwo</a>";
+    echo "<a href='/orderhistory?&page=$mpageplusThree' class='button'>$mpageplusThree</a>";
+    echo "<a href='/orderhistory?&page=$pageplusTwo' class='button'>...</a>";
+    echo "<a href='/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
     }
     if ($page >= 4 AND $page <= $maxPages - 3){
-        echo "<a href='http://kbs.local/orderhistory?&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$pageminTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$pagemin' class='button'>$pagemin</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$page' class='button'>$page</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$pageplus' class='button'>$pageplus</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$pageplusTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
+        echo "<a href='/orderhistory?&page=1' class='button'>1</a>";
+        echo "<a href='/orderhistory?&page=$pageminTwo' class='button'>...</a>";
+        echo "<a href='/orderhistory?&page=$pagemin' class='button'>$pagemin</a>";
+        echo "<a href='/orderhistory?&page=$page' class='button'>$page</a>";
+        echo "<a href='/orderhistory?&page=$pageplus' class='button'>$pageplus</a>";
+        echo "<a href='/orderhistory?&page=$pageplusTwo' class='button'>...</a>";
+        echo "<a href='/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
     }
     if($page >= $maxPages - 2){
-        echo "<a href='http://kbs.local/orderhistory?&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$pageminTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$mpageminThree' class='button'>$mpageminThree</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$mpageminTwo' class='button'>$mpageminTwo</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$mpagemin' class='button'>$mpagemin</a>";
-        echo "<a href='http://kbs.local/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
+        echo "<a href='/orderhistory?&page=1' class='button'>1</a>";
+        echo "<a href='/orderhistory?&page=$pageminTwo' class='button'>...</a>";
+        echo "<a href='/orderhistory?&page=$mpageminThree' class='button'>$mpageminThree</a>";
+        echo "<a href='/orderhistory?&page=$mpageminTwo' class='button'>$mpageminTwo</a>";
+        echo "<a href='/orderhistory?&page=$mpagemin' class='button'>$mpagemin</a>";
+        echo "<a href='/orderhistory?&page=$maxPages' class='button'>$maxPages</a>";
     }
 }
  
