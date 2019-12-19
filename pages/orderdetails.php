@@ -5,11 +5,11 @@ if(!isset($_GET['OrderID'])){
 }
     
 
-// if(isset($_SESSION['isloggedIn'])){
-//     $usertoken = $_SESSION['isloggedIn'];
-// }else{
-//     echo 'Please login first to check your order details';
-// }
+if(isset($_SESSION['isloggedIn'])){
+    $usertoken = $_SESSION['isloggedIn'];
+}else{
+    echo 'Please login first to check your order details';
+}
 
 $orderID = $_GET['OrderID'];
 
@@ -18,7 +18,7 @@ $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems S ON OL.StockItemID = S.StockItemID
-WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]); 
+WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, $usertoken]); 
 if($orderDetails == '0 results found!'){
     header('location: /orderhistory?page=1');
 }
@@ -27,7 +27,7 @@ $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.Recommen
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID
-WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, 832]);
+WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, $usertoken]);
 $normalDate = date("d-m-Y", strtotime($orderDetails[0]['OrderDate']));
 $maxtotal = 0;
 ?>
