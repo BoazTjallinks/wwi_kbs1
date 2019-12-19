@@ -8,36 +8,38 @@
 
 $database = new database();
 
-//Laad StockCategories in
 
-$getstockgroups = $database->DBQuery("SELECT stockgroupname, stockgroupID FROM stockgroups WHERE stockgroupID != ?", [2]);
+	
 
-function getStockgroups($getstockgroups, $i)
-{
-    for ($i=0; $i<count($getstockgroups); $i++) {
-        print($getstockgroups[$i]['stockgroupname']."<br>");
-    }
-}
+
 
 // Laad Discounted product zien op home pagina
 // Dit is de werkende versie die filtered op de datum van nu DESCRIPTION toevoegen
 
 $discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SD.StockItemID, SI.RecommendedRetailPrice FROM specialdeals AS SD  LEFT JOIN stockitems AS SI  ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?", [1]);
 
-$checkDeals = $database->DBQuery('SELECT * from specialdeals WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate', []);
+$checkDeals = $database->DBQuery('SELECT StartDate, EndDate, DiscountAmount, DealDescription, DiscountPercentage, SD.StockItemID, SD.StockGroupID, SI.StockItemName, SI.RecommendedRetailPrice, SG.stockgroupname
+FROM specialdeals AS SD
+LEFT JOIN stockitems AS SI 
+ON SD.StockItemID = SI.StockItemID 
+LEFT JOIN stockgroups AS SG
+ON SD.StockgroupID = SG.StockgroupID
+WHERE UTC_DATE BETWEEN StartDate AND EndDate', []);
+
+// Checkt voor active deals
 function checkDeals($checkDeals)
 {
     if ($checkDeals !== '0 results found!') {
         for ($i=0; $i < count($checkDeals); $i++) {
-            if ($checkDeals[$i]['StockItemID'] == 0) {
-				//print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockGroupName']</strong></h1>");
-				print("<h3 class='wwi_text_light'><strong>".round($checkDeals[$i]['DiscountPercentage'],0)." % Discount!</strong></h3>");
+            if ($checkDeals[$i]['StockItemID'] == 0) {	
+				print("<h1 class='wwi_text_light'><strong>".$checkDeals[$i]['stockgroupname']."</strong></h1>");
+				//print("<h3 class='wwi_text_light'><strong>".round($checkDeals[$i]['DiscountPercentage'],0)." % Discount!</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
 
 			} elseif ($checkDeals[$i]['StockGroupID'] == 0) {
-				//print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockItemName']</strong></h1>");
-				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DiscountPercentage']." Discount!</strong></h3>");
+				print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockItemName']</strong></h1>");
+				//print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DiscountPercentage']." Discount!</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
 				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
             } else {
@@ -47,63 +49,20 @@ function checkDeals($checkDeals)
     }
 }
 
-
+//Print Knop gaat naar active deal zowel checkt zowel stockitemID 
+function Dealbutton ($checkDeals){
+	if ($checkDeals !== '0 results found!') {
+		for ($i=0; $i < count($checkDeals); $i++) {
+			if ($checkDeals[$i]['StockItemID'] == 0) {	
+				print("<a href='/categories?catid=".$checkDeals[$i]['StockGroupID']."&page=1'class='btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor' role='button'><strong>View product</strong></a>");
 		
-//	<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
-//<h3 class="wwi_text_light"><strong>..</strong></h3>
- 
-// BEREKENT PRIJS CORRECT
-/*
-for($b=0; $b < 6; $b++){
-    $discountPrice= ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
-    print($discountPrice);
-    }
-*/
-
-
-//TEST QUERYS
-/*
-    //deze laad bestaande deals in
-    $discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, SI.StockItemName, SI.StockItemID, SI.RecommendedRetailPrice
-    FROM specialdeals AS SD
-LEFT JOIN stockitems AS SI
-ON SD.StockItemID = SI.StockItemID
-WHERE  StartDate != ?",[0]);
-
-print($discountedItems[1]['StockItemName']); // Deze is niet bestaand en laat niets zien
-//print($discountedItems[1]['StartDate']);     // deze bestsaat wel
-
-// Test Query    voor korting berekenen
-
-$TestQuery= $database->DBQuery("SELECT RecommendedRetailPrice, UnitPrice FROM stockitems WHERE UnitPrice != ?;",[0]);
-if(isset($TestQuery[1]['RecommendedRetailPrice'])){
-$TestQuerySom = ($TestQuery[1]['RecommendedRetailPrice'] - $TestQuery[1]['UnitPrice']);
-print($TestQuerySom);
-  }
-
-
-//berekent de prijs met korting maar niet correcte versie {
-    for($b=0; $b < 6; $b++){
-$discountPrice= ($TestQuery[$b]['RecommendedRetailPrice'] - $TestQuery[$b]['UnitPrice']);
-print($discountPrice);
-    }
-*/
-
-
-// (unfinished laad korting producten nog niet in)
-/*
-if($discountedItems !== 0  && $discountedItems[0]['StockItemID'] !== 0){
-    for($b=0; $b < 6; $b++){
-        $discountPrice = ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
-        print($discountPrice);
-    }
-}else{
-    print("<ul>");
-    print('<li> new items soon </li>');
-    print('<li> new items soon </li>');
-    print("</ul>");
+			} elseif ($checkDeals[$i]['StockGroupID'] == 0) {
+				print("<a href='/productview?id=".$checkDeals[$i]['StockItemID']."' class='btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor' role='button'><strong>View product</strong></a>");
+			}else 
+			print("<a href='#' class='btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor' role='button'><strong>No deals</strong></a>");
+		}
+	}
 }
-*/
 
 
 // populaire producten query
@@ -163,7 +122,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								data-slide="next"><span class="sr-only">Next</span></a></div>
 					</div>
                 </div>
-                
+                <!-- Kortingsdeals --> 
 				<div class="col">
 					<div class="carousel slide wwi_50minheight" data-ride="carousel" id="carousel-1">
 						<div class="carousel-inner" role="listbox">
@@ -174,8 +133,10 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								<div>
 									<div class="wwi_banner_text_overlay">
 										<?php checkDeals($checkDeals); ?>
-									</div><button class="btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor"
-										type="button"><strong>View product</strong></button>
+									</div>
+									<?php
+									Dealbutton($checkDeals);
+									?>
 								</div>
 							</div>
 							
@@ -194,9 +155,10 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 			<div class="col-xl-2 offset-xl-1 wwi_bgsidebar d-none d-lg-block wwi_mat_3">
 				<h1 class="wwi_light wwi_textalign_center"><strong>Categories</strong></h1>
 				<ul class="list-unstyled">
-					<li><a class="wwi_text_light wwi_text_lighthover" href="#"><?php getStockgroups($getstockgroups, $i); ?></a></li>
+				<li> No items </li>
 				</ul>
 			</div>
+			<!-- Populaire producten --> 
 			<div class="col-xl-8 offset-xl-0">
 				<div class="container">
 					<div class="row">
