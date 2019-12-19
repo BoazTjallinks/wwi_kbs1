@@ -14,5 +14,11 @@
 
     </footer>
 </section>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld2eMgUAAAAAEvQKhq8jB929CdPYFMmfgfWGON3"></script>
+<script>
+grecaptcha.ready(function() {
+    grecaptcha.execute('6Ld2eMgUAAAAAEvQKhq8jB929CdPYFMmfgfWGON3', {action: 'homepage'});
+});
+</script>
 </body>
 </html>
