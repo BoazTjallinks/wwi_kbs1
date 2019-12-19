@@ -246,7 +246,7 @@ $mpageplusThree = $minPages + 3;
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=1' class='button page-link'>1</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageminTwo' class='button page-link'>...</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminThree' class='button page-link'>$mpageminThree</a></li>";
-                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminTwo' class='button page-link'>$mpageminTwo</a</li>>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminTwo' class='button page-link'>$mpageminTwo</a</li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpagemin' class='button page-link'>$mpagemin</a></li>";
                                                 echo " <li class='page-item'><a href='/categories?catid=$cat&page=$maxPages' class='button page-link'>$maxPages</a></li>";
                                             }
