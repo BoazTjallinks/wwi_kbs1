@@ -11,7 +11,7 @@ if (!is_numeric($id)) {
 }
  
 $database = new database();
-$result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;", [$id]);
+$result = $database->DBQuery("SELECT DISTINCT S.StockItemID, S.SupplierID, S.StockItemName, S.RecommendedRetailPrice, P.Description, SH.QuantityOnHand FROM stockitems AS S JOIN purchaseorderlines AS P ON S.StockItemID = P.StockItemID JOIN stockitemholdings AS SH ON S.StockItemID = SH.StockItemID WHERE S.StockItemID = ? ORDER BY S.StockItemID;", [$id]);
 $showTemprature = $database->DBQuery('SELECT si.stockitemid, si.stockitemname, ischillerstock,  crt.ColdRoomTemperatureID, crt.temperature FROM stockitems AS si LEFT JOIN coldroomstockitems AS crsi ON si.stockitemid = crsi.stockitemid LEFT JOIN coldroomtemperatures AS crt ON crsi.ColdRoomTemperatureID = crt.ColdRoomTemperatureID WHERE IsChillerStock = ?', [1]);
  
  
@@ -52,7 +52,7 @@ if ($GetStockItemHolding > 15) {
 }
  
 // Get deliverytime from database
-$GetDeliveryTime= $database->DBQuery("SELECT deliverytime, DT.stockitemID FROM deliverytime as DT JOIN stockitems as SI ON SI.stockitemID=DT.stockitemID WHERE SI.stockitemID = ?",[$id]);
+$GetDeliveryTime= $database->DBQuery("SELECT deliverytime, DT.stockitemID FROM deliverytime as DT JOIN stockitems as SI ON SI.stockitemID=DT.stockitemID WHERE SI.stockitemID = ?", [$id]);
 
 
 
@@ -60,7 +60,7 @@ $GetDeliveryTime= $database->DBQuery("SELECT deliverytime, DT.stockitemID FROM d
 
  
  
-#$database = new database(); 
+#$database = new database();
  
  
 $photoPath = "../../public/img/products/id".$id.".png";
@@ -161,12 +161,12 @@ if(empty($_SESSION['geturlpage'])){
                     ?> 
                     </div> 
                     <div class = "row"> 
-                    <?php 
-                    If($soldOut == TRUE){ 
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>"); 
-                    }else{ 
-                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>"); 
-                    } 
+                    <?php
+                    if ($soldOut == true) {
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
+                    } else {
+                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>");
+                    }
                     ?> 
                     </div> 
                 </div> 
@@ -184,7 +184,7 @@ if(empty($_SESSION['geturlpage'])){
         <div class="container d-none d-lg-block"> 
             <div class="row"> 
                 <div class="col"> 
-                <script>document.write('<a href="' + document.referrer + '"><button type="button" id="go-back-desktop" class="btn btn-primary">< Go back</button></a>');</script> 
+                <script>document.write('<a href="/categories?catid=<?php print($result[0]['SupplierID']); ?>&page=1"><button type="button" id="go-back-desktop" class="btn btn-primary">< Go back</button></a>');</script> 
                     <h1 id="title-product-desktop"><?php print($stockItemName); ?></h1> 
                 </div> 
             </div> 
@@ -262,12 +262,12 @@ if(empty($_SESSION['geturlpage'])){
                     ?> 
                     </div> 
                     <div class = "row"> 
-                    <?php 
-                    If($soldOut == TRUE){ 
-                        print("<h6><div class=\"col\">No delivery Available</div></h6>"); 
-                    }else{ 
-                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>"); 
-                    } 
+                    <?php
+                    if ($soldOut == true) {
+                        print("<h6><div class=\"col\">No delivery Available</div></h6>");
+                    } else {
+                        print("<h6><div class=\"col\">Order now and have the product in: ". $GetDeliveryTime[0]['deliverytime'] .  "!"."</div></h6>");
+                    }
                     ?> 
                     </div> 
                 </div> 

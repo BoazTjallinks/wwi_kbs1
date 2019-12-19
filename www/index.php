@@ -19,9 +19,9 @@ $functions = scandir('../src/functions/');
 // Sanitizes everything
 
 
-$_GET = filter_var_array($_GET,FILTER_SANITIZE_STRING);
-$_POST = filter_var_array($_POST,FILTER_SANITIZE_STRING);
-$_SESSION = filter_var_array($_SESSION,FILTER_SANITIZE_STRING);
+$_GET = filter_var_array($_GET, FILTER_SANITIZE_STRING);
+$_POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
+$_SESSION = filter_var_array($_SESSION, FILTER_SANITIZE_STRING);
 
 
 for ($i=2; $i < count($functions); $i++) {
@@ -46,4 +46,3 @@ else {
 }
 
 require_once('../src/includes/footer.php');
-
