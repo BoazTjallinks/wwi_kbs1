@@ -52,16 +52,26 @@
 						</div>
 						<ul class="nav navbar-nav ml-auto wwi_right">
 						<li class="nav-item" role="presentation">
-								<a class="nav-link" href="#" data-toggle="modal" data-target="#login">
-									<i class="fas fa-user"></i>
-									<strong>&nbsp;Account</strong><br>
+								
+								<?php
+                                // <a class="nav-link" href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong><br></a>
+                                    if (isset($_SESSION['isloggedIn'])) {
+                                        ?>
+								<div class="dropdown show">
+									<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-user"></i>&nbsp;Account
+									</a>
+
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+										<a class="dropdown-item" href="/orderhistory">Order history</a>
+										<a class="dropdown-item" href="/logout">Logout</a>
+									</div>
+                                </div>
 									<?php
-                                    if (isset($_SESSION['isloggedIn']) && ($_SESSION['isloggedIn'] != '0 results found!')) {
-                                        echo 'Logged in!';
                                     } else {
-                                        echo('Not logged in');
+                                        echo('<a class="nav-link" href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user"></i><strong>&nbsp;Account</strong><br></a>');
+                                        // logout
                                     } ?>
-								</a>
 							</li>
 							
 							<li class="nav-item" role="presentation">
