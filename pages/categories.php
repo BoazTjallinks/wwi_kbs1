@@ -105,6 +105,7 @@ if ($colorId !== $function->getDefaultnr('colorid')) {
             array_push($getcolor, $stockCategories[$i]);
         }
     }
+    $stockCategories = $getcolor;
 }
 
 if ($minPrice !== $function->getDefaultnr('minprice') || $maxPrice !== $function->getDefaultnr('maxprice')) {
@@ -114,10 +115,8 @@ if ($minPrice !== $function->getDefaultnr('minprice') || $maxPrice !== $function
             array_push($getPrice, $stockCategories[$i]);
         }
     }
-    print_r(count($stockCategories));
-    print('</br>');
+
     $stockCategories = $getPrice;
-    print_r(count($stockCategories));
 }
 
 if ($size !== $function->getDefaultnr('size')) {
@@ -127,16 +126,14 @@ if ($size !== $function->getDefaultnr('size')) {
             array_push($getSize, $stockCategories[$i]);
         }
     }
-    print_r(count($stockCategories));
-    print('</br>');
+
     $stockCategories = $getSize;
-    print_r(count($stockCategories));
 }
 
 
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
-$maxPages = 100;
+// $maxPages = 100;
 $minPages = 1;
 $pagemin = $page - 1;
 $pageminTwo = $page - 2;
@@ -149,59 +146,135 @@ $mpageplus = $minPages + 1;
 $mpageplusTwo = $minPages + 2;
 $mpageplusThree = $minPages + 3;
 
-if ($maxPages <= $minPages) {
-    $page = 1;
-    echo 'Disabled';
-} elseif ($page < 1) {
-    header('Location: /home');
-} elseif ($page > $maxPages) {
-    header('Location: /home');
-}
-elseif($maxPages >= 2 AND $maxPages <= 4){
-    for($i = 1; $i <= $maxPages; $i++){
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$i' class='button'>$i</a>";
-    }
-    
-}
-elseif($maxPages > 4){
-    if($page <= 3){
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplus' class='button'>$mpageplus</a>";
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplusTwo' class='button'>$mpageplusTwo</a>";
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageplusThree' class='button'>$mpageplusThree</a>";
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplusTwo' class='button'>...</a>";
-    echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
-    }
-    if ($page >= 4 AND $page <= $maxPages - 3){
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageminTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pagemin' class='button'>$pagemin</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$page' class='button'>$page</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplus' class='button'>$pageplus</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageplusTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
-    }
-    if($page >= $maxPages - 2){
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=1' class='button'>1</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$pageminTwo' class='button'>...</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageminThree' class='button'>$mpageminThree</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpageminTwo' class='button'>$mpageminTwo</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$mpagemin' class='button'>$mpagemin</a>";
-        echo "<a href='http://kbs.local/categories?catid=$cat&page=$maxPages' class='button'>$maxPages</a>";
-    }
-}
+?>
+
+<section id="homequathead" class="wwi_text_left wwi_float_left">
+        <div class="row container-fluid wwi_margin_top_normal">
+            <div class="col-xl-2 offset-xl-1 wwi_bgsidebar d-none d-lg-block wwi_mat_3">
+                <h1 class="wwi_light wwi_textalign_center"><strong>Filter</strong></h1>
+                <form action="/categories" method="post">
+                    <input type="hidden" name="catid" value="<?php echo $cat; ?>">
+                    <select onChange="autoSubmit();">
+                    <?php
+                        $getColors = $database->DBQuery('SELECT * FROM colors WHERE ColorID IN (SELECT ColorID FROM stockitems JOIN stockitemstockgroups s on stockitems.StockItemID = s.StockItemID WHERE s.StockGroupID = ?)', [$stockCategories[0]['StockGroupID']]);
+                        if ($colorId == 'nAn') {
+                            echo '<option value="'.$colorId.'" selected hidden>Color</option>';
+                        }
+                        for ($i=0; $i < count($getColors); $i++) {
+                            if ($colorId == $getColors[$i]['ColorID']) {
+                                echo "<option value='".$getColors[$i]['ColorID']."'selected hidden>" .$getColors[$i]['ColorName']."</option><br>";
+                            } else {
+                                echo "<option value='".$getColors[$i]['ColorID']."'>" .$getColors[$i]['ColorName']."</option><br>";
+                            }
+                        }
+                    ?>
+                    </select>
+                </form>
+            </div>
+            <div class="col-xl-8 offset-xl-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                <h1 class="wwi_maincolor"><strong><?php echo count($stockCategories); ?> product(s)</strong></h1>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <nav>
+                                    <ul class="pagination">
+                                <!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
+
+                                        <?php
+                                        // $amountPages = ceil(count($stockAllCategories) / $limit);
+                                        // print_r('<li>'.$amountPages.'</li>');
+                                        
+                                        // if ($amountPages > 5) {
+                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+                                        //     for ($i=0; $i < $amountPages; $i++) {
+                                        //         echo '<li class="page-item"><a class="page-link" href="#">'.$i.'</a></li>';
+                                        //     }
+                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+                                        // } else {
+                                        //     for ($i=0; $i < $amountPages; $i++) {
+                                        //         if (($i + 1) == $page) {
+                                        //             echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
+                                        //         } else {
+                                        //             echo '<li class="page-item"><a class="page-link" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
+                                        //         }
+                                        //     }
+                                        // }
+                                        if ($maxPages <= $minPages) {
+                                            $page = 1;
+                                        // echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page=1">1</a></li>';
+                                        } elseif ($page < 1) {
+                                            header('Location: /home');
+                                        } elseif ($page > $maxPages) {
+                                            header('Location: /home');
+                                        } elseif ($maxPages >= 2 and $maxPages <= 4) {
+                                            for ($i = 1; $i <= $maxPages; $i++) {
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$i' class='button page-link'>$i</a></li>";
+                                            }
+                                        } elseif ($maxPages > 4) {
+                                            if ($page <= 3) {
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=1' class='button page-link'>1</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageplus' class='button page-link'>$mpageplus</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageplusTwo' class='button page-link'>$mpageplusTwo</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageplusThree' class='button page-link'>$mpageplusThree</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageplusTwo' class='button page-link'>...</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$maxPages' class='button page-link'>$maxPages</a></li>";
+                                            }
+                                            if ($page >= 4 and $page <= $maxPages - 3) {
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=1' class='button page-link'>1</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageminTwo' class='button page-link'>...</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pagemin' class='button page-link'>$pagemin</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$page' class='button page-link'>$page</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageplus' class='button page-link'>$pageplus</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageplusTwo' class='button page-link'>...</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$maxPages' class='button page-link'>$maxPages</a></li>";
+                                            }
+                                            if ($page >= $maxPages - 2) {
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=1' class='button page-link'>1</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$pageminTwo' class='button page-link'>...</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminThree' class='button page-link'>$mpageminThree</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpageminTwo' class='button page-link'>$mpageminTwo</a</li>>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$mpagemin' class='button page-link'>$mpagemin</a></li>";
+                                                echo " <li class='page-item'><a href='/categories?catid=$cat&page=$maxPages' class='button page-link'>$maxPages</a></li>";
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-flex">
+                    <?php
+                    for ($i=0; $i < count($stockCategories); $i++) {
+                        $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$stockCategories[$i]['StockItemID']]);
+                        if ($getimg == '0 results found!') {
+                            $img = '/public/img/products/no-image.png';
+                        } else {
+                            $img = $getimg[0]['ImagePath'];
+                        }
+                        
+                        showItem($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice']);
+                    }
+                    ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
 
 
-print('<div class="row container">');
-for ($i=0; $i < count($stockCategories); $i++) {
-    $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$stockCategories[$i]['StockItemID']]);
-    if ($getimg == '0 results found!') {
-        $img = '/public/img/products/no-image.png';
-    } else {
-        $img = $getimg[0]['ImagePath'];
-    }
-
-    showItem($stockCategories[$i]['StockItemID'], $img, $stockCategories[$i]['StockItemName'], '', $stockCategories[$i]['SearchDetails'], $stockCategories[$i]['RecommendedRetailPrice']);
-}
-print('</div>');
 $database->closeConnection();
