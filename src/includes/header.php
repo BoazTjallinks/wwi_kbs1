@@ -117,3 +117,12 @@
         		</div>
     		</nav>
 	</section>
+	<?php
+    if (!$_SESSION['limit']) {
+        $_SESSION['limit'] = 25;
+    } else {
+        if (empty($_SESSION['limit'])) {
+            $_SESSION['limit'] = 25;
+        }
+    }
+    print_r($_SESSION);
