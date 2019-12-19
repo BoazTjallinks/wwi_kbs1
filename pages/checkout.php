@@ -68,7 +68,11 @@ if(empty($_POST['cvccid'])){
 //         }
 //     }
 // }
-// echo ($_SESSION['shoppingCart']['ItemID'].' - '.$_SESSION['shoppingCart']['ItemAmount']);
+for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
+    if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+        echo ($_SESSION['shoppingCart'][$i]['ItemID'].' - '.$_SESSION['shoppingCart'][$i]['ItemAmount']);
+    }
+}
 
 
 if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset($_POST['submit_ideal']) && isset($_POST['submit_credit']))){
