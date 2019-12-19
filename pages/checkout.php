@@ -70,7 +70,36 @@ if(empty($_POST['cvccid'])){
 // }
 
 $database = new database();
+$date = date('Y-m-d H:i:s');
 
+// for($i = 0; $i < count($_SESSION['shoppingCart']); $i++){
+//     if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+
+//         $shoppedID = $_SESSION['shoppingCart'][$i]['ItemID'];
+//         $shoppedAmount = $_SESSION['shoppingCart'][$i]['ItemAmount'];
+
+//         $itemsToSubtract = $database->DBQuery("SELECT StockItemID, QuantityOnHand FROM quantity_test WHERE stockitemid = ?",[$shoppedID]);
+//         $instock = $itemsToSubtract[0]['QuantityOnHand'];
+        
+//         $newinstock = $instock - $shoppedAmount;
+//         // echo ('itemid: '.$shoppedID.' amount to buy: '.$shoppedAmount.' amount in stock: '.$instock.' nieuw in stock: '.$newinstock.'<br>');
+
+//         // $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
+        
+                    //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
+
+//         $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID) FROM orderlines LIMIT ?",[1]);
+//         // var_dump($maxorderlineid[0].'<br>');
+//         $maxorderid = $database->DBQuery("SELECT MAX(OrderID) FROM orders LIMIT ?",[1]);
+//         // var_dump($maxorderid[0].'<br>');
+
+//         $stockitemcolumns = $database->DBQuery("SELECT StockItemName, OuterPackageID, RecommendedRetailPrice, TaxRate FROM stockitems WHERE StockItemID = ?",[$_SESSION['shoppingCart'][$i]['ItemID']]);
+//         //echo 'ff -'.$maxorderlineid[0]['MAX(OrderLineID)'].' - '.$maxorderid[0]['MAX(OrderID)'].' - '.$shoppedID.' - '.$stockitemcolumns[0]['StockItemName'].' - '.$stockitemcolumns[0]['OuterPackageID'].' - '.$shoppedAmount.' - '.$stockitemcolumns[0]['RecommendedRetailPrice'].' - '.$stockitemcolumns[0]['TaxRate'].' - '.$shoppedAmount.' - '.$date.' - 7 - '.$date.' - <br>';
+        
+//         //de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
+//         //$updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0],$maxorderid[0],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount],$date,7,$date);
+//     }
+// }
 
 
 // echo($itemsToSubtract[0]['quantityonhand'].'<br>');
@@ -116,7 +145,20 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                     // echo ('itemid: '.$shoppedID.' amount to buy: '.$shoppedAmount.' amount in stock: '.$instock.' nieuw in stock: '.$newinstock.'<br>');
             
                     $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
+
                     
+                    //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
+/*                    $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID + ?) AS maxi FROM orderlines",[1]);
+                    // var_dump($maxorderlineid[0].'<br>');
+                    $maxorderid = $database->DBQuery("SELECT MAX(OrderID + ?) AS maxi FROM orders",[1]);
+                    // var_dump($maxorderid[0].'<br>');
+
+                    $stockitemcolumns = $database->DBQuery("SELECT StockItemName, OuterPackageID, RecommendedRetailPrice, TaxRate FROM stockitems WHERE StockItemID = ?",[$_SESSION['shoppingCart'][$i]['ItemID']]);
+                    echo $maxorderlineid[0]['maxi'].' - '.$maxorderid[0]['maxi'].' - '.$shoppedID.' - '.$stockitemcolumns[0]['StockItemName'].' - '.$stockitemcolumns[0]['OuterPackageID'].' - '.$shoppedAmount.' - '.$stockitemcolumns[0]['RecommendedRetailPrice'].' - '.$stockitemcolumns[0]['TaxRate'].' - '.$shoppedAmount.' - '.$date.' - 7 - '.$date.' - <br>';
+                    
+                    //de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
+                    $updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0]['maxi'],$maxorderid[0]['maxi'],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount,$date,7,$date]);
+                    */
                 }
             }
 
@@ -169,6 +211,20 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                         
                                 $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
                                 
+
+
+                                //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
+/*                                $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID + ?) AS maxi FROM orderlines",[1]);
+                                // var_dump($maxorderlineid[0].'<br>');
+                                $maxorderid = $database->DBQuery("SELECT MAX(OrderID + ?) AS maxi FROM orders",[1]);
+                                // var_dump($maxorderid[0].'<br>');
+
+                                $stockitemcolumns = $database->DBQuery("SELECT StockItemName, OuterPackageID, RecommendedRetailPrice, TaxRate FROM stockitems WHERE StockItemID = ?",[$_SESSION['shoppingCart'][$i]['ItemID']]);
+                                echo $maxorderlineid[0]['maxi'].' - '.$maxorderid[0]['maxi'].' - '.$shoppedID.' - '.$stockitemcolumns[0]['StockItemName'].' - '.$stockitemcolumns[0]['OuterPackageID'].' - '.$shoppedAmount.' - '.$stockitemcolumns[0]['RecommendedRetailPrice'].' - '.$stockitemcolumns[0]['TaxRate'].' - '.$shoppedAmount.' - '.$date.' - 7 - '.$date.' - <br>';
+                                
+                                //de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
+                                $updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0]['maxi'],$maxorderid[0]['maxi'],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount,$date,7,$date]);
+*/
                             }
                         }
 
@@ -185,6 +241,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
     /*----------------------------------------Submit credit eind----------------------------------------*/
 
 }
+$database->closeConnection();
 
 
 ?>

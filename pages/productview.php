@@ -287,6 +287,8 @@ if(empty($_SESSION['geturlpage'])){
  
 <?php
  
+$database->closeConnection();
+
  
 //print("f");
      
