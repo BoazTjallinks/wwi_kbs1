@@ -103,11 +103,11 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 
 <section id="homeSubhead" class="container-fluid d-none d-lg-block wwi_margin_top_normal">
 			<div class="row no-gutters container-fluid">
-				<div class="col-xl-6 wwi_50height">
+				<div class="col wwi_50height">
 					<div class="carousel slide wwi_50minheight" data-ride="carousel" id="stockcarousel">
 						<div class="carousel-inner" role="listbox">
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock2.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -117,7 +117,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item active wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock3.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -127,7 +127,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock4.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -137,7 +137,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock1.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
