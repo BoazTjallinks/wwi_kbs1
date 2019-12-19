@@ -22,9 +22,9 @@ if (isset($_POST['submitform'])) {
     $checkContactForm= $database->DBQuery("SELECT first_name, last_name, email, reason_contact, order_nmr, phone_nmr FROM customerservice WHERE first_name = ? AND last_name = ? AND email = ? AND reason_contact = ? AND order_nmr = ? AND phone_nmr = ?", [$firstName, $lastName, $email, $reasonOfContact, $orderNmr, $phoneNumber]);
     if ($checkContactForm == "0 results found!") {
         $contactForm= $database->DBQuery("INSERT INTO customerservice (first_name, last_name, email, reason_contact, order_nmr, phone_nmr) values (?, ?, ?, ?, ?, ?)", [$firstName, $lastName, $email, $reasonOfContact, $orderNmr, $phoneNumber]);
-        echo "Thank you for your message, you will hear from us as soon as possible";
+        echo showSwall('Form submitted', "You will hear from us as soon as possible!", "success", "");
     } else {
-        echo "You can't submit the same form twice";
+        echo showSwall('Form not submitted', "You can't submit the same form twice", "error", "");
     }
 }
 $database->closeConnection();
@@ -49,12 +49,13 @@ Mobile/Phonenumber: <input type='tel' name='phonenumber' placeholder='06-1234567
     <form method="POST" action="/customersupport" class="wwi_padding_normal">
     <h1>Contact form</h1>
         <?php
-            echo showInput(1, ['emailaddress'], ['csupportEmail'], ['Email address'], ['email'], [''], [''], ['wwi_mat_3'], [true]);
+            echo '*Required';
+            echo showInput(1, ['emailaddress'], ['csupportEmail'], ['*Email address'], ['email'], [''], ['Example@example.com'], ['wwi_mat_3'], [true]);
             echo '<div class="form-row">';
-            echo showInput(2, ['firstname', 'lastname'], ['csupportFirstname', 'csupportLastname'], ['First name', 'Last name'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
+            echo showInput(2, ['firstname', 'lastname'], ['csupportFirstname', 'csupportLastname'], ['*First name', '*Last name'], ['text', 'text'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, true]);
             echo '</div>';
             echo '<div class="form-row">';
-            echo showInput(2, ['phonenumber', 'ordernumber'], ['csupportPhonenumber', 'csupportOrdernumber'], ['Phone number', 'Order Number'], ['tel', 'number'], ['col-md-6', 'col-md-6'], ['', ''], ['wwi_mat_3', 'wwi_mat_3'], [true, '']);
+            echo showInput(2, ['phonenumber', 'ordernumber'], ['csupportPhonenumber', 'csupportOrdernumber'], ['Phone number', 'Order Number'], ['tel', 'number'], ['col-md-6', 'col-md-6'], ['06-12345678', ''], ['wwi_mat_3', 'wwi_mat_3'], ['', '']);
             echo '</div>';
         ?>
         
@@ -68,7 +69,7 @@ Mobile/Phonenumber: <input type='tel' name='phonenumber' placeholder='06-1234567
         </br>
         Order number: <input type="number" name="ordernumber" min="1" max="99999999" rows="20" maxlength="8"> -->
         <div class="form-group">
-            <textarea class="wwi_mat_3 wwi_100procwidth" name="reasonofcontact" cols="50" rows="20" maxlength='1000' placeholder='*Type your questions or concerns here....'required></textarea>
+            <textarea class="wwi_mat_3 wwi_100procwidth" style="resize: none" name="reasonofcontact" cols="94" rows="12" maxlength='1000' placeholder='*Type your questions or concerns here....'required></textarea>
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="submitform" value="Submit contact form">
