@@ -24,24 +24,34 @@ function getStockgroups($getstockgroups, $i)
 
 $discountedItems = $database->DBQuery("SELECT StartDate, EndDate, DiscountAmount, DiscountPercentage, StockItemName, SD.StockItemID, SI.RecommendedRetailPrice FROM specialdeals AS SD  LEFT JOIN stockitems AS SI  ON SD.StockItemID = SI.StockItemID WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate != ?", [1]);
 
-function getDiscountedProducts($discountedItems, $b)
+$checkDeals = $database->DBQuery('SELECT * from specialdeals WHERE UTC_DATE BETWEEN StartDate AND EndDate AND StartDate', []);
+function checkDeals($checkDeals)
 {
-    if ($discountedItems !== 0  && $discountedItems[$b]['StockItemID'] !== 0) {
-        for ($b=0; $b < 6; $b++) {
-            return $discountPrice = ($discountedItems[$b]['RecommendedRetailPrice'] - $discountedItems[$b]['DiscountAmount']);
-            return $oldPrice = ($discountedItems[$b]['RecommendedRetailPrice']);
-            return $discountPercentage =($discountedItems[$b]['DiscountPercentage']);
-            return $discountProductName = ($discountedItems[$b]['StockItemID']);
-            return $endDate = ($discountedItems[$b]['EndDate']);
-            return $b;
+    if ($checkDeals !== '0 results found!') {
+        for ($i=0; $i < count($checkDeals); $i++) {
+            if ($checkDeals[$i]['StockItemID'] == 0) {
+				//print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockGroupName']</strong></h1>");
+				print("<h3 class='wwi_text_light'><strong>".round($checkDeals[$i]['DiscountPercentage'],0)." % Discount!</strong></h3>");
+				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
+				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
+
+			} elseif ($checkDeals[$i]['StockGroupID'] == 0) {
+				//print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockItemName']</strong></h1>");
+				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DiscountPercentage']." Discount!</strong></h3>");
+				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
+				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
+            } else {
+				print("<h1 class='wwi_text_light'><strong>New deals coming soon!</strong></h1>");
+			}
         }
-    } else {
-        print("<ul>");
-        print('<li> new items soon </li>');
-        print("</ul>");
     }
 }
 
+
+		
+//	<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
+//<h3 class="wwi_text_light"><strong>..</strong></h3>
+ 
 // BEREKENT PRIJS CORRECT
 /*
 for($b=0; $b < 6; $b++){
@@ -163,34 +173,12 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								<div class="wwi_banner_blue_bgcolr"></div>
 								<div>
 									<div class="wwi_banner_text_overlay">
-										<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
-										<h3 class="wwi_text_light"><strong>30% off</strong></h3>
-										<h3 class="wwi_text_light"><strong>..</strong></h3>
+										<?php checkDeals($checkDeals); ?>
 									</div><button class="btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor"
 										type="button"><strong>View product</strong></button>
 								</div>
 							</div>
-							<?php
-
-                            for ($i=0; $i < 5; $i++) {
-                                ?>
-							<div class="carousel-item active wwi_50minheight"><img
-									class="w-100 d-block wwi_25width wwi_25height .wwi_banner_img wwi_banner_img_overlay"
-									src="public/img/products/testproduct.png" alt="Slide Image">
-								<div class="wwi_banner_blue_bgcolr"></div>
-								<div>
-									<div class="wwi_banner_text_overlay">
-										<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
-										<h3 class="wwi_text_light"><strong>30% off</strong></h3>
-										<h3 class="wwi_text_light"><strong>..</strong></h3>
-									</div><button class="btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor"
-										type="button"><strong>View product</strong></button>
-								</div>
-							</div>
-							<?php
-                            }
-                            ?>
-						</div>
+							
 						<div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span
 									class="sr-only">Previous</span></a><a class="carousel-control-next"
 								href="#carousel-1" role="button" data-slide="next"><span class="sr-only">Next</span></a>
