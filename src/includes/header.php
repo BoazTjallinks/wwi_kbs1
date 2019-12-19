@@ -44,6 +44,7 @@
 								<div class="input-group wwi_25width wwi_mat_3">
 									<input class="form-control wwi_mainborder" name="Searchquery" type="text"
 										placeholder="e.g Blue Chair, Sofa or Post Modern">
+										<input type="hidden" name="page" value="1">
 									<div class="input-group-append"><button
 											class="btn wwi_mainbgcolor wwi_text_lighthover wwi_text_light wwi_text_lighthover"
 											type="submit"><i class="fas fa-search"></i></button></div>
