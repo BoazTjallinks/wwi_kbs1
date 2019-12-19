@@ -74,7 +74,7 @@ if (isset($_POST['SDKGJKEAHT']) && isset($_POST['ABSFUIGSAF'])&& isset($_POST['a
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                         aria-labelledby="pills-home-tab">
-                                        <form action="#" method="POST">
+                                        <form action="#" method="POST" class="range-field">
                                             <div>
                                                 <!-- wwi_login_h0n3y -->
                                                 <!-- <div class="form-group"> -->
