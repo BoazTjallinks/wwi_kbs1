@@ -103,11 +103,11 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 
 <section id="homeSubhead" class="container-fluid d-none d-lg-block wwi_margin_top_normal">
 			<div class="row no-gutters container-fluid">
-				<div class="col-xl-6 wwi_50height">
+				<div class="col wwi_50height">
 					<div class="carousel slide wwi_50minheight" data-ride="carousel" id="stockcarousel">
 						<div class="carousel-inner" role="listbox">
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock2.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -117,7 +117,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item active wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock3.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -127,7 +127,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock4.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -137,7 +137,7 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 								</div>
 							</div>
 							<div class="carousel-item wwi_50minheight"><img
-									class="w-100 d-block wwi_50width wwi_50height wwi_blur"
+									class="w-100 d-block wwi_50height wwi_blur"
 									src="public/img/stock/stock1.png" alt="Slide Image">
 								<div class="wwi_banner_blur_bgcolr"></div>
 								<div>
@@ -170,26 +170,6 @@ $PopularProducts = $database->DBQuery("SELECT stockitemname, recommendedretailpr
 										type="button"><strong>View product</strong></button>
 								</div>
 							</div>
-							<?php
-
-                            for ($i=0; $i < 5; $i++) {
-                                ?>
-							<div class="carousel-item active wwi_50minheight"><img
-									class="w-100 d-block wwi_25width wwi_25height .wwi_banner_img wwi_banner_img_overlay"
-									src="public/img/products/testproduct.png" alt="Slide Image">
-								<div class="wwi_banner_blue_bgcolr"></div>
-								<div>
-									<div class="wwi_banner_text_overlay">
-										<h1 class="wwi_text_light"><strong>Usb Novalties</strong></h1>
-										<h3 class="wwi_text_light"><strong>30% off</strong></h3>
-										<h3 class="wwi_text_light"><strong>..</strong></h3>
-									</div><button class="btn btn-light btn-lg wwi_banner_btn_overlay wwi_maincolor"
-										type="button"><strong>View product</strong></button>
-								</div>
-							</div>
-							<?php
-                            }
-                            ?>
 						</div>
 						<div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span
 									class="sr-only">Previous</span></a><a class="carousel-control-next"
