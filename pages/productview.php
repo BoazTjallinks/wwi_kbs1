@@ -73,7 +73,17 @@ if (file_exists($photoPath)) {
 //checkt of er een bestand bestaat op de plek van $photoPath
 //if(file_exists($photoPath)){$photo = "src='/public/img/id".$id.".png'";}else{$photo = "src='/public/img/no-image.png'";}
  
- 
+/*if(empty($_SESSION['geturlcatid'])){
+    $geturlcatid = 'NULL';
+}else{
+    $geturlcatid = $_SESSION['geturlcatid'];
+}
+if(empty($_SESSION['geturlpage'])){
+    $geturlpage = 'NULL';
+}else{
+    $geturlpage = $_SESSION['geturlpage'];
+}
+<a href="<?php if(($geturlcatid !== 'NULL')&& ($geturlpage !== 'NULL')){echo('/categories?catid'.$geturlcatid.'&page='.$geturlpage);}else{echo('/home');} ?>"><button type="button" id="go-back-mobile" class="btn btn-primary">< Go back</button></a> */
 ?> 
  
 <!-- mobile responsive  -->  
