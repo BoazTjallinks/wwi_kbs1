@@ -68,10 +68,10 @@ Mobile/Phonenumber: <input type='tel' name='phonenumber' placeholder='06-1234567
         </br>
         Order number: <input type="number" name="ordernumber" min="1" max="99999999" rows="20" maxlength="8"> -->
         <div class="form-group">
-            <textarea class="wwi_mat_3 wwi_100procwidth" name="reasonofcontact" cols="50" rows="20" maxlength='1000' placeholder='Type your reason here....'required></textarea>
+            <textarea class="wwi_mat_3 wwi_100procwidth" name="reasonofcontact" cols="50" rows="20" maxlength='1000' placeholder='*Type your questions or concerns here....'required></textarea>
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="submitform" value="Submit Button">
+            <input type="submit" class="btn btn-primary" name="submitform" value="Submit contact form">
         </div>
     </form>
 </section>

@@ -2,7 +2,7 @@
     <section class="wwi_subfooter">
         <h1
             class="d-flex d-xl-flex justify-content-center align-items-center align-content-center align-self-center order-10 my-auto justify-content-xl-center align-items-xl-center wwi_subfooter_title wwi_text_light">
-            <strong>Problems? Contact support</strong></h1>
+            <strong><?php echo "<a href='/customersupport' class='wwi_text_light wwi_text_lighthover'>Questions or concerns? Click here to contact us</a>" ?></strong></h1>
     </section>
     <footer class="page-footer sticky-bottom font-small wwi_mainbgcolor wwi_mainbgcolordarker">
 
