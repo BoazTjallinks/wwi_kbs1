@@ -133,7 +133,6 @@ if ($size !== $function->getDefaultnr('size')) {
 
 /*Pagination*/
 $maxPages = ceil(count($stockAllCategories) / $limit);
-// $maxPages = 100;
 $minPages = 1;
 $pagemin = $page - 1;
 $pageminTwo = $page - 2;
@@ -192,27 +191,8 @@ $mpageplusThree = $minPages + 3;
                                 <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
 
                                         <?php
-                                        // $amountPages = ceil(count($stockAllCategories) / $limit);
-                                        // print_r('<li>'.$amountPages.'</li>');
-                                        
-                                        // if ($amountPages > 5) {
-                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
-                                        //     for ($i=0; $i < $amountPages; $i++) {
-                                        //         echo '<li class="page-item"><a class="page-link" href="#">'.$i.'</a></li>';
-                                        //     }
-                                        //     echo '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
-                                        // } else {
-                                        //     for ($i=0; $i < $amountPages; $i++) {
-                                        //         if (($i + 1) == $page) {
-                                        //             echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
-                                        //         } else {
-                                        //             echo '<li class="page-item"><a class="page-link" href="/categories?catid='.$cat.'&page='.($i + 1).'">'.($i + 1).'</a></li>';
-                                        //         }
-                                        //     }
-                                        // }
                                         if ($maxPages <= $minPages) {
                                             $page = 1;
-                                        // echo '<li class="page-item"><a class="page-link wwi_mainbgcolor wwi_mainborder wwi_mainbgcolorhover wwi_text_light wwi_mainborderhover" href="/categories?catid='.$cat.'&page=1">1</a></li>';
                                         } elseif ($page < 1) {
                                             header('Location: /home');
                                         } elseif ($page > $maxPages) {
