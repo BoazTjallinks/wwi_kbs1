@@ -1,0 +1,201 @@
+:root {
+  --main-color: #4DBFF2;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background: var(--main-color);
+  color: white;
+}
+
+a, a:hover, a:focus {
+  color: var(--main-color);
+}
+
+.wwi_text_light {
+  color: white;
+}
+
+.wwi_text_lighthover:hover {
+  color: white;
+}
+
+.wwi_mainbgcolordarker {
+  filter: brightness(90%);
+}
+
+.wwi_mainbgcolor {
+  background: var(--main-color);
+}
+
+.wwi_mainbgcolorhover:hover {
+  background: var(--main-color);
+}
+
+.wwi_mainborder {
+  border-color: var(--main-color);
+}
+
+.wwi_mainborderhover:hover {
+  border-color: var(--main-color);
+}
+
+.wwi_maincolor {
+  color: var(--main-color);
+}
+
+.wwi_maincolor:hover, .wwi_maincolor:active, .wwi_maincolor:focus {
+  color: Var(--main-color)!important;
+}
+
+.wwi_right {
+  float: right;
+}
+
+.wwi_left {
+  float: left;
+}
+
+.wwi_center {
+  margin: 0 auto;
+}
+
+.wwi_text_center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wwi_50width {
+  width: 50vw!important;
+}
+
+.wwi_25width {
+  width: 25vw!important;
+}
+
+.wwi_50minheight {
+  min-height: 50vh!important;
+}
+
+.wwi_25minheight {
+  min-height: 25vh!important;
+}
+
+.wwi_50height {
+  height: 50vh!important;
+}
+
+.wwi_35height {
+  height: 35vh!important;
+}
+
+.wwi_25height {
+  height: 25vh!important;
+}
+
+.wwi_nav_img {
+  width: 8rem;
+}
+
+.wwi_padding_normal {
+  padding: 2rem;
+}
+
+.wwi_padding_right_normal {
+  padding-right: 2rem;
+}
+
+.wwi_padding_left_normal {
+  padding-left: 2rem;
+}
+
+.wwi_padding_top_normal {
+  padding-top: 2rem;
+}
+
+.wwi_padding_top_large {
+  padding-top: 4rem;
+}
+
+.wwi_margin_top_normal {
+  margin-top: 2rem;
+}
+
+.wwi_float_right {
+  float: right;
+}
+
+.wwi_noborder {
+  border: 0px;
+}
+
+.wwi_mat_3 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.wwi_mat_4 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.wwi_text_left {
+  text-align: left;
+}
+
+.wwi_textalign_center {
+  text-align: center;
+}
+
+.wwi_text_right {
+  text-align: right;
+}
+
+.wwi_blur {
+  filter: blur(0.125rem);
+}
+
+.wwi-itemimg {
+  height: 15vh!important;
+  width: 90%;
+}
+
+.wwi-itemimg_nowith {
+  height: 8vh!important;
+}
+
+.wwi_stuck {
+  position: fixed;
+}
+
+.wwi_fontsize_xtrasmall {
+  font-size: 1rem;
+}
+
+.wwi_frontsize_small {
+  font-size: 1.25rem;
+}
+
+.wwi_frontsize_normal {
+  font-size: 2rem;
+}
+
+.wwi_login_h0n3y {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
+
+#side-menu {
+  opacity: 0!important;
+  position: absolute!important;
+  top: 0!important;
+  left: 0!important;
+  height: 0!important;
+  width: 0!important;
+  z-index: -1!important;
+}
