@@ -34,8 +34,9 @@ function checkDeals($checkDeals)
             if ($checkDeals[$i]['StockItemID'] == 0) {	
 				print("<h1 class='wwi_text_light'><strong>".$checkDeals[$i]['stockgroupname']."</strong></h1>");
 				//print("<h3 class='wwi_text_light'><strong>".round($checkDeals[$i]['DiscountPercentage'],0)." % Discount!</strong></h3>");
+				$normalDate = date("d-m-Y", strtotime($checkDeals[$i]['EndDate']));
 				print("<h3 class='wwi_text_light'><strong>".$checkDeals[$i]['DealDescription']."</strong></h3>");
-				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$checkDeals[$i]['EndDate']."</strong></h3>");
+				print("<h3 class='wwi_text_light'><strong>Lasts until! ".$normalDate."</strong></h3>");
 
 			} elseif ($checkDeals[$i]['StockGroupID'] == 0) {
 				print("<h1 class='wwi_text_light'><strong>$checkDeals[$i]['StockItemName']</strong></h1>");
