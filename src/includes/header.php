@@ -31,6 +31,15 @@
 		<section id="hidden" class="">
 			<?php
                 require('../src/includes/login.php');
+                if (isset($_SESSION['shoppingCart'])) {
+                    $shoppingcart = [];
+                    for ($i=0; $i < count($_SESSION['shoppingCart']); $i++) {
+                        if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+                            array_push($shoppingcart, $_SESSION['shoppingCart'][$i]);
+                        }
+                    }
+                    $_SESSION['shoppingCart'] = $shoppingcart;
+                }
                 require('../src/includes/cart.php');
             ?>
 		</section>
@@ -82,9 +91,11 @@
 								<?php
 
                                 if (!isset($_SESSION['shoppingCart'])) {
-                                    echo '<strong>&nbsp;Cart</strong>';
-                                } else {
-                                    echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                    if (empty($_SESSION['shoppingCart'])) {
+                                        echo '<strong>&nbsp;Cart</strong>';
+                                    } else {
+                                        echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                    }
                                 }
                                 ?>
 								</a>
