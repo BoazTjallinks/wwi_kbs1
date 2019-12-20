@@ -305,13 +305,13 @@ $mpageplusThree = $minPages + 3;
                             <option value="" selected hidden>Reset filter</option>
                             <option value="clear filter">Reset filter</option>
                     </select>
-                    <h5><strong>min</strong></h5>
+                    <h5><strong>Min Price</strong></h5>
                     <div class="d-flex justify-content-center my-4">
                     <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
                         <input class="border-0" value="<?php echo $minPrice; ?>" name="Minprice" type="range" min="<?php echo $minPrice; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
                     <span class="font-weight-bold indigo-text ml-2 mt-1"><?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?></span>
                     </div>
-                    <h5><strong>max</strong></h5>
+                    <h5><strong>Max Price</strong></h5>
                     <div class="d-flex justify-content-center my-4">
                     <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
                         <input class="border-0" value="<?php echo $maxPrice; ?>" name="Maxprice" type="range" min="<?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
