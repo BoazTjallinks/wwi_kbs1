@@ -90,11 +90,11 @@
 								<i class="fas fa-shopping-cart"></i>
 								<?php
 
-                                if (!isset($_SESSION['shoppingCart'])) {
-                                    if (empty($_SESSION['shoppingCart'])) {
-                                        echo '<strong>&nbsp;Cart</strong>';
-                                    } else {
+                                if (isset($_SESSION['shoppingCart'])) {
+                                    if (!empty($_SESSION['shoppingCart'])) {
                                         echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                    } else {
+                                        echo '<strong>&nbsp;Cart</strong>';
                                     }
                                 }
                                 ?>
