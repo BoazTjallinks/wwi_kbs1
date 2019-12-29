@@ -8,7 +8,7 @@ if(!isset($_GET['page'])){
 if(isset($_SESSION['isloggedIn'])){
     $usertoken = $_SESSION['isloggedIn'];
 }else{
-    echo 'Please login first to check your order history';
+    header('location: /home');
 }
 
 $page = $_GET['page'];
