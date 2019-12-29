@@ -86,7 +86,7 @@ $date = date('Y-m-d H:i:s');
 
 //         // $updateDatabaseStock = $database->DBQuery("UPDATE quantity_test SET QuantityOnHand = ? WHERE StockItemID = ?",[$newinstock,$shoppedID]);
         
-                    //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
+//                     //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
 
 //         $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID) FROM orderlines LIMIT ?",[1]);
 //         // var_dump($maxorderlineid[0].'<br>');
@@ -94,10 +94,10 @@ $date = date('Y-m-d H:i:s');
 //         // var_dump($maxorderid[0].'<br>');
 
 //         $stockitemcolumns = $database->DBQuery("SELECT StockItemName, OuterPackageID, RecommendedRetailPrice, TaxRate FROM stockitems WHERE StockItemID = ?",[$_SESSION['shoppingCart'][$i]['ItemID']]);
-//         //echo 'ff -'.$maxorderlineid[0]['MAX(OrderLineID)'].' - '.$maxorderid[0]['MAX(OrderID)'].' - '.$shoppedID.' - '.$stockitemcolumns[0]['StockItemName'].' - '.$stockitemcolumns[0]['OuterPackageID'].' - '.$shoppedAmount.' - '.$stockitemcolumns[0]['RecommendedRetailPrice'].' - '.$stockitemcolumns[0]['TaxRate'].' - '.$shoppedAmount.' - '.$date.' - 7 - '.$date.' - <br>';
+//         echo 'ff -'.$maxorderlineid[0]['MAX(OrderLineID)'].' - '.$maxorderid[0]['MAX(OrderID)'].' - '.$shoppedID.' - '.$stockitemcolumns[0]['StockItemName'].' - '.$stockitemcolumns[0]['OuterPackageID'].' - '.$shoppedAmount.' - '.$stockitemcolumns[0]['RecommendedRetailPrice'].' - '.$stockitemcolumns[0]['TaxRate'].' - '.$shoppedAmount.' - '.$date.' - 7 - '.$date.' - <br>';
         
-//         //de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
-//         //$updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0],$maxorderid[0],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount],$date,7,$date);
+//         // de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
+//         $updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0],$maxorderid[0],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount],$date,7,$date);
 //     }
 // }
 
@@ -148,7 +148,7 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
 
                     
                     //-------------- CODE OM DE ORDER IN DE DATABASE TE GOOIEN --------------
-/*                    $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID + ?) AS maxi FROM orderlines",[1]);
+                    $maxorderlineid = $database->DBQuery("SELECT MAX(OrderLineID + ?) AS maxi FROM orderlines",[1]);
                     // var_dump($maxorderlineid[0].'<br>');
                     $maxorderid = $database->DBQuery("SELECT MAX(OrderID + ?) AS maxi FROM orders",[1]);
                     // var_dump($maxorderid[0].'<br>');
@@ -158,12 +158,12 @@ if((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset(
                     
                     //de queries hierboven worden nog niet geod gepakt, dus de query hieronder heeft nog geen groen licht;
                     $updateDatabaseStock = $database->DBQuery("INSERT INTO orderlines VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",[$maxorderlineid[0]['maxi'],$maxorderid[0]['maxi'],$shoppedID,$stockitemcolumns[0]['StockItemName'],$stockitemcolumns[0]['OuterPackageID'],$shoppedAmount,$stockitemcolumns[0]['RecommendedRetailPrice'],$stockitemcolumns[0]['TaxRate'],$shoppedAmount,$date,7,$date]);
-                    */
+                    
                 }
             }
 
             unset($_SESSION['shoppingCart']);
-            $database->closeConnection();
+            // $database->closeConnection();
 
     }
 /*----------------------------------------Submit iDeal eind----------------------------------------*/

@@ -4,7 +4,7 @@
  * Shows al items in categorie
  */
 
-
+// session_destroy();
 class cat
 {
     protected $options = [
@@ -110,6 +110,14 @@ if (isset($_POST['catupdater'])) {
                 header('location: /categories?catid='.$_GET['catid'].'&page=1');
             }
         }
+
+        if (isset($_POST['clearItem'])) {
+            if ($_POST['clearItem'] == 'clear filter') {
+                $function->clearSession();
+                $function->setFilter($sizePriceStockItems);
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
     }
 }
 
@@ -131,7 +139,7 @@ $maxPrice = $_SESSION['maxprice'];
 $size = $_SESSION['size'];
 
 
-print_r($_SESSION);
+// print_r($_SESSION);
 
 
 $sessionOptions = $function->getOptions();
@@ -146,34 +154,81 @@ if ($stockAllCategories == '0 results found!') {
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
     $getcolor = [];
+    $getColor2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
         if ($stockCategories[$i]['ColorID'] == $colorId) {
             array_push($getcolor, $stockCategories[$i]);
         }
     }
+
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['ColorID'] == $colorId) {
+            array_push($getColor2, $stockAllCategories[$i]);
+        }
+    }
     $stockCategories = $getcolor;
+    $stockAllCategories = $getColor2;
 }
 
-if ($minPrice !== $function->getDefaultnr('minprice') || $maxPrice !== $function->getDefaultnr('maxprice')) {
+// print_r($stockAllCategories);
+
+if ($minPrice !== $function->getDefaultnr('minprice')) {
     $getPrice = [];
+    $getPrice2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
-        if ($stockCategories[$i]['RecommendedRetailPrice'] < $maxPrice && $stockCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
+        if ($stockCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
             array_push($getPrice, $stockCategories[$i]);
         }
     }
 
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
+            array_push($getPrice2, $stockCategories[$i]);
+        }
+    }
+
     $stockCategories = $getPrice;
+    $stockAllCategories = $getPrice2;
 }
+
+if ($maxPrice !== $function->getDefaultnr('maxprice')) {
+    $getPrice = [];
+    $getPrice2 = [];
+    for ($i=0; $i < count($stockCategories); $i++) {
+        if ($stockCategories[$i]['RecommendedRetailPrice'] < $maxPrice) {
+            array_push($getPrice, $stockCategories[$i]);
+        }
+    }
+
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['RecommendedRetailPrice'] < $maxPrice) {
+            array_push($getPrice2, $stockCategories[$i]);
+        }
+    }
+
+    $stockCategories = $getPrice;
+    $stockAllCategories = $getPrice2;
+}
+
 
 if ($size !== $function->getDefaultnr('size')) {
     $getSize = [];
+    $getSize2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
         if ($stockCategories[$i]['Size'] == $size) {
             array_push($getSize, $stockCategories[$i]);
         }
     }
+
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['Size'] == $size) {
+            array_push($getSize2, $stockAllCategories[$i]);
+        }
+    }
     $stockCategories = $getSize;
+    $stockAllCategories = $getSize2;
 }
+
 
 
 /*Pagination*/
@@ -235,25 +290,31 @@ $mpageplusThree = $minPages + 3;
                                     echo '<option value="'.$size.'" selected hidden>Size</option>';
                                 }
                                 for ($i=0; $i < count($getAllsizes); $i++) {
-                                    if ($size == $getAllsizes[$i]['Size']) {
-                                        echo "<option value='".$getAllsizes[$i]['Size']."'selected hidden>" .$getAllsizes[$i]['Size']."</option><br>";
-                                    } else {
-                                        echo "<option value='".$getAllsizes[$i]['Size']."'>" .$getAllsizes[$i]['Size']."</option><br>";
+                                    if ($getAllsizes[$i]['Size'] !== '') {
+                                        if ($size == $getAllsizes[$i]['Size']) {
+                                            echo "<option value='".$getAllsizes[$i]['Size']."'selected hidden>" .$getAllsizes[$i]['Size']."</option><br>";
+                                        } else {
+                                            echo "<option value='".$getAllsizes[$i]['Size']."'>" .$getAllsizes[$i]['Size']."</option><br>";
+                                        }
                                     }
                                 }
                             }
                         ?>
                     </select>
-                    <h5><strong>min</strong></h5>
+                    <select name="clearItem" onchange="autoSubmit();">
+                            <option value="" selected hidden>Reset filter</option>
+                            <option value="clear filter">Reset filter</option>
+                    </select>
+                    <h5><strong>Min Price</strong></h5>
                     <div class="d-flex justify-content-center my-4">
                     <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
-                        <input class="border-0" name="Minprice" type="range" min="<?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
+                        <input class="border-0" value="<?php echo $minPrice; ?>" name="Minprice" type="range" min="<?php echo $minPrice; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
                     <span class="font-weight-bold indigo-text ml-2 mt-1"><?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?></span>
                     </div>
-                    <h5><strong>max</strong></h5>
+                    <h5><strong>Max Price</strong></h5>
                     <div class="d-flex justify-content-center my-4">
                     <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
-                        <input class="border-0" name="Maxprice" type="range" min="<?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
+                        <input class="border-0" value="<?php echo $maxPrice; ?>" name="Maxprice" type="range" min="<?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
                     <span class="font-weight-bold indigo-text ml-2 mt-1"><?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?></span>
                     </div>
                 </form>
