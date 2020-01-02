@@ -118,7 +118,7 @@
                                 echo '<div class="col"><div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">'.$getStockgroupCategories[$i]['sgCategoriesName'].'&nbsp;</a><div class="dropdown-menu" role="menu">';
                                 for ($i2=0; $i2 < count($getstockgroups); $i2++) {
                                     if ($getStockgroupCategories[$i]['sgCategoriesID'] == $getstockgroups[$i2]['StockGroupParent']) {
-                                        echo '<a class="dropdown-item" role="presentation" href="/categories?catid='.$getstockgroups[$i2]['StockGroupID'].'&page=1">'.$getstockgroups[$i2]['StockGroupName'].'</a>';
+                                        echo '<a class="dropdown-item" role="presentation" href="/categories?catid='.$getstockgroups[$i2]['StockGroupID'].'&clearFilter=1&page=1">'.$getstockgroups[$i2]['StockGroupName'].'</a>';
                                     }
                                 }
                                 echo '</div></div></div>';

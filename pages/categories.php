@@ -76,6 +76,14 @@ $database = new database();
 $function->checkGetParams();
 
 
+if (isset($_GET['clearFilter'])) {
+    unset($_SESSION['colorid']);
+    unset($_SESSION['limit']);
+    unset($_SESSION['size']);
+    unset($_SESSION['minprice']);
+    unset($_SESSION['maxprice']);
+}
+
 if (isset($_POST['catupdater'])) {
     if ($_POST['catupdater'] == session_id()) {
         if (isset($_POST['colorid'])) {
@@ -138,10 +146,6 @@ $minPrice = $_SESSION['minprice'];
 $maxPrice = $_SESSION['maxprice'];
 $size = $_SESSION['size'];
 
-
-// print_r($_SESSION);
-
-
 $sessionOptions = $function->getOptions();
 $stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$cat]);
 $stockCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?) LIMIT ? OFFSET ?', [$cat, $limit, $offset]);
@@ -169,8 +173,6 @@ if ($colorId !== $function->getDefaultnr('colorid')) {
     $stockCategories = $getcolor;
     $stockAllCategories = $getColor2;
 }
-
-// print_r($stockAllCategories);
 
 if ($minPrice !== $function->getDefaultnr('minprice')) {
     $getPrice = [];
@@ -331,14 +333,6 @@ $mpageplusThree = $minPages + 3;
                             <div>
                                 <nav>
                                     <ul class="pagination">
-                                <!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
-
                                         <?php
                                         if ($maxPages <= $minPages) {
                                             $page = 1;
