@@ -4,7 +4,7 @@
  * Shows al items in categorie
  */
 
-
+// session_destroy();
 class cat
 {
     protected $options = [
@@ -75,11 +75,67 @@ $database = new database();
 
 $function->checkGetParams();
 
+
+if (isset($_GET['clearFilter'])) {
+    unset($_SESSION['colorid']);
+    unset($_SESSION['limit']);
+    unset($_SESSION['size']);
+    unset($_SESSION['minprice']);
+    unset($_SESSION['maxprice']);
+}
+
+if (isset($_POST['catupdater'])) {
+    if ($_POST['catupdater'] == session_id()) {
+        if (isset($_POST['colorid'])) {
+            if (is_numeric($_POST['colorid'])) {
+                $_SESSION['colorid'] = $_POST['colorid'];
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
+
+        if (isset($_POST['limit'])) {
+            if ($_POST['limit'] == 25 || $_POST['limit'] == 50 || $_POST['limit'] == 100) {
+                $_SESSION['limit'] = $_POST['limit'];
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
+
+        if (isset($_POST['size'])) {
+            $_SESSION['size'] = $_POST['size'];
+            header('location: /categories?catid='.$_GET['catid'].'&page=1');
+        }
+
+        if (isset($_POST['Minprice'])) {
+            if (is_numeric($_POST['Minprice'])) {
+                $_SESSION['minprice'] = $_POST['Minprice'];
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
+
+        if (isset($_POST['Maxprice'])) {
+            if (is_numeric($_POST['Maxprice'])) {
+                $_SESSION['maxprice'] = $_POST['Maxprice'];
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
+
+        if (isset($_POST['clearItem'])) {
+            if ($_POST['clearItem'] == 'clear filter') {
+                $function->clearSession();
+                $function->setFilter($sizePriceStockItems);
+                header('location: /categories?catid='.$_GET['catid'].'&page=1');
+            }
+        }
+    }
+}
+
+
 $sizePriceStockItems = $database->DBQuery('SELECT MIN(RecommendedRetailPrice), MAX(RecommendedRetailPrice) FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$_GET['catid']]);
 
 $function->setFilter($sizePriceStockItems);
 
 $function->checkFilterSession();
+
 
 $cat = $_GET['catid'];
 $page = $_GET['page'];
@@ -89,7 +145,6 @@ $colorId = $_SESSION['colorid'];
 $minPrice = $_SESSION['minprice'];
 $maxPrice = $_SESSION['maxprice'];
 $size = $_SESSION['size'];
-
 
 $sessionOptions = $function->getOptions();
 $stockAllCategories = $database->DBQuery('SELECT * FROM stockitems si JOIN stockitemstockgroups sisg ON si.StockItemID = sisg.StockItemID WHERE sisg.StockGroupID in (SELECT StockGroupID FROM stockgroups WHERE StockGroupID = ?)', [$cat]);
@@ -103,35 +158,79 @@ if ($stockAllCategories == '0 results found!') {
 
 if ($colorId !== $function->getDefaultnr('colorid')) {
     $getcolor = [];
+    $getColor2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
         if ($stockCategories[$i]['ColorID'] == $colorId) {
             array_push($getcolor, $stockCategories[$i]);
         }
     }
+
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['ColorID'] == $colorId) {
+            array_push($getColor2, $stockAllCategories[$i]);
+        }
+    }
     $stockCategories = $getcolor;
+    $stockAllCategories = $getColor2;
 }
 
-if ($minPrice !== $function->getDefaultnr('minprice') || $maxPrice !== $function->getDefaultnr('maxprice')) {
+if ($minPrice !== $function->getDefaultnr('minprice')) {
     $getPrice = [];
+    $getPrice2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
-        if ($stockCategories[$i]['RecommendedRetailPrice'] < $maxPrice && $stockCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
+        if ($stockCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
             array_push($getPrice, $stockCategories[$i]);
         }
     }
 
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['RecommendedRetailPrice'] > $minPrice) {
+            array_push($getPrice2, $stockCategories[$i]);
+        }
+    }
+
     $stockCategories = $getPrice;
+    $stockAllCategories = $getPrice2;
 }
+
+if ($maxPrice !== $function->getDefaultnr('maxprice')) {
+    $getPrice = [];
+    $getPrice2 = [];
+    for ($i=0; $i < count($stockCategories); $i++) {
+        if ($stockCategories[$i]['RecommendedRetailPrice'] < $maxPrice) {
+            array_push($getPrice, $stockCategories[$i]);
+        }
+    }
+
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['RecommendedRetailPrice'] < $maxPrice) {
+            array_push($getPrice2, $stockCategories[$i]);
+        }
+    }
+
+    $stockCategories = $getPrice;
+    $stockAllCategories = $getPrice2;
+}
+
 
 if ($size !== $function->getDefaultnr('size')) {
     $getSize = [];
+    $getSize2 = [];
     for ($i=0; $i < count($stockCategories); $i++) {
         if ($stockCategories[$i]['Size'] == $size) {
             array_push($getSize, $stockCategories[$i]);
         }
     }
 
+    for ($i=0; $i < count($stockAllCategories); $i++) {
+        if ($stockAllCategories[$i]['Size'] == $size) {
+            array_push($getSize2, $stockAllCategories[$i]);
+        }
+    }
     $stockCategories = $getSize;
+    $stockAllCategories = $getSize2;
 }
+
 
 
 /*Pagination*/
@@ -154,23 +253,72 @@ $mpageplusThree = $minPages + 3;
         <div class="row container-fluid wwi_margin_top_normal">
             <div class="col-xl-2 offset-xl-1 wwi_bgsidebar d-none d-lg-block wwi_mat_3">
                 <h1 class="wwi_light wwi_textalign_center"><strong>Filter</strong></h1>
-                <form action="/categories" method="post">
-                    <input type="hidden" name="catid" value="<?php echo $cat; ?>">
-                    <select onChange="autoSubmit();">
+                <form action="/categories?catid=<?php echo $cat; ?>&page=1" method="post" id="filter">
+                <input type="hidden" name="catupdater" value="<?php echo session_id(); ?>">
+                    <select name="limit" onChange="autoSubmit();">
+                        <option value="<?php echo $limit; ?>" selected hidden><?php echo $limit; ?> filtered</option>
+                        <?php
+                        
+                            $optlim = [25, 50, 100];
+                            for ($i=0; $i < count($optlim); $i++) {
+                                if ($limit !== $optlim) {
+                                    echo '<option value="'.$optlim[$i].'">'.$optlim[$i].'</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                    <select name="colorid" onChange="autoSubmit();">
                     <?php
                         $getColors = $database->DBQuery('SELECT * FROM colors WHERE ColorID IN (SELECT ColorID FROM stockitems JOIN stockitemstockgroups s on stockitems.StockItemID = s.StockItemID WHERE s.StockGroupID = ?)', [$stockCategories[0]['StockGroupID']]);
-                        if ($colorId == 'nAn') {
-                            echo '<option value="'.$colorId.'" selected hidden>Color</option>';
-                        }
-                        for ($i=0; $i < count($getColors); $i++) {
-                            if ($colorId == $getColors[$i]['ColorID']) {
-                                echo "<option value='".$getColors[$i]['ColorID']."'selected hidden>" .$getColors[$i]['ColorName']."</option><br>";
-                            } else {
-                                echo "<option value='".$getColors[$i]['ColorID']."'>" .$getColors[$i]['ColorName']."</option><br>";
+                        if ($getColors !== '0 results found!') {
+                            if ($colorId == 'nAn') {
+                                echo '<option value="'.$colorId.'" selected hidden>Color</option>';
+                            }
+                            for ($i=0; $i < count($getColors); $i++) {
+                                if ($colorId == $getColors[$i]['ColorID']) {
+                                    echo "<option value='".$getColors[$i]['ColorID']."'selected hidden>" .$getColors[$i]['ColorName']."</option><br>";
+                                } else {
+                                    echo "<option value='".$getColors[$i]['ColorID']."'>" .$getColors[$i]['ColorName']."</option><br>";
+                                }
                             }
                         }
                     ?>
                     </select>
+                    <select name="size" onchange="autoSubmit();">
+                        <?php
+                            $getAllsizes = $database->DBQuery('SELECT DISTINCT Size FROM stockitems WHERE SupplierID = ? AND Size IS NOT NULL', [$cat]);
+                            if ($getAllsizes !== '0 results found!') {
+                                if ($size == 'nAn') {
+                                    echo '<option value="'.$size.'" selected hidden>Size</option>';
+                                }
+                                for ($i=0; $i < count($getAllsizes); $i++) {
+                                    if ($getAllsizes[$i]['Size'] !== '') {
+                                        if ($size == $getAllsizes[$i]['Size']) {
+                                            echo "<option value='".$getAllsizes[$i]['Size']."'selected hidden>" .$getAllsizes[$i]['Size']."</option><br>";
+                                        } else {
+                                            echo "<option value='".$getAllsizes[$i]['Size']."'>" .$getAllsizes[$i]['Size']."</option><br>";
+                                        }
+                                    }
+                                }
+                            }
+                        ?>
+                    </select>
+                    <select name="clearItem" onchange="autoSubmit();">
+                            <option value="" selected hidden>Reset filter</option>
+                            <option value="clear filter">Reset filter</option>
+                    </select>
+                    <h5><strong>Min Price</strong></h5>
+                    <div class="d-flex justify-content-center my-4">
+                    <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
+                        <input class="border-0" value="<?php echo $minPrice; ?>" name="Minprice" type="range" min="<?php echo $minPrice; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
+                    <span class="font-weight-bold indigo-text ml-2 mt-1"><?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?></span>
+                    </div>
+                    <h5><strong>Max Price</strong></h5>
+                    <div class="d-flex justify-content-center my-4">
+                    <span class="font-weight-bold indigo-text mr-2 mt-1"><?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?></span>
+                        <input class="border-0" value="<?php echo $maxPrice; ?>" name="Maxprice" type="range" min="<?php echo $sizePriceStockItems[0]['MIN(RecommendedRetailPrice)']; ?>" max="<?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?>" onchange="autoSubmit();" />
+                    <span class="font-weight-bold indigo-text ml-2 mt-1"><?php echo $sizePriceStockItems[0]['MAX(RecommendedRetailPrice)']; ?></span>
+                    </div>
                 </form>
             </div>
             <div class="col-xl-8 offset-xl-0">
@@ -185,14 +333,6 @@ $mpageplusThree = $minPages + 3;
                             <div>
                                 <nav>
                                     <ul class="pagination">
-                                <!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
-
                                         <?php
                                         if ($maxPages <= $minPages) {
                                             $page = 1;
@@ -256,7 +396,12 @@ $mpageplusThree = $minPages + 3;
         </div>
     </div>
 </section>
-
+<script>
+    function autoSubmit() {
+        var formObject = document.forms['filter'];
+        formObject.submit();
+    }
+</script>
 <?php
 
 

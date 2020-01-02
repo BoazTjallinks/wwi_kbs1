@@ -1,26 +1,19 @@
 <?php
 $database = new database();
-if (!isset($_GET['page'])) {
+if(!isset($_GET['page'])){
     header('location: /orderhistory?page=1');
 }
 
 
-if (isset($_SESSION['isloggedIn'])) {
+if(isset($_SESSION['isloggedIn'])){
     $usertoken = $_SESSION['isloggedIn'];
-} else {
+}else{
     header('location: /home');
 }
 
 $page = $_GET['page'];
-$offset = $page * 7 - 7;
-$orderDetailsAll= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
-FROM orders O 
-JOIN orderlines OL ON O.OrderID = OL.OrderID
-JOIN stockitems S ON OL.StockItemID = S.StockItemID
-WHERE O.CustomerID = ?
-GROUP BY O.OrderID
-ORDER BY O.OrderDate DESC, O.OrderID DESC", [$usertoken]);
-
+$offset = $page * 6 - 6;
+$orderDetailsAll= $database->DBQuery("SELECT * FROM orders O  WHERE O.CustomerID = ? GROUP BY O.OrderID", [$usertoken]);
 
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName,SUM(OL.Quantity * S.RecommendedRetailPrice / 100 * (100 + S.TaxRate)) AS TotalPriceItem, S.TaxRate
 FROM orders O 
@@ -29,7 +22,7 @@ JOIN stockitems S ON OL.StockItemID = S.StockItemID
 WHERE O.CustomerID = ?
 GROUP BY O.OrderID
 ORDER BY O.OrderDate DESC, O.OrderID DESC
-LIMIT ? OFFSET ? ", [$usertoken, 10, $offset]);
+LIMIT ? OFFSET ? ", [$usertoken, 6, $offset]); 
 
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);
 ?>
@@ -50,31 +43,32 @@ $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.Recommen
                 </thead>
                 <tbody>
                         <?php
-                        if ($orderDetails == '0 results found!') {
+                        if($orderDetails == '0 results found!'){
                             echo '<td>No orders found.</td>';
-                        } else {
-                            for ($i = 0; $i < count($orderDetails); $i++) {
+                        }else{
+                            for($i = 0; $i < count($orderDetails); $i++){
                                 echo ' <tr class="wwi_textalign_center wwi_frontsize_small">';
                                 $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$orderDetails[$i]['StockItemID']]);
-                                if ($getimg == '0 results found!') {
-                                    $img = '/public/img/products/no-image.png';
-                                } else {
-                                    $img = $getimg[0]['ImagePath'];
-                                }
+                                    if ($getimg == '0 results found!') {
+                                        $img = '/public/img/products/no-image.png';
+                                    }
+                                    else {
+                                        $img = $getimg[0]['ImagePath'];
+                                    }
                                 $normalDate = date("d-m-Y", strtotime($orderDetails[$i]['OrderDate']));
                                 echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure></td>';
                                 echo '<td class="align-middle">'.$orderDetails[$i]['OrderID'].'</td>';
-                                if (isset($orderDetails[$i]['StockItemID'])) {
+                                if(isset($orderDetails[$i]['StockItemID'])){
                                     echo "<td class='align-middle'><a href='/productview?id=".$orderDetails[$i]['StockItemID']."'>".$orderDetails[$i]['StockItemName']."</a></td>";
-                                } else {
+                                }else{
                                     echo "<td class='align-middle'>$itemsNotSold[$i]['StockItemName']</td>";
                                 }
                                 echo '<td class="align-middle">'.$normalDate.'</td>';
-                                echo '<td class="align-middle">€ '.round($orderDetails[$i]['TotalPriceItem'], 2).'</td>';
+                                echo '<td class="align-middle">€ '.round($orderDetails[$i]['TotalPriceItem'],2).'</td>';
                                 echo "<td class='align-middle'><a href='/orderdetails?OrderID=".$orderDetails[$i]['OrderID']."' class='btn btn-primary'>More details</a></td>";
                                 echo '</tr>';
+                                }
                             }
-                        }
                         ?>
                 </tbody>
             </table>
@@ -82,7 +76,7 @@ $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.Recommen
     </section>
 <?php
 
-$maxPages = ceil(count($orderDetailsAll) / 7);
+$maxPages = ceil(count($orderDetailsAll) / 6);
 $minPages = 1;
 $pagemin = $page - 1;
 $pageminTwo = $page - 2;

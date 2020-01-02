@@ -83,7 +83,8 @@ $StockItems = $database->DBquery('SELECT * FROM stockitems JOIN stockitemholding
                                                             echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
                                                             echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure></td>';
                                                             echo '<td class="align-middle">'.$StockItems[$i2]['StockItemName'].'</td>';
-                                                            echo '<td class="align-middle"><input class="form-control-sm" type="number" value="'.$ItemAmount.'" min="1" max="'.$StockItems[$i2]['QuantityOnHand'].'"></td>';
+                                                            echo '<td class="align-middle"><form method="GET" action="/updatequantitiy"><input type="hidden" value="" name="redirect"><input class="form-control-sm" name="newnr" type="number" value="'.$ItemAmount.'" min="1" max="'.$StockItems[$i2]['QuantityOnHand'].'"></form></td>';
+                                                            // echo '<input type="hidden" value="'.$cat.'" name="catid">';
                                                             echo '<td class="align-middle">'.($StockItems[$i2]['RecommendedRetailPrice'] * $ItemAmount).'</td>';
                                                             echo '<td class="align-middle"><a class="text-danger" href="/deletecart?itemid='.$StockItems[$i2]['StockItemID'].'&redirect='.$query.'"><i class="fa fa-trash wwi_frontsize_normal"></i></a></td>';
                                                             echo '</tr>';

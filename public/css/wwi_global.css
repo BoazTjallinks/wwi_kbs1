@@ -67,6 +67,10 @@ a, a:hover, a:focus {
   transform: translate(-50%, -50%);
 }
 
+.wwi_100procwidth {
+  width: 100%!important;
+}
+
 .wwi_50width {
   width: 50vw!important;
 }

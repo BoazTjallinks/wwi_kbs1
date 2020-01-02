@@ -31,6 +31,15 @@
 		<section id="hidden" class="">
 			<?php
                 require('../src/includes/login.php');
+                if (isset($_SESSION['shoppingCart'])) {
+                    $shoppingcart = [];
+                    for ($i=0; $i < count($_SESSION['shoppingCart']); $i++) {
+                        if ($_SESSION['shoppingCart'][$i] !== 'nAn') {
+                            array_push($shoppingcart, $_SESSION['shoppingCart'][$i]);
+                        }
+                    }
+                    $_SESSION['shoppingCart'] = $shoppingcart;
+                }
                 require('../src/includes/cart.php');
             ?>
 		</section>
@@ -81,10 +90,12 @@
 								<i class="fas fa-shopping-cart"></i>
 								<?php
 
-                                if (!isset($_SESSION['shoppingCart'])) {
-                                    echo '<strong>&nbsp;Cart</strong>';
-                                } else {
-                                    echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                if (isset($_SESSION['shoppingCart'])) {
+                                    if (!empty($_SESSION['shoppingCart'])) {
+                                        echo '<span class="badge badge-info">'.count($_SESSION['shoppingCart']).'</span><strong>&nbsp;Cart</strong>';
+                                    } else {
+                                        echo '<strong>&nbsp;Cart</strong>';
+                                    }
                                 }
                                 ?>
 								</a>
@@ -107,7 +118,7 @@
                                 echo '<div class="col"><div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">'.$getStockgroupCategories[$i]['sgCategoriesName'].'&nbsp;</a><div class="dropdown-menu" role="menu">';
                                 for ($i2=0; $i2 < count($getstockgroups); $i2++) {
                                     if ($getStockgroupCategories[$i]['sgCategoriesID'] == $getstockgroups[$i2]['StockGroupParent']) {
-                                        echo '<a class="dropdown-item" role="presentation" href="/categories?catid='.$getstockgroups[$i2]['StockGroupID'].'&page=1">'.$getstockgroups[$i2]['StockGroupName'].'</a>';
+                                        echo '<a class="dropdown-item" role="presentation" href="/categories?catid='.$getstockgroups[$i2]['StockGroupID'].'&clearFilter=1&page=1">'.$getstockgroups[$i2]['StockGroupName'].'</a>';
                                     }
                                 }
                                 echo '</div></div></div>';
@@ -117,3 +128,12 @@
         		</div>
     		</nav>
 	</section>
+	<?php
+    if (!$_SESSION['limit']) {
+        $_SESSION['limit'] = 25;
+    } else {
+        if (empty($_SESSION['limit'])) {
+            $_SESSION['limit'] = 25;
+        }
+    }
+    // print_r($_SESSION);
