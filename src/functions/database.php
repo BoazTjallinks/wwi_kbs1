@@ -34,15 +34,20 @@ class database
     private function returnQuery($result)
     {
         try {
-            if (!$result || mysqli_num_rows($result) > 0) {
-                $returnValue = array();
-                while ($row = mysqli_fetch_assoc($result)) {
-                    array_push($returnValue, $row);
+            if ($result) {
+                if (!$result || mysqli_num_rows($result) > 0) {
+                    $returnValue = array();
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        array_push($returnValue, $row);
+                    }
+    
+                    return $returnValue;
+                } else {
+                    return '0 results found!';
                 }
-
-                return $returnValue;
-            } else {
-                return '0 results found!';
+            }
+            else {
+                return 0;
             }
         } catch (\Throwable $th) {
             return $th;

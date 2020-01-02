@@ -4,7 +4,7 @@
  * This file parses the correct page and displayes this for the user. If not it redirects to a 404 page
  */
 
-
+unset($_SESSION['shoppingCart']);
 
 $database = new database();
 
