@@ -24,7 +24,8 @@ GROUP BY O.OrderID
 ORDER BY O.OrderDate DESC, O.OrderID DESC
 LIMIT ? OFFSET ? ", [$usertoken, 6, $offset]); 
 
-$itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [832]);
+$itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate FROM orders O JOIN orderlines OL ON O.OrderID = OL.OrderID JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID WHERE O.CustomerID = ?", [$usertoken]);
+
 ?>
 <section id="shopping-cart" class="wwi_padding_normal">
         <h1 class="wwi_maincolor"><strong>Your order history</strong></h1>
@@ -46,6 +47,7 @@ $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.Recommen
                         if($orderDetails == '0 results found!'){
                             echo '<td>No orders found.</td>';
                         }else{
+                            $maxt;
                             for($i = 0; $i < count($orderDetails); $i++){
                                 echo ' <tr class="wwi_textalign_center wwi_frontsize_small">';
                                 $getimg = $database->DBQuery('SELECT * FROM picture WHERE StockItemID = ? AND isPrimary IS NOT NULL', [$orderDetails[$i]['StockItemID']]);
@@ -64,7 +66,12 @@ $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.Recommen
                                     echo "<td class='align-middle'>$itemsNotSold[$i]['StockItemName']</td>";
                                 }
                                 echo '<td class="align-middle">'.$normalDate.'</td>';
-                                echo '<td class="align-middle">€ '.round($orderDetails[$i]['TotalPriceItem'],2).'</td>';
+                                if($orderDetails[$i]['TotalPriceItem'] < 100){
+                                    $maxt = $orderDetails[$i]['TotalPriceItem'] + (10 / 100 * (100 + $orderDetails[0]['TaxRate']));
+                                }else{
+                                    $maxt = $orderDetails[$i]['TotalPriceItem'];
+                                }
+                                echo '<td class="align-middle">€ '.round($maxt,2).'</td>';
                                 echo "<td class='align-middle'><a href='/orderdetails?OrderID=".$orderDetails[$i]['OrderID']."' class='btn btn-primary'>More details</a></td>";
                                 echo '</tr>';
                                 }

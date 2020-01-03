@@ -30,6 +30,7 @@ JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID
 WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, $usertoken]);
 $normalDate = date("d-m-Y", strtotime($orderDetails[0]['OrderDate']));
 $maxtotal = 0;
+$shipping = 10;
 ?>
 <section id="orderDetails" class="wwi_padding_normal">
 <div class="row">
@@ -77,8 +78,7 @@ $maxtotal = 0;
                     echo "<td class='align-middle'>€ ".round($total, 2)."</td>";
                     echo '</tr>';
                     $maxtotal = $maxtotal + $total;
-                    $maxt = $maxtotal;
-                }else{
+                    }else{
                     echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
                     echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure></td>';
                     echo "<td class='align-middle'>".$itemsNotSold[$i]['StockItemName']."</td>";
@@ -88,7 +88,14 @@ $maxtotal = 0;
                     echo "<td class='align-middle'>€ ".round($total, 2)."</td>";
                     echo '</tr>';
                     $maxtotal = $maxtotal + $total;
-                    $maxt = $maxtotal;
+                    }
+                    if($maxtotal < 100000000000){
+                        $shipping = $shipping /100 * (100 + $price1);
+                        $maxt = $maxtotal + $shipping;
+                    }else{
+                        $shipping = "Free";
+                        $maxt = $maxtotal;
+                    
                 }
             }
         }
@@ -99,9 +106,12 @@ $maxtotal = 0;
             <tr>
                 <td></td>
                 <td></td>
-                <td></td>
                 <?php
-                
+                if($shipping == 'Free'){
+                    echo "<td class='wwi_textalign_center wwi_maincolor wwi_fontsize_xtrasmall'><strong>Shipping: &nbsp;</strong>".$shipping."</td>"; 
+                }else{
+                    echo "<td class='wwi_textalign_center wwi_maincolor wwi_fontsize_xtrasmall'><strong>Shipping: &nbsp;</strong> € ".$shipping."</td>"; 
+                }
                 echo "<td class='wwi_textalign_center wwi_maincolor wwi_fontsize_xtrasmall'><strong>Tax: &nbsp;</strong>".$price1."%</td>";
                 echo "<td class='wwi_textalign_center wwi_maincolor wwi_fontsize_xtrasmall'><strong>Total Price: &nbsp;</strong> € ".round($maxt,2)."</td>";
                 ?>
