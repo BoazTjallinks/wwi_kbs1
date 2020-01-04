@@ -225,8 +225,8 @@ if ((isset($_POST['submit_ideal']) || isset($_POST['submit_credit'])) && !(isset
                                 </div>
                             </div>
                         </div>
-                        <!--</div></div></div>-->');                        
-                // unset($_SESSION['shoppingCart']);
+                        <!--</div></div></div>-->');
+            // unset($_SESSION['shoppingCart']);
             } else {
                 $notCompleted = true;
             }
