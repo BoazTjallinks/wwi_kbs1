@@ -89,7 +89,7 @@ $shipping = 10;
                     echo '</tr>';
                     $maxtotal = $maxtotal + $total;
                     }
-                    if($maxtotal < 100000000000){
+                    if($maxtotal < 100){
                         $shipping = $shipping /100 * (100 + $price1);
                         $maxt = $maxtotal + $shipping;
                     }else{
