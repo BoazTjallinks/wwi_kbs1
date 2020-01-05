@@ -1,19 +1,20 @@
 <?php 
+/* Verbinding maken met de database en terug verwijzen naar orderhistory */
 $database = new database();
 if(!isset($_GET['OrderID'])){
     header('location: /orderhistory?page=1');
 }
     
-
+/* Controleren of er is ingelogd, als dat niet het geval is terug naar homepagina */
 if(isset($_SESSION['isloggedIn'])){
     $usertoken = $_SESSION['isloggedIn'];
 }else{
-    echo 'Please login first to check your order details';
+    header('location: /home');
 }
 
 $orderID = $_GET['OrderID'];
 
-
+/* Alle informatie van een order ophalen met deze query */
 $orderDetails= $database->DBQuery("SELECT O.OrderID, O.OrderDate, OL.StockItemID, OL.Quantity, S.StockItemName, S.RecommendedRetailPrice, S.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
@@ -22,16 +23,18 @@ WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, $usertoken]);
 if($orderDetails == '0 results found!'){
     header('location: /orderhistory?page=1');
 }
-
+/* Als een item niet verkocht wordt wordt deze uit archive gehaald */
 $itemsNotSold= $database->DBQuery("SELECT DISTINCT SA.StockItemName, SA.RecommendedRetailPrice, SA.TaxRate
 FROM orders O 
 JOIN orderlines OL ON O.OrderID = OL.OrderID
 JOIN stockitems_archive SA ON OL.StockItemID = SA.StockItemID
 WHERE O.OrderID = ? AND O.CustomerID = ?", [$orderID, $usertoken]);
+
 $normalDate = date("d-m-Y", strtotime($orderDetails[0]['OrderDate']));
 $maxtotal = 0;
 $shipping = 10;
 ?>
+<!-- Begin tonen order details-->
 <section id="orderDetails" class="wwi_padding_normal">
 <div class="row">
     <div class="col">
@@ -54,6 +57,8 @@ $shipping = 10;
         </thead>
         <tbody>
             <?php
+            /* Check of er resultaten zijn uit de query anders No orders found tonen als er wel resultaten zijn door de query lopen met for loop
+            met een query foto's uit de database halen*/
             if($orderDetails == '0 results found!'){
                 echo 'No orders found.';
             }else{
@@ -68,6 +73,7 @@ $shipping = 10;
                 else {
                     $img = $getimg[0]['ImagePath'];
                 }
+                /* Checken of een stockitem id gevonden kan worden tussen de producten in stock dan tonen met link anders uit archive halen zonder link naar productpage */
                 if(isset($orderDetails[$i]['StockItemID'])){
                     echo '<tr class="wwi_textalign_center wwi_frontsize_small">';
                     echo '<td class="align-middle"><figure class="figure"><img class="img-fluid figure-img wwi-itemimg_nowith" src="'.$img.'"></figure></td>';
@@ -89,6 +95,7 @@ $shipping = 10;
                     echo '</tr>';
                     $maxtotal = $maxtotal + $total;
                     }
+                    /* Berekenen shipping cost */
                     if($maxtotal < 100){
                         $shipping = $shipping /100 * (100 + $price1);
                         $maxt = $maxtotal + $shipping;
@@ -107,6 +114,7 @@ $shipping = 10;
                 <td></td>
                 <td></td>
                 <?php
+                /* ifstatment voor shipping cost */
                 if($shipping == 'Free'){
                     echo "<td class='wwi_textalign_center wwi_maincolor wwi_fontsize_xtrasmall'><strong>Shipping: &nbsp;</strong>".$shipping."</td>"; 
                 }else{
@@ -121,7 +129,8 @@ $shipping = 10;
     </table>
 </div>
 </section>
+<!-- Einde tonen order details-->
 <?php
-
+/* Database connection sluiten*/
 $database->closeConnection();
 ?>
